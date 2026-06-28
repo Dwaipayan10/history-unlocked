@@ -6,9 +6,9 @@
     <title>History Unlocked - The Hidden Levers</title>
     <style>
         :root {
-            --bg-color: #f4f1ea;
-            --text-color: #2b2b2b;
-            --accent-color: #b85a38;
+            --bg-color: #f7f6f2;
+            --text-color: #2c3531;
+            --accent-color: #5a786b; /* Soothing Sage Green */
             --card-bg: #ffffff;
         }
 
@@ -24,7 +24,7 @@
         .top-bar {
             max-width: 800px;
             margin: 0 auto 40px auto;
-            border-bottom: 2px solid var(--text-color);
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 10px;
         }
 
@@ -66,7 +66,7 @@
         }
 
         .chapter-btn:hover {
-            background-color: rgba(184, 90, 56, 0.1);
+            background-color: rgba(90, 120, 107, 0.1);
             color: var(--accent-color);
         }
 
@@ -79,17 +79,13 @@
             background: var(--card-bg);
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             min-height: 250px;
             position: relative;
         }
 
         .event-content {
             display: none;
-        }
-
-        .event-content.active {
-            display: block;
         }
 
         .date {
@@ -125,13 +121,13 @@
             border-radius: 12px;
             padding: 35px 30px 30px 30px;
             max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             background: #ffffff;
             position: relative;
         }
 
         dialog::backdrop {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(44, 53, 49, 0.4);
             backdrop-filter: blur(4px);
         }
 
@@ -143,7 +139,7 @@
             border: none;
             font-size: 1.5rem;
             font-weight: bold;
-            color: #999;
+            color: #b0b0b0;
             cursor: pointer;
             padding: 5px;
             line-height: 1;
@@ -194,7 +190,6 @@
     <div id="modalContainer"></div>
 
     <script>
-        // Connected directly to your specific Google Sheet
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
@@ -202,17 +197,20 @@
             try {
                 const response = await fetch(SHEET_URL);
                 const text = await response.text();
-                // Clean Google's data format into standard web data
                 const jsonData = JSON.parse(text.substr(47).slice(0, -2));
                 const rows = jsonData.table.rows;
 
                 let menuHtml = '';
                 let contentHtml = '';
                 let modalHtml = '';
+                let chapterNumber = 1;
 
-                rows.forEach((row, index) => {
-                    // Extract data box values mapping to A, B, C, D, E, F, G columns
-                    const id = row.c[0] ? row.c[0].v : `chapter-${index}`;
+                rows.forEach((row) => {
+                    const id = row.c[0] ? row.c[0].v : '';
+                    
+                    // Skip the row completely if it is the header line
+                    if (!id || id.toString().toLowerCase().trim() === 'id') return;
+
                     const title = row.c[1] ? row.c[1].v : '';
                     const date = row.c[2] ? row.c[2].v : '';
                     const body = row.c[3] ? row.c[3].v : '';
@@ -220,13 +218,12 @@
                     const popupHook = row.c[5] ? row.c[5].v : '';
                     const popupReason = row.c[6] ? row.c[6].v : '';
 
-                    const activeClass = index === 0 ? 'active' : '';
-                    const displayStyle = index === 0 ? 'block' : 'none';
+                    // The very first real story row gets set to active
+                    const activeClass = chapterNumber === 1 ? 'active' : '';
+                    const displayStyle = chapterNumber === 1 ? 'block' : 'none';
 
-                    // Build sidebar button
-                    menuHtml += `<li><button class="chapter-btn ${activeClass}" id="btn-${id}" onclick="switchChapter('${id}')">Chapter ${index + 1}: ${title}</button></li>`;
+                    menuHtml += `<li><button class="chapter-btn ${activeClass}" id="btn-${id}" onclick="switchChapter('${id}')">Chapter ${chapterNumber}: ${title}</button></li>`;
 
-                    // Build main event text body
                     contentHtml += `
                         <article id="${id}" class="event-content" style="display: ${displayStyle};">
                             <div class="date">${date}</div>
@@ -238,7 +235,6 @@
                         </article>
                     `;
 
-                    // Build hidden popups dynamically
                     modalHtml += `
                         <dialog id="modal-${id}">
                             <button class="close-x" onclick="document.getElementById('modal-${id}').close()">&times;</button>
@@ -246,6 +242,8 @@
                             <p>${popupReason}</p>
                         </dialog>
                     `;
+
+                    chapterNumber++;
                 });
 
                 document.getElementById('menuContainer').innerHTML = menuHtml;
@@ -253,7 +251,7 @@
                 document.getElementById('modalContainer').innerHTML = modalHtml;
 
             } catch (error) {
-                document.getElementById('contentContainer').innerHTML = `<div class="loading-text" style="color:red;">Error loading content. Make sure your Google Sheet is published to the web.</div>`;
+                document.getElementById('contentContainer').innerHTML = `<div class="loading-text" style="color:red;">Error loading content. Check your configuration.</div>`;
                 console.error(error);
             }
         }
@@ -272,9 +270,7 @@
             document.getElementById('btn-' + targetId).classList.add('active');
         }
 
-        // Start loading the spreadsheet data immediately when browser opens
         window.onload = loadData;
     </script>
-
 </body>
 </html>
