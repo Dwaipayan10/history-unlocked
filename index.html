@@ -18,29 +18,80 @@
             color: var(--text-color);
             line-height: 1.6;
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
-        .container {
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        header h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--text-color);
-            margin-bottom: 40px;
+        /* Top Bar Layout */
+        .top-bar {
+            max-width: 800px;
+            margin: 0 auto 40px auto;
             border-bottom: 2px solid var(--text-color);
             padding-bottom: 10px;
         }
 
-        .event-card {
+        .site-title {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar Navigation */
+        .chapter-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .chapter-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .chapter-btn:hover {
+            background-color: rgba(184, 90, 56, 0.1);
+            color: var(--accent-color);
+        }
+
+        .chapter-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Content Display Area */
+        .content-area {
             background: var(--card-bg);
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
+            min-height: 250px;
+        }
+
+        .event-content {
+            display: none;
+        }
+
+        .event-content.active {
+            display: block;
         }
 
         .date {
@@ -51,7 +102,7 @@
             font-size: 0.9rem;
         }
 
-        h2 {
+        .event-content h2 {
             margin-top: 5px;
             font-size: 1.8rem;
         }
@@ -64,7 +115,6 @@
             font-weight: bold;
             border-bottom: 2px dashed var(--accent-color);
             cursor: pointer;
-            transition: color 0.2s;
         }
 
         .trigger-link:hover {
@@ -72,6 +122,7 @@
             border-bottom-color: var(--text-color);
         }
 
+        /* Pop-up Modals */
         dialog {
             border: none;
             border-radius: 12px;
@@ -103,33 +154,53 @@
             margin-top: 0;
             font-size: 1.4rem;
         }
+
+        /* Responsive design for Mobile screens */
+        @media (max-width: 600px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>History Unlocked</h1>
-        </header>
+    <div class="top-bar">
+        <h1 class="site-title">History Unlocked</h1>
+    </div>
 
-        <main class="event-card">
-            <div class="date">Early 15th Century</div>
-            <h2>Portuguese Sailors Brave the Open Atlantic</h2>
-            <p>Portuguese captains began launching fleets down the unknown coast of Africa. They braved superstitions of sea monsters and boiling equatorial waters to map out entirely new ocean routes.</p>
+    <div class="container">
+        <nav>
+            <ul class="chapter-list">
+                <li><button class="chapter-btn active" onclick="showChapter('portuguese-voyage', this)">Chapter 1: Atlantic Voyages</button></li>
+                <li><button class="chapter-btn" onclick="showChapter('french-revolution', this)">Chapter 2: French Bread Riots</button></li>
+            </ul>
+        </nav>
+
+        <main class="content-area">
             
-            <span class="trigger-link" onclick="window.spiceModal.showModal()">
-                🔍 Why did they suddenly risk everything for alternative routes?
-            </span>
+            <article id="portuguese-voyage" class="event-content active">
+                <div class="date">Early 15th Century</div>
+                <h2>Portuguese Sailors Brave the Open Atlantic</h2>
+                <p>Portuguese captains began launching fleets down the unknown coast of Africa. They braved superstitions of sea monsters and boiling equatorial waters to map out entirely new ocean routes.</p>
+                <span class="trigger-link" onclick="window.spiceModal.showModal()">
+                    🔍 Why did they suddenly risk everything for alternative routes?
+                </span>
+            </article>
+
+            <article id="french-revolution" class="event-content">
+                <div class="date">Year 1789</div>
+                <h2>The Storming of the Bastille</h2>
+                <p>An angry, starving mob of Parisian citizens marched on the Bastille fortress, a towering symbol of royal tyranny. It sparked the violent dawn of the French Revolution.</p>
+                <span class="trigger-link" onclick="window.breadModal.showModal()">
+                    🔍 What hidden crises drove ordinary people to this extreme edge?
+                </span>
+            </article>
+
         </main>
     </div>
 
     <dialog id="spiceModal">
         <h3 class="modal-title">The Hidden Lever: The Spice Tax Crisis</h3>
         <p><strong>The Hook:</strong> In 1490, a pound of nutmeg in Europe cost more than its weight in gold.</p>
-        <p><strong>The Reason:</strong> When the Ottoman Empire took over Constantinople in 1453, they locked down the traditional overland Silk Road. They slapped massive tariffs on European merchants. If Europeans wanted pepper, cinnamon, or medicine, they had to pay exorbitant prices to Middle Eastern middlemen.</p>
-        <p><strong>The Result:</strong> Portugal realized it was financially smarter to risk their entire navy exploring uncharted oceans than to keep bleeding cash to foreign empires.</p>
-        <button class="close-btn" onclick="window.spiceModal.close()">Got it</button>
-    </dialog>
-
-</body>
-</html>
+        <p><strong>The Reason:</strong> When the Ottoman Empire took over Constantinople in 1453, they locked down the traditional overland Silk Road. They slapped massive tariffs on European merchants. If Europeans wanted pepper or cinnamon, they had to pay exorbitant prices to Middle Eastern middlemen.</p>
