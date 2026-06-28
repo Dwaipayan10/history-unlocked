@@ -8,7 +8,7 @@
         :root {
             --bg-color: #f7f6f2;
             --text-color: #2c3531;
-            --accent-color: #5a786b; /* Soothing Sage Green */
+            --accent-color: #5a786b;
             --card-bg: #ffffff;
         }
 
@@ -99,6 +99,17 @@
         h2 {
             margin-top: 5px;
             font-size: 1.8rem;
+        }
+
+        /* Chapter Feature Image Styling */
+        .chapter-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            display: block;
         }
 
         .trigger-link {
@@ -208,7 +219,6 @@
                 rows.forEach((row) => {
                     const id = row.c[0] ? row.c[0].v : '';
                     
-                    // Skip the row completely if it is the header line
                     if (!id || id.toString().toLowerCase().trim() === 'id') return;
 
                     const title = row.c[1] ? row.c[1].v : '';
@@ -217,17 +227,22 @@
                     const triggerText = row.c[4] ? row.c[4].v : '';
                     const popupHook = row.c[5] ? row.c[5].v : '';
                     const popupReason = row.c[6] ? row.c[6].v : '';
+                    const imageUrl = row.c[7] ? row.c[7].v : ''; // Column H
 
-                    // The very first real story row gets set to active
                     const activeClass = chapterNumber === 1 ? 'active' : '';
                     const displayStyle = chapterNumber === 1 ? 'block' : 'none';
 
-                    menuHtml += `<li><button class="chapter-btn ${activeClass}" id="btn-${id}" onclick="switchChapter('${id}')">Chapter ${chapterNumber}: ${title}</button></li>`;
+                    // Removed "Chapter X" prefix. Displays only the Topic Name.
+                    menuHtml += `<li><button class="chapter-btn ${activeClass}" id="btn-${id}" onclick="switchChapter('${id}')">${title}</button></li>`;
+
+                    // Main display now includes an image alongside the text
+                    let imgHtml = imageUrl ? `<img src="${imageUrl}" class="chapter-image" alt="${title}">` : '';
 
                     contentHtml += `
                         <article id="${id}" class="event-content" style="display: ${displayStyle};">
                             <div class="date">${date}</div>
                             <h2>${title}</h2>
+                            ${imgHtml}
                             <p>${body}</p>
                             <span class="trigger-link" onclick="document.getElementById('modal-${id}').showModal()">
                                 ${triggerText}
