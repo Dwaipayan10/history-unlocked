@@ -82,7 +82,7 @@
             margin: 0 auto;
         }
 
-        /* View 1: Dashboard Layout */
+        /* View 1: Dashboard Preview Layout */
         .dashboard-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -151,7 +151,7 @@
             opacity: 0.9;
         }
 
-        /* View 2: Reader Layout */
+        /* View 2: Dedicated Workspace Reader */
         .reader-layout {
             display: none; 
             background: var(--card-bg);
@@ -219,7 +219,7 @@
             box-shadow: 0 4px 12px rgba(90, 120, 107, 0.1);
         }
 
-        /* Popups styling */
+        /* Modal Overlay Interfaces */
         dialog {
             border: none;
             border-radius: 12px;
@@ -265,16 +265,6 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .close-x:hover {
-            background: white;
-        }
-
-        .popup-title {
-            color: var(--accent-color);
-            margin: 0 0 15px 0;
-            font-size: 1.5rem;
         }
 
         .loading-msg {
@@ -329,8 +319,12 @@
 
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
-        const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
-        const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet2`;
+        
+        // ATTENTION: Put your Sheet2 GID number inside the quotes below if it doesn't match '0'
+        const SHEET2_GID = '714083378'; 
+
+        const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
+        const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
 
         let globalChapters = {};
         let globalLevers = [];
@@ -374,7 +368,91 @@
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration error. Please check your database settings.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration engine mismatch. Please check your data layout structure.</div>`;
                 console.error(err);
             }
         }
+
+        function renderMenu(activeId) {
+            let menuHtml = '';
+            Object.values(globalChapters).forEach((ch) => {
+                const cls = ch.id === activeId ? 'active' : '';
+                menuHtml += `<li><button class="chapter-btn ${cls}" id="nav-${ch.id}" onclick="setPreviewTarget('${ch.id}')">${ch.title}</button></li>`;
+            });
+            document.getElementById('menuContainer').innerHTML = menuHtml;
+            if(activeId) setPreviewTarget(activeId);
+        }
+
+        function setPreviewTarget(id) {
+            document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById(`nav-${id}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const data = globalChapters[id];
+            if (!data) return;
+            
+            let imageSection = data.img ? `<img src="${data.img}" class="preview-image" alt="${data.title}">` : '';
+            
+            document.getElementById('previewContainer').innerHTML = `
+                <div class="date">${data.date}</div>
+                <h2 style="margin:5px 0 15px 0; font-size:1.8rem;">${data.title}</h2>
+                ${imageSection}
+                <div>
+                    <button class="explore-trigger-btn" onclick="launchReaderView('${id}')">Open Interactive Chapter</button>
+                </div>
+            `;
+        }
+
+        function launchReaderView(id) {
+            const ch = globalChapters[id];
+            document.getElementById('readerTitle').innerText = ch.title;
+            document.getElementById('readerDate').innerText = ch.date;
+            document.getElementById('readerBody').innerText = ch.body;
+
+            const matchedLevers = globalLevers.filter(l => l.chapterId === id);
+            
+            let gridHtml = '';
+            let modalHtml = '';
+
+            matchedLevers.forEach((lev, idx) => {
+                const uniqueId = `modal-${id}-${idx}`;
+                
+                gridHtml += `
+                    <div class="lever-card" onclick="document.getElementById('${uniqueId}').showModal()">
+                        <span>🔍</span> <span>${lev.linkText}</span>
+                    </div>
+                `;
+
+                let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Illustration">` : '';
+                
+                modalHtml += `
+                    <dialog id="${uniqueId}">
+                        ${modalImgHtml}
+                        <div class="popup-content-box">
+                            <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
+                            <h3 class="popup-title">${lev.popTitle}</h3>
+                            <p style="margin:0; font-size:1.05rem; line-height:1.5; color:#333;">${lev.popBody}</p>
+                        </div>
+                    </dialog>
+                `;
+            });
+
+            document.getElementById('leversContainer').innerHTML = gridHtml || '<p style="color:#666;">No dynamic levers discovered for this event timeline yet.</p>';
+            document.getElementById('popupMasterStack').innerHTML = modalHtml;
+
+            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('dashboardScreen').style.display = 'none';
+            document.getElementById('readerScreen').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function showDashboardView() {
+            document.getElementById('mainHeader').style.display = 'block';
+            document.getElementById('dashboardScreen').style.display = 'grid';
+            document.getElementById('readerScreen').style.display = 'none';
+        }
+
+        window.onload = initSystem;
+    </script>
+</body>
+</html>
