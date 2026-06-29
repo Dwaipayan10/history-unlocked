@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History Unlocked - The Hidden Levers</title>
+    <title>Backstory - The Hidden Levers</title>
     <style>
         :root {
             --bg-color: #f7f6f2;
@@ -26,17 +26,37 @@
             max-width: 900px;
             margin: 0 auto 30px auto;
             border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 15px;
+            padding-bottom: 20px;
+        }
+
+        .header-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 8px;
         }
 
         .site-title {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             margin: 0;
             font-weight: bold;
             color: var(--text-color);
+        }
+
+        .author-name {
+            font-size: 0.85rem;
+            color: #777;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+        }
+
+        .site-description {
+            font-size: 1.05rem;
+            color: #555;
+            margin: 0;
+            max-width: 700px;
+            line-height: 1.5;
         }
 
         .back-btn {
@@ -48,7 +68,8 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.2s;
-            display: none; /* Hidden on landing screen */
+            margin-bottom: 20px;
+            display: inline-block;
         }
 
         .back-btn:hover {
@@ -61,7 +82,7 @@
             margin: 0 auto;
         }
 
-        /* View 1: Dashboard Hub Grid Layout */
+        /* View 1: Dashboard Layout */
         .dashboard-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -110,7 +131,7 @@
             max-height: 380px;
             object-fit: cover;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .explore-trigger-btn {
@@ -130,9 +151,9 @@
             opacity: 0.9;
         }
 
-        /* View 2: Immersive Reader Workspace */
+        /* View 2: Reader Layout */
         .reader-layout {
-            display: none; /* Active only on link click */
+            display: none; 
             background: var(--card-bg);
             padding: 40px;
             border-radius: 12px;
@@ -170,7 +191,7 @@
             font-size: 0.85rem;
         }
 
-        /* Grid Framework for Unlimited History Cards */
+        /* Levers Cards Grid */
         .levers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -198,7 +219,7 @@
             box-shadow: 0 4px 12px rgba(90, 120, 107, 0.1);
         }
 
-        /* Split-Media Popup Windows */
+        /* Popups styling */
         dialog {
             border: none;
             border-radius: 12px;
@@ -229,7 +250,7 @@
 
         .close-x {
             position: absolute;
-            top: -210px; /* Positions button cleanly over top corner of picture framework */
+            top: -210px; 
             right: 15px;
             background: rgba(255, 255, 255, 0.8);
             border: none;
@@ -244,6 +265,10 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .close-x:hover {
+            background: white;
         }
 
         .popup-title {
@@ -261,14 +286,19 @@
 
         @media (max-width: 700px) {
             .dashboard-layout { grid-template-columns: 1fr; }
+            .header-row { flex-direction: column; }
+            .author-name { margin-top: 5px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <h1 class="site-title">History Unlocked</h1>
-        <button class="back-btn" id="backBtn" onclick="showDashboardView()">← Back to Menu</button>
+    <div class="top-bar" id="mainHeader">
+        <div class="header-row">
+            <h1 class="site-title">Backstory</h1>
+            <div class="author-name">Dwaipayan Sinha</div>
+        </div>
+        <p class="site-description">Every major event has a hidden beginning. Discover the secret motives, accidental choices, and forgotten human drama that shaped our world.</p>
     </div>
 
     <div class="container">
@@ -277,11 +307,12 @@
                 <ul class="chapter-list" id="menuContainer"></ul>
             </nav>
             <main class="preview-pane" id="previewContainer">
-                <div class="loading-msg">Fetching architecture records...</div>
+                <div class="loading-msg">Loading history engine...</div>
             </main>
         </div>
 
         <div class="reader-layout" id="readerScreen">
+            <button class="back-btn" onclick="showDashboardView()">← Back to Menu</button>
             <div class="date" id="readerDate"></div>
             <h2 class="reader-header" id="readerTitle"></h2>
             <p class="reader-body" id="readerBody"></p>
@@ -298,7 +329,6 @@
 
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
-        // Connect to Sheet 1 (Chapters) and Sheet 2 (Levers)
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet2`;
 
@@ -307,7 +337,6 @@
 
         async function initSystem() {
             try {
-                // Fetch data from both sheets simultaneously
                 const [res1, res2] = await Promise.all([fetch(CHAPTERS_URL), fetch(LEVERS_URL)]);
                 const t1 = await res1.text();
                 const t2 = await res2.text();
@@ -315,7 +344,6 @@
                 const d1 = JSON.parse(t1.substr(47).slice(0, -2)).table.rows;
                 const d2 = JSON.parse(t2.substr(47).slice(0, -2)).table.rows;
 
-                // 1. Process Main Chapters Data Setup
                 let firstId = null;
                 d1.forEach((row) => {
                     const id = row.c[0] ? row.c[0].v : '';
@@ -331,7 +359,6 @@
                     };
                 });
 
-                // 2. Process Dynamic Sub-Topic Levers Data Setup
                 d2.forEach((row) => {
                     const cId = row.c[0] ? row.c[0].v : '';
                     if (!cId || cId.toString().toLowerCase().trim() === 'chapter_id') return;
@@ -347,92 +374,7 @@
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration mismatch error. Please check sharing parameters.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration error. Please check your database settings.</div>`;
                 console.error(err);
             }
         }
-
-        function renderMenu(activeId) {
-            let menuHtml = '';
-            Object.values(globalChapters).forEach((ch) => {
-                const cls = ch.id === activeId ? 'active' : '';
-                menuHtml += `<li><button class="chapter-btn ${cls}" id="nav-${ch.id}" onclick="setPreviewTarget('${ch.id}')">${ch.title}</button></li>`;
-            });
-            document.getElementById('menuContainer').innerHTML = menuHtml;
-            setPreviewTarget(activeId);
-        }
-
-        function setPreviewTarget(id) {
-            document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`nav-${id}`).classList.add('active');
-
-            const data = globalChapters[id];
-            let imageSection = data.img ? `<img src="${data.img}" class="preview-image" alt="${data.title}">` : '';
-            
-            document.getElementById('previewContainer').innerHTML = `
-                <div class="date">${data.date}</div>
-                <h2 style="margin:5px 0 15px 0; font-size:1.8rem;">${data.title}</h2>
-                ${imageSection}
-                <div>
-                    <button class="explore-trigger-btn" onclick="launchReaderView('${id}')">Open Interactive Chapter</button>
-                </div>
-            `;
-        }
-
-        function launchReaderView(id) {
-            const ch = globalChapters[id];
-            document.getElementById('readerTitle').innerText = ch.title;
-            document.getElementById('readerDate').innerText = ch.date;
-            document.getElementById('readerBody').innerText = ch.body;
-
-            // Gather only the levers matching this specific chapter id
-            const matchedLevers = globalLevers.filter(l => l.chapterId === id);
-            
-            let gridHtml = '';
-            let modalHtml = '';
-
-            matchedLevers.forEach((lev, idx) => {
-                const uniqueId = `modal-${id}-${idx}`;
-                
-                // Build dynamic link item card styles
-                gridHtml += `
-                    <div class="lever-card" onclick="document.getElementById('${uniqueId}').showModal()">
-                        <span>🔍</span> <span>${lev.linkText}</span>
-                    </div>
-                `;
-
-                // Build rich modal systems supporting split images automatically
-                let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Illustration">` : '';
-                
-                modalHtml += `
-                    <dialog id="${uniqueId}">
-                        ${modalImgHtml}
-                        <div class="popup-content-box">
-                            <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
-                            <h3 class="popup-title">${lev.popTitle}</h3>
-                            <p style="margin:0; font-size:1.05rem; line-height:1.5; color:#333;">${lev.popBody}</p>
-                        </div>
-                    </dialog>
-                `;
-            });
-
-            document.getElementById('leversContainer').innerHTML = gridHtml || '<p style="color:#666;">No catalyst modules found matching this record.</p>';
-            document.getElementById('popupMasterStack').innerHTML = modalHtml;
-
-            // Smooth UI display toggle states
-            document.getElementById('dashboardScreen').style.display = 'none';
-            document.getElementById('readerScreen').style.display = 'block';
-            document.getElementById('backBtn').style.display = 'block';
-            window.scrollTo(0,0);
-        }
-
-        function showDashboardView() {
-            document.getElementById('dashboardScreen').style.display = 'grid';
-            document.getElementById('readerScreen').style.display = 'none';
-            document.getElementById('backBtn').style.display = 'none';
-        }
-
-        window.onload = initSystem;
-    </script>
-</body>
-</html>
