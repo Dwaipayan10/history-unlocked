@@ -8,8 +8,9 @@
         :root {
             --bg-color: #f7f6f2;
             --text-color: #2c3531;
-            --accent-color: #5a786b;
+            --accent-color: #5a786b; /* Soothing Sage Green */
             --card-bg: #ffffff;
+            --card-hover: rgba(90, 120, 107, 0.08);
         }
 
         body {
@@ -22,10 +23,13 @@
         }
 
         .top-bar {
-            max-width: 800px;
-            margin: 0 auto 40px auto;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
             border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .site-title {
@@ -35,11 +39,32 @@
             color: var(--text-color);
         }
 
+        .back-btn {
+            background: none;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            display: none; /* Hidden on landing screen */
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+        }
+
+        /* View 1: Dashboard Hub Grid Layout */
+        .dashboard-layout {
             display: grid;
-            grid-template-columns: 250px 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 30px;
         }
 
@@ -55,129 +80,187 @@
             text-align: left;
             background: none;
             border: none;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 6px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: var(--text-color);
             transition: all 0.2s;
-            font-weight: 500;
+            font-weight: 600;
+            border-left: 4px solid transparent;
         }
 
-        .chapter-btn:hover {
-            background-color: rgba(90, 120, 107, 0.1);
+        .chapter-btn:hover, .chapter-btn.active {
+            background-color: var(--card-hover);
             color: var(--accent-color);
+            border-left-color: var(--accent-color);
         }
 
-        .chapter-btn.active {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .content-area {
+        .preview-pane {
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            min-height: 250px;
-            position: relative;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            text-align: center;
         }
 
-        .event-content {
-            display: none;
-        }
-
-        .date {
-            font-weight: bold;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        h2 {
-            margin-top: 5px;
-            font-size: 1.8rem;
-        }
-
-        /* Chapter Feature Image Styling */
-        .chapter-image {
+        .preview-image {
             width: 100%;
-            max-height: 300px;
+            max-height: 380px;
             object-fit: cover;
-            border-radius: 6px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            display: block;
+            border-radius: 8px;
+            margin-top: 20px;
         }
 
-        .trigger-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: var(--accent-color);
-            text-decoration: none;
+        .explore-trigger-btn {
+            margin-top: 25px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
             font-weight: bold;
-            border-bottom: 2px dashed var(--accent-color);
+            border-radius: 6px;
             cursor: pointer;
+            transition: opacity 0.2s;
         }
 
-        .trigger-link:hover {
-            color: var(--text-color);
-            border-bottom-color: var(--text-color);
+        .explore-trigger-btn:hover {
+            opacity: 0.9;
         }
 
+        /* View 2: Immersive Reader Workspace */
+        .reader-layout {
+            display: none; /* Active only on link click */
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.02);
+        }
+
+        .reader-header {
+            font-size: 2.2rem;
+            margin: 5px 0 20px 0;
+            text-align: center;
+        }
+
+        .reader-body {
+            font-size: 1.15rem;
+            color: #3e4743;
+            margin-bottom: 40px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-divider {
+            text-align: center;
+            border-bottom: 1px solid #e0dddb;
+            line-height: 0.1em;
+            margin: 40px 0;
+        }
+
+        .section-divider span {
+            background: var(--card-bg);
+            padding: 0 15px;
+            color: var(--accent-color);
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+        }
+
+        /* Grid Framework for Unlimited History Cards */
+        .levers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .lever-card {
+            background: var(--bg-color);
+            border: 1px solid #e6e4de;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lever-card:hover {
+            transform: translateY(-2px);
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(90, 120, 107, 0.1);
+        }
+
+        /* Split-Media Popup Windows */
         dialog {
             border: none;
             border-radius: 12px;
-            padding: 35px 30px 30px 30px;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 0;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             background: #ffffff;
-            position: relative;
+            overflow: hidden;
         }
 
         dialog::backdrop {
-            background: rgba(44, 53, 49, 0.4);
-            backdrop-filter: blur(4px);
+            background: rgba(44, 53, 49, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .popup-img {
+            width: 100%;
+            max-height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .popup-content-box {
+            padding: 30px;
+            position: relative;
         }
 
         .close-x {
             position: absolute;
-            top: 12px;
+            top: -210px; /* Positions button cleanly over top corner of picture framework */
             right: 15px;
-            background: none;
+            background: rgba(255, 255, 255, 0.8);
             border: none;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #b0b0b0;
-            cursor: pointer;
-            padding: 5px;
-            line-height: 1;
-        }
-
-        .close-x:hover {
-            color: var(--text-color);
-        }
-
-        .modal-title {
-            color: var(--accent-color);
-            margin-top: 0;
             font-size: 1.4rem;
-            padding-right: 20px;
+            font-weight: bold;
+            color: #333;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .loading-text {
+        .popup-title {
+            color: var(--accent-color);
+            margin: 0 0 15px 0;
+            font-size: 1.5rem;
+        }
+
+        .loading-msg {
             text-align: center;
             font-size: 1.2rem;
+            padding: 50px 0;
             color: #666;
-            padding-top: 40px;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 700px) {
+            .dashboard-layout { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -185,107 +268,171 @@
 
     <div class="top-bar">
         <h1 class="site-title">History Unlocked</h1>
+        <button class="back-btn" id="backBtn" onclick="showDashboardView()">← Back to Menu</button>
     </div>
 
     <div class="container">
-        <nav>
-            <ul class="chapter-list" id="menuContainer">
-                </ul>
-        </nav>
+        <div class="dashboard-layout" id="dashboardScreen">
+            <nav>
+                <ul class="chapter-list" id="menuContainer"></ul>
+            </nav>
+            <main class="preview-pane" id="previewContainer">
+                <div class="loading-msg">Fetching architecture records...</div>
+            </main>
+        </div>
 
-        <main class="content-area" id="contentContainer">
-            <div class="loading-text">Loading history chapters...</div>
-        </main>
+        <div class="reader-layout" id="readerScreen">
+            <div class="date" id="readerDate"></div>
+            <h2 class="reader-header" id="readerTitle"></h2>
+            <p class="reader-body" id="readerBody"></p>
+
+            <div class="section-divider">
+                <span>EXPLORE THE HIDDEN LEVERS OF THIS ERA</span>
+            </div>
+
+            <div class="levers-grid" id="leversContainer"></div>
+        </div>
     </div>
 
-    <div id="modalContainer"></div>
+    <div id="popupMasterStack"></div>
 
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
-        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        // Connect to Sheet 1 (Chapters) and Sheet 2 (Levers)
+        const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+        const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet2`;
 
-        async function loadData() {
+        let globalChapters = {};
+        let globalLevers = [];
+
+        async function initSystem() {
             try {
-                const response = await fetch(SHEET_URL);
-                const text = await response.text();
-                const jsonData = JSON.parse(text.substr(47).slice(0, -2));
-                const rows = jsonData.table.rows;
+                // Fetch data from both sheets simultaneously
+                const [res1, res2] = await Promise.all([fetch(CHAPTERS_URL), fetch(LEVERS_URL)]);
+                const t1 = await res1.text();
+                const t2 = await res2.text();
 
-                let menuHtml = '';
-                let contentHtml = '';
-                let modalHtml = '';
-                let chapterNumber = 1;
+                const d1 = JSON.parse(t1.substr(47).slice(0, -2)).table.rows;
+                const d2 = JSON.parse(t2.substr(47).slice(0, -2)).table.rows;
 
-                rows.forEach((row) => {
+                // 1. Process Main Chapters Data Setup
+                let firstId = null;
+                d1.forEach((row) => {
                     const id = row.c[0] ? row.c[0].v : '';
-                    
                     if (!id || id.toString().toLowerCase().trim() === 'id') return;
+                    if (!firstId) firstId = id;
 
-                    const title = row.c[1] ? row.c[1].v : '';
-                    const date = row.c[2] ? row.c[2].v : '';
-                    const body = row.c[3] ? row.c[3].v : '';
-                    const triggerText = row.c[4] ? row.c[4].v : '';
-                    const popupHook = row.c[5] ? row.c[5].v : '';
-                    const popupReason = row.c[6] ? row.c[6].v : '';
-                    const imageUrl = row.c[7] ? row.c[7].v : ''; // Column H
-
-                    const activeClass = chapterNumber === 1 ? 'active' : '';
-                    const displayStyle = chapterNumber === 1 ? 'block' : 'none';
-
-                    // Removed "Chapter X" prefix. Displays only the Topic Name.
-                    menuHtml += `<li><button class="chapter-btn ${activeClass}" id="btn-${id}" onclick="switchChapter('${id}')">${title}</button></li>`;
-
-                    // Main display now includes an image alongside the text
-                    let imgHtml = imageUrl ? `<img src="${imageUrl}" class="chapter-image" alt="${title}">` : '';
-
-                    contentHtml += `
-                        <article id="${id}" class="event-content" style="display: ${displayStyle};">
-                            <div class="date">${date}</div>
-                            <h2>${title}</h2>
-                            ${imgHtml}
-                            <p>${body}</p>
-                            <span class="trigger-link" onclick="document.getElementById('modal-${id}').showModal()">
-                                ${triggerText}
-                            </span>
-                        </article>
-                    `;
-
-                    modalHtml += `
-                        <dialog id="modal-${id}">
-                            <button class="close-x" onclick="document.getElementById('modal-${id}').close()">&times;</button>
-                            <h3 class="modal-title">The Hidden Lever: ${popupHook}</h3>
-                            <p>${popupReason}</p>
-                        </dialog>
-                    `;
-
-                    chapterNumber++;
+                    globalChapters[id] = {
+                        id: id,
+                        title: row.c[1] ? row.c[1].v : '',
+                        date: row.c[2] ? row.c[2].v : '',
+                        img: row.c[3] ? row.c[3].v : '',
+                        body: row.c[4] ? row.c[4].v : ''
+                    };
                 });
 
-                document.getElementById('menuContainer').innerHTML = menuHtml;
-                document.getElementById('contentContainer').innerHTML = contentHtml;
-                document.getElementById('modalContainer').innerHTML = modalHtml;
+                // 2. Process Dynamic Sub-Topic Levers Data Setup
+                d2.forEach((row) => {
+                    const cId = row.c[0] ? row.c[0].v : '';
+                    if (!cId || cId.toString().toLowerCase().trim() === 'chapter_id') return;
 
-            } catch (error) {
-                document.getElementById('contentContainer').innerHTML = `<div class="loading-text" style="color:red;">Error loading content. Check your configuration.</div>`;
-                console.error(error);
+                    globalLevers.push({
+                        chapterId: cId,
+                        linkText: row.c[1] ? row.c[1].v : '',
+                        popTitle: row.c[2] ? row.c[2].v : '',
+                        popImg: row.c[3] ? row.c[3].v : '',
+                        popBody: row.c[4] ? row.c[4].v : ''
+                    });
+                });
+
+                renderMenu(firstId);
+            } catch (err) {
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration mismatch error. Please check sharing parameters.</div>`;
+                console.error(err);
             }
         }
 
-        function switchChapter(targetId) {
-            var items = document.getElementsByClassName('event-content');
-            for (var i = 0; i < items.length; i++) {
-                items[i].style.display = 'none';
-            }
-            document.getElementById(targetId).style.display = 'block';
+        function renderMenu(activeId) {
+            let menuHtml = '';
+            Object.values(globalChapters).forEach((ch) => {
+                const cls = ch.id === activeId ? 'active' : '';
+                menuHtml += `<li><button class="chapter-btn ${cls}" id="nav-${ch.id}" onclick="setPreviewTarget('${ch.id}')">${ch.title}</button></li>`;
+            });
+            document.getElementById('menuContainer').innerHTML = menuHtml;
+            setPreviewTarget(activeId);
+        }
+
+        function setPreviewTarget(id) {
+            document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`nav-${id}`).classList.add('active');
+
+            const data = globalChapters[id];
+            let imageSection = data.img ? `<img src="${data.img}" class="preview-image" alt="${data.title}">` : '';
             
-            var btns = document.getElementsByClassName('chapter-btn');
-            for (var i = 0; i < btns.length; i++) {
-                btns[i].classList.remove('active');
-            }
-            document.getElementById('btn-' + targetId).classList.add('active');
+            document.getElementById('previewContainer').innerHTML = `
+                <div class="date">${data.date}</div>
+                <h2 style="margin:5px 0 15px 0; font-size:1.8rem;">${data.title}</h2>
+                ${imageSection}
+                <div>
+                    <button class="explore-trigger-btn" onclick="launchReaderView('${id}')">Open Interactive Chapter</button>
+                </div>
+            `;
         }
 
-        window.onload = loadData;
+        function launchReaderView(id) {
+            const ch = globalChapters[id];
+            document.getElementById('readerTitle').innerText = ch.title;
+            document.getElementById('readerDate').innerText = ch.date;
+            document.getElementById('readerBody').innerText = ch.body;
+
+            // Gather only the levers matching this specific chapter id
+            const matchedLevers = globalLevers.filter(l => l.chapterId === id);
+            
+            let gridHtml = '';
+            let modalHtml = '';
+
+            matchedLevers.forEach((lev, idx) => {
+                const uniqueId = `modal-${id}-${idx}`;
+                
+                // Build dynamic link item card styles
+                gridHtml += `
+                    <div class="lever-card" onclick="document.getElementById('${uniqueId}').showModal()">
+                        <span>🔍</span> <span>${lev.linkText}</span>
+                    </div>
+                `;
+
+                // Build rich modal systems supporting split images automatically
+                let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Illustration">` : '';
+                
+                modalHtml += `
+                    <dialog id="${uniqueId}">
+                        ${modalImgHtml}
+                        <div class="popup-content-box">
+                            <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
+                            <h3 class="popup-title">${lev.popTitle}</h3>
+                            <p style="margin:0; font-size:1.05rem; line-height:1.5; color:#333;">${lev.popBody}</p>
+                        </div>
+                    </dialog>
+                `;
+            });
+
+            document.getElementById('leversContainer').innerHTML = gridHtml || '<p style="color:#666;">No catalyst modules found matching this record.</p>';
+            document.getElementById('popupMasterStack').innerHTML = modalHtml;
+
+            // Smooth UI display toggle states
+            document.getElementById('dashboardScreen').style.display = 'none';
+            document.getElementById('readerScreen').style.display = 'block';
+            document.getElementById('backBtn').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function showDashboardView() {
+            document.getElementById('dashboardScreen').style.display = 'grid';
+            document.getElementById('readerScreen').style.display = 'none';
+            document.getElementById('backBtn').style.display = 'none';
+        }
+
+        window.onload = initSystem;
     </script>
 </body>
 </html>
