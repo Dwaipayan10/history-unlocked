@@ -82,7 +82,7 @@
             margin: 0 auto;
         }
 
-        /* View 1: Dashboard Preview Layout */
+        /* View 1: Dashboard Layout */
         .dashboard-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -151,7 +151,7 @@
             opacity: 0.9;
         }
 
-        /* View 2: Dedicated Workspace Reader */
+        /* View 2: Reader Layout */
         .reader-layout {
             display: none; 
             background: var(--card-bg);
@@ -166,13 +166,31 @@
             text-align: center;
         }
 
+        /* Immersive Backstory Text Content Card Wrapper with Custom Watermarking */
+        .story-text-container {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        .story-text-overlay {
+            background-color: rgba(255, 255, 255, 0.88); /* Beautiful readable glass overlay layer over background photo */
+            backdrop-filter: blur(2px);
+            padding: 35px;
+        }
+
         .reader-body {
             font-size: 1.15rem;
-            color: #3e4743;
-            margin-bottom: 40px;
+            color: #2c3531;
+            margin: 0;
             max-width: 750px;
             margin-left: auto;
             margin-right: auto;
+            white-space: pre-wrap; /* Maintains spacing from sheet */
         }
 
         .section-divider {
@@ -219,7 +237,7 @@
             box-shadow: 0 4px 12px rgba(90, 120, 107, 0.1);
         }
 
-        /* Modal Overlay Interfaces */
+        /* Popups styling */
         dialog {
             border: none;
             border-radius: 12px;
@@ -305,7 +323,12 @@
             <button class="back-btn" onclick="showDashboardView()">← Back to Menu</button>
             <div class="date" id="readerDate"></div>
             <h2 class="reader-header" id="readerTitle"></h2>
-            <p class="reader-body" id="readerBody"></p>
+            
+            <div class="story-text-container" id="storyContainerBackground">
+                <div class="story-text-overlay">
+                    <p class="reader-body" id="readerBody"></p>
+                </div>
+            </div>
 
             <div class="section-divider">
                 <span>EXPLORE THE HIDDEN LEVERS OF THIS ERA</span>
@@ -321,7 +344,7 @@
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
         
         // ATTENTION: Put your Sheet2 GID number inside the quotes below if it doesn't match '0'
-        const SHEET2_GID = '714083378'; 
+        const SHEET2_GID = '146747970'; 
 
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
@@ -349,7 +372,8 @@
                         title: row.c[1] ? row.c[1].v : '',
                         date: row.c[2] ? row.c[2].v : '',
                         img: row.c[3] ? row.c[3].v : '',
-                        body: row.c[4] ? row.c[4].v : ''
+                        body: row.c[4] ? row.c[4].v : '',
+                        readerImg: row.c[5] ? row.c[5].v : '' // Column F map mapping
                     };
                 });
 
@@ -368,7 +392,7 @@
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration engine mismatch. Please check your data layout structure.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration error. Please check your database settings.</div>`;
                 console.error(err);
             }
         }
@@ -409,6 +433,14 @@
             document.getElementById('readerDate').innerText = ch.date;
             document.getElementById('readerBody').innerText = ch.body;
 
+            // Apply dynamic reader background photo from Column F seamlessly
+            const bgContainer = document.getElementById('storyContainerBackground');
+            if (ch.readerImg) {
+                bgContainer.style.backgroundImage = `url('${ch.readerImg}')`;
+            } else {
+                bgContainer.style.backgroundImage = 'none';
+            }
+
             const matchedLevers = globalLevers.filter(l => l.chapterId === id);
             
             let gridHtml = '';
@@ -437,7 +469,7 @@
                 `;
             });
 
-            document.getElementById('leversContainer').innerHTML = gridHtml || '<p style="color:#666;">No dynamic levers discovered for this event timeline yet.</p>';
+            document.getElementById('leversContainer').innerHTML = gridHtml || '<p style="color:#666;">No catalyst modules found matching this record.</p>';
             document.getElementById('popupMasterStack').innerHTML = modalHtml;
 
             document.getElementById('mainHeader').style.display = 'none';
