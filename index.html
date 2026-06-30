@@ -240,7 +240,7 @@
         }
 
         .lever-card {
-            background: #faf9f6; /* Subtle parchment tone */
+            background: #faf9f6; /* Parchment tone */
             border: 1px solid #e2dfd9;
             padding: 24px;
             border-radius: 10px;
@@ -253,7 +253,6 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
-        /* Stamp Badge Look */
         .lever-badge {
             font-family: "Courier New", Courier, monospace;
             font-size: 0.9rem;
@@ -281,17 +280,15 @@
             margin: 0;
             line-height: 1.4;
             
-            /* Gradient background setup for the text */
             background: linear-gradient(to right, #2c3531 0%, #2c3531 50%, var(--accent-color) 100%);
             background-size: 200% 100%;
             background-position: 100% 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: #666; /* Fallback */
+            color: #666;
             transition: background-position 0.4s ease;
         }
 
-        /* Hover Board Lift & Micro-Hook Trigger State */
         .lever-card:hover {
             transform: translateY(-4px);
             background-color: #ffffff;
@@ -300,7 +297,7 @@
         }
 
         .lever-card:hover .lever-hook {
-            background-position: 0 0; /* Smoothly sweeps gradient left-to-right */
+            background-position: 0 0;
         }
 
         /* Popups styling */
@@ -413,7 +410,7 @@
 
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
-        const SHEET2_GID = '714083378'; 
+        const SHEET2_GID = '714083378'; // Safely integrated your verified Sheet2 identification tag
 
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
@@ -450,13 +447,14 @@
                     const cId = row.c[0] ? row.c[0].v : '';
                     if (!cId || cId.toString().toLowerCase().trim() === 'chapter_id') return;
 
+                    // DEFENSIVE FIX: Automatically maps missing or empty cells safely without breaking the script pipeline
                     globalLevers.push({
                         chapterId: cId,
-                        linkText: row.c[1] ? row.c[1].v : '',
-                        popTitle: row.c[2] ? row.c[2].v : '',
-                        popImg: row.c[3] ? row.c[3].v : '',
-                        popBody: row.c[4] ? row.c[4].v : '',
-                        popHook: row.c[5] ? row.c[5].v : '' // Maps dynamically to Column F hook text data
+                        linkText: (row.c[1] && row.c[1].v) ? row.c[1].v : '',
+                        popTitle: (row.c[2] && row.c[2].v) ? row.c[2].v : '',
+                        popImg: (row.c[3] && row.c[3].v) ? row.c[3].v : '',
+                        popBody: (row.c[4] && row.c[4].v) ? row.c[4].v : '',
+                        popHook: (row.c[5] && row.c[5].v) ? row.c[5].v : '' 
                     });
                 });
 
@@ -505,7 +503,7 @@
 
             const mapFrame = document.getElementById('mapFrameContainer');
             if (ch.readerImg) {
-                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" alt="Historical Map Content">`;
+                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" alt="Historical Map Context">`;
                 mapFrame.style.display = 'block';
             } else {
                 mapFrame.innerHTML = '';
@@ -519,12 +517,47 @@
 
             matchedLevers.forEach((lev, idx) => {
                 const uniqueId = `modal-${id}-${idx}`;
-                
-                // Formats incremental numerical digits into double characters safely (e.g., 01, 02)
                 const sequenceNum = String(idx + 1).padStart(2, '0');
                 const hookText = lev.popHook ? `"${lev.popHook}"` : '';
 
-                // Investigation board document snippet card structure mapping
                 gridHtml += `
                     <div class="lever-card" onclick="document.getElementById('${uniqueId}').showModal()">
-                        <div class="lever-badge">[ ${sequenceNum} ]
+                        <div class="lever-badge">[ ${sequenceNum} ]</div>
+                        <h4 class="lever-title">${lev.linkText}</h4>
+                        <p class="lever-hook">${hookText}</p>
+                    </div>
+                `;
+
+                let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Illustration">` : '';
+                
+                modalHtml += `
+                    <dialog id="${uniqueId}">
+                        ${modalImgHtml}
+                        <div class="popup-content-box">
+                            <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
+                            <h3 class="popup-title">${lev.popTitle}</h3>
+                            <p style="margin:0; font-size:1.05rem; line-height:1.5; color:#333;">${lev.popBody}</p>
+                        </div>
+                    </dialog>
+                `;
+            });
+
+            document.getElementById('leversContainer').innerHTML = gridHtml || '<p style="color:#666;">No dynamic puzzle pieces discovered for this timeline yet.</p>';
+            document.getElementById('popupMasterStack').innerHTML = modalHtml;
+
+            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('dashboardScreen').style.display = 'none';
+            document.getElementById('readerScreen').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function showDashboardView() {
+            document.getElementById('mainHeader').style.display = 'block';
+            document.getElementById('dashboardScreen').style.display = 'grid';
+            document.getElementById('readerScreen').style.display = 'none';
+        }
+
+        window.onload = initSystem;
+    </script>
+</body>
+</html>
