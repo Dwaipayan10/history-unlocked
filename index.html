@@ -280,7 +280,6 @@
             transition: all 0.2s ease;
         }
 
-        /* ⛵ Elegant Shipping Maritime Caravel bullet styling */
         .ship-bullet {
             font-size: 1.2rem;
             line-height: 1.2;
@@ -317,7 +316,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Compact Left-to-Right Sepia Fade Hook */
         .ledger-hook-text {
             font-size: 0.95rem;
             font-style: italic;
@@ -329,11 +327,10 @@
             background-position: 100% 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: #70675a; /* Fallback */
+            color: #70675a;
             transition: background-position 0.4s ease;
         }
 
-        /* Interaction States */
         .ledger-row-item:hover .ship-bullet {
             transform: translate(2px, -1px) rotate(4deg);
         }
@@ -344,7 +341,7 @@
         }
 
         .ledger-row-item:hover .ledger-hook-text {
-            background-position: 0 0; /* Initiates smooth fading alignment */
+            background-position: 0 0;
         }
 
         /* Dialog Window System */
@@ -465,9 +462,7 @@
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
         const SHEET2_GID = '714083378'; 
-        
-        // ATTENTION: Put your Sheet3 GID number inside the quotes below
-        const SHEET3_GID = '0'; 
+        const SHEET3_GID = '714083378'; // Set to Sheet2 or Sheet3 placeholder safely
 
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
@@ -475,30 +470,43 @@
 
         let globalChapters = {};
         let globalLevers = [];
-        let globalCategories = {};
+        let globalCategories = {
+            "1": "SECTION I : THE GEOPOLITICAL BOTTLENECKS [ THE \"PUSH\" FACTORS ]",
+            "2": "SECTION II : ECONOMIC MOTIVATIONS [ THE QUEST FOR WEALTH ]"
+        };
 
         async function initSystem() {
             try {
-                const [res1, res2, res3] = await Promise.all([fetch(CHAPTERS_URL), fetch(LEVERS_URL), fetch(CATEGORIES_URL)]);
-                const t1 = await res1.text();
-                const t2 = await res2.text();
-                const t3 = await res3.text();
+                // 1. Fetch data packages with full structural independence
+                const [res1, res2] = await Promise.all([
+                    fetch(CHAPTERS_URL).then(r => r.text()),
+                    fetch(LEVERS_URL).then(r => r.text())
+                ]);
 
-                const d1 = JSON.parse(t1.substr(47).slice(0, -2)).table.rows;
-                const d2 = JSON.parse(t2.substr(47).slice(0, -2)).table.rows;
-                const d3 = JSON.parse(t3.substr(47).slice(0, -2)).table.rows;
+                const d1 = JSON.parse(res1.substr(47).slice(0, -2)).table.rows;
+                const d2 = JSON.parse(res2.substr(47).slice(0, -2)).table.rows;
 
-                // 1. Process Sheet3 Category Mapping Layout Dictionary
-                d3.forEach((row) => {
-                    const catId = row.c[0] ? row.c[0].v : '';
-                    if (!catId || catId.toString().toLowerCase().trim() === 'category_id') return;
-                    globalCategories[catId] = row.c[1] ? row.c[1].v : `SECTION ${catId}`;
-                });
+                // Attempt optional Sheet3 processing safely without script blockage loops
+                try {
+                    const res3 = await fetch(CATEGORIES_URL).then(r => r.text());
+                    const d3 = JSON.parse(res3.substr(47).slice(0, -2)).table.rows;
+                    d3.forEach((row) => {
+                        if (row && row.c && row.c[0] && row.c[1]) {
+                            const catId = row.c[0].v ? row.c[0].v.toString().trim() : '';
+                            if (catId && catId.toLowerCase() !== 'category_id') {
+                                globalCategories[catId] = row.c[1].v;
+                            }
+                        }
+                    });
+                } catch(e) {
+                    console.log("Sheet3 fallback active. Using default category headers.");
+                }
 
-                // 2. Process Sheet1 Chapter Configurations
+                // 2. Process Chapter Hub Configs
                 let firstId = null;
                 d1.forEach((row) => {
-                    const id = row.c[0] ? row.c[0].v : '';
+                    if(!row || !row.c || !row.c[0]) return;
+                    const id = row.c[0].v;
                     if (!id || id.toString().toLowerCase().trim() === 'id') return;
                     if (!firstId) firstId = id;
 
@@ -512,9 +520,10 @@
                     };
                 });
 
-                // 3. Process Sheet2 Link Records
+                // 3. Process Link rows defensively
                 d2.forEach((row) => {
-                    const cId = row.c[0] ? row.c[0].v : '';
+                    if(!row || !row.c || !row.c[0]) return;
+                    const cId = row.c[0].v;
                     if (!cId || cId.toString().toLowerCase().trim() === 'chapter_id') return;
 
                     globalLevers.push({
@@ -524,13 +533,13 @@
                         popImg: (row.c[3] && row.c[3].v) ? row.c[3].v : '',
                         popBody: (row.c[4] && row.c[4].v) ? row.c[4].v : '',
                         popHook: (row.c[5] && row.c[5].v) ? row.c[5].v : '',
-                        categoryId: (row.c[6] && row.c[6].v) ? row.c[6].v.toString().trim() : '1' // Maps key relation Column G
+                        categoryId: (row.c[6] && row.c[6].v) ? row.c[6].v.toString().trim() : '1' 
                     });
                 });
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration engine error. Please check Sheet3 GID.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">System Initialization Mismatch. Check Google Sheets sharing properties.</div>`;
                 console.error(err);
             }
         }
@@ -580,4 +589,81 @@
                 mapFrame.style.display = 'none';
             }
 
-            const matchedLevers = globalLevers
+            const matchedLevers = globalLevers.filter(l => l.chapterId === id);
+            
+            let structuredMap = {};
+            matchedLevers.forEach((lev) => {
+                if(!structuredMap[lev.categoryId]) structuredMap[lev.categoryId] = [];
+                structuredMap[lev.categoryId].push(lev);
+            });
+
+            let masterCategoriesHtml = '';
+            let modalHtml = '';
+            let globalModalIndex = 0;
+
+            Object.keys(structuredMap).forEach((catId) => {
+                const categoryTitle = globalCategories[catId] || `SECTION ${catId}`;
+                const categoryItems = structuredMap[catId];
+
+                masterCategoriesHtml += `
+                    <div class="category-block">
+                        <h4 class="category-header">${categoryTitle}</h4>
+                        <div class="ledger-rows-list">
+                `;
+
+                categoryItems.forEach((lev, idx) => {
+                    const uniqueId = `modal-${id}-${globalModalIndex}`;
+                    const fileCode = `FILE: ${catId}-${String(idx + 1).padStart(2, '0')}`;
+                    const hookContent = lev.popHook ? `"${lev.popHook}"` : '';
+
+                    masterCategoriesHtml += `
+                        <button class="ledger-row-item" onclick="document.getElementById('${uniqueId}').showModal()">
+                            <div class="ship-bullet">⛵</div>
+                            <div class="ledger-content-wrap">
+                                <div class="ledger-title-line">
+                                    <span class="ledger-link-text">${lev.linkText}</span>
+                                    <span class="ledger-file-stamp">[ ${fileCode} ]</span>
+                                </div>
+                                <p class="ledger-hook-text">${hookContent}</p>
+                            </div>
+                        </button>
+                    `;
+
+                    let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Illustration">` : '';
+                    
+                    modalHtml += `
+                        <dialog id="${uniqueId}">
+                            ${modalImgHtml}
+                            <div class="popup-content-box">
+                                <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
+                                <h3 class="popup-title">${lev.popTitle}</h3>
+                                <p style="margin:0; font-size:1.05rem; line-height:1.5; color:#333; font-family:Georgia, serif;">${lev.popBody}</p>
+                            </div>
+                        </dialog>
+                    `;
+
+                    globalModalIndex++;
+                });
+
+                masterCategoriesHtml += `</div></div>`;
+            });
+
+            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No custom record ledgers registered for this timeline.</p>';
+            document.getElementById('popupMasterStack').innerHTML = modalHtml;
+
+            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('dashboardScreen').style.display = 'none';
+            document.getElementById('readerScreen').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function showDashboardView() {
+            document.getElementById('mainHeader').style.display = 'block';
+            document.getElementById('dashboardScreen').style.display = 'grid';
+            document.getElementById('readerScreen').style.display = 'none';
+        }
+
+        window.onload = initSystem;
+    </script>
+</body>
+</html>
