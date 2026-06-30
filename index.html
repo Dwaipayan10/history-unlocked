@@ -166,13 +166,12 @@
             text-align: center;
         }
 
-        /* Fixed Heights Split Layout matching both components together */
         .split-reader-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin-bottom: 40px;
-            height: 450px; /* Rigid container footprint balancing panels */
+            height: 450px;
         }
 
         .map-viewer-frame {
@@ -188,17 +187,15 @@
             width: 100%;
             height: 100%;
             display: block;
-            object-fit: cover; /* Fully crops map elements into crisp view window boundaries */
+            object-fit: cover;
         }
 
-        /* Right Scrollbar Workspace Wrapper */
         .text-content-frame {
             height: 100%;
-            overflow-y: auto; /* Activates seamless scroll actions */
+            overflow-y: auto;
             padding-right: 15px;
         }
 
-        /* Custom subtle scrollbar styling */
         .text-content-frame::-webkit-scrollbar {
             width: 6px;
         }
@@ -234,32 +231,76 @@
             font-size: 0.85rem;
         }
 
-        /* Levers Cards Grid */
+        /* Format 1: Investigation Board Grid Styles */
         .levers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            counter-reset: badge-counter;
         }
 
         .lever-card {
-            background: var(--bg-color);
-            border: 1px solid #e6e4de;
-            padding: 20px;
-            border-radius: 8px;
+            background: #faf9f6; /* Subtle parchment tone */
+            border: 1px solid #e2dfd9;
+            padding: 24px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
+        /* Stamp Badge Look */
+        .lever-badge {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            background: rgba(90, 120, 107, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            align-self: flex-start;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .lever-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        /* Animated Left-to-Right Reveal Hook Styles */
+        .lever-hook {
+            font-size: 0.95rem;
+            font-style: italic;
+            margin: 0;
+            line-height: 1.4;
+            
+            /* Gradient background setup for the text */
+            background: linear-gradient(to right, #2c3531 0%, #2c3531 50%, var(--accent-color) 100%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #666; /* Fallback */
+            transition: background-position 0.4s ease;
+        }
+
+        /* Hover Board Lift & Micro-Hook Trigger State */
         .lever-card:hover {
-            transform: translateY(-2px);
-            background-color: var(--card-bg);
-            border-color: var(--accent-color);
-            box-shadow: 0 4px 12px rgba(90, 120, 107, 0.1);
+            transform: translateY(-4px);
+            background-color: #ffffff;
+            border-color: #b0aba0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .lever-card:hover .lever-hook {
+            background-position: 0 0; /* Smoothly sweeps gradient left-to-right */
         }
 
         /* Popups styling */
@@ -361,7 +402,7 @@
             </div>
 
             <div class="section-divider">
-                <span>EXPLORE THE HIDDEN LEVERS OF THIS ERA</span>
+                <span>PIECES OF THE PUZZLE: THE CATALYSTS</span>
             </div>
 
             <div class="levers-grid" id="leversContainer"></div>
@@ -414,13 +455,14 @@
                         linkText: row.c[1] ? row.c[1].v : '',
                         popTitle: row.c[2] ? row.c[2].v : '',
                         popImg: row.c[3] ? row.c[3].v : '',
-                        popBody: row.c[4] ? row.c[4].v : ''
+                        popBody: row.c[4] ? row.c[4].v : '',
+                        popHook: row.c[5] ? row.c[5].v : '' // Maps dynamically to Column F hook text data
                     });
                 });
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration error. Please check your database settings.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration engine error. Please check sharing parameters.</div>`;
                 console.error(err);
             }
         }
@@ -463,7 +505,7 @@
 
             const mapFrame = document.getElementById('mapFrameContainer');
             if (ch.readerImg) {
-                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" alt="Historical Map Context">`;
+                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" alt="Historical Map Content">`;
                 mapFrame.style.display = 'block';
             } else {
                 mapFrame.innerHTML = '';
@@ -478,42 +520,11 @@
             matchedLevers.forEach((lev, idx) => {
                 const uniqueId = `modal-${id}-${idx}`;
                 
+                // Formats incremental numerical digits into double characters safely (e.g., 01, 02)
+                const sequenceNum = String(idx + 1).padStart(2, '0');
+                const hookText = lev.popHook ? `"${lev.popHook}"` : '';
+
+                // Investigation board document snippet card structure mapping
                 gridHtml += `
                     <div class="lever-card" onclick="document.getElementById('${uniqueId}').showModal()">
-                        <span>🔍</span> <span>${lev.linkText}</span>
-                    </div>
-                `;
-
-                let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Illustration">` : '';
-                
-                modalHtml += `
-                    <dialog id="${uniqueId}">
-                        ${modalImgHtml}
-                        <div class="popup-content-box">
-                            <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
-                            <h3 class="popup-title">${lev.popTitle}</h3>
-                            <p style="margin:0; font-size:1.05rem; line-height:1.5; color:#333;">${lev.popBody}</p>
-                        </div>
-                    </dialog>
-                `;
-            });
-
-            document.getElementById('leversContainer').innerHTML = gridHtml || '<p style="color:#666;">No catalyst modules found matching this record.</p>';
-            document.getElementById('popupMasterStack').innerHTML = modalHtml;
-
-            document.getElementById('mainHeader').style.display = 'none';
-            document.getElementById('dashboardScreen').style.display = 'none';
-            document.getElementById('readerScreen').style.display = 'block';
-            window.scrollTo(0,0);
-        }
-
-        function showDashboardView() {
-            document.getElementById('mainHeader').style.display = 'block';
-            document.getElementById('dashboardScreen').style.display = 'grid';
-            document.getElementById('readerScreen').style.display = 'none';
-        }
-
-        window.onload = initSystem;
-    </script>
-</body>
-</html>
+                        <div class="lever-badge">[ ${sequenceNum} ]
