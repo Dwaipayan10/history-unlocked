@@ -6,15 +6,16 @@
     <title>Backstory - The Hidden Levers</title>
     <style>
         :root {
-            --bg-color: #f7f6f2;
+            --bg-color: #f4f0e6; /* Antique Ledger Parchment Background */
             --text-color: #2c3531;
-            --accent-color: #5a786b; /* Soothing Sage Green */
+            --accent-color: #5a786b; /* Sepia/Sage Ink Green */
             --card-bg: #ffffff;
-            --card-hover: rgba(90, 120, 107, 0.08);
+            --card-hover: rgba(90, 120, 107, 0.05);
+            --ink-dark: #1b201e;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif;
+            font-family: Georgia, "Times New Roman", Times, serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -25,7 +26,7 @@
         .top-bar {
             max-width: 900px;
             margin: 0 auto 30px auto;
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 2px double var(--accent-color);
             padding-bottom: 20px;
         }
 
@@ -37,39 +38,43 @@
         }
 
         .site-title {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             margin: 0;
             font-weight: bold;
-            color: var(--text-color);
+            color: var(--ink-dark);
+            letter-spacing: 0.5px;
         }
 
         .author-name {
             font-size: 0.85rem;
-            color: #777;
+            color: #665f55;
             font-weight: 500;
-            letter-spacing: 0.5px;
-            margin-top: 12px;
+            letter-spacing: 1px;
+            margin-top: 14px;
+            text-transform: uppercase;
         }
 
         .site-description {
             font-size: 1.05rem;
-            color: #555;
+            color: #4a4339;
             margin: 0;
             max-width: 700px;
             line-height: 1.5;
+            font-style: italic;
         }
 
         .back-btn {
             background: none;
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 6px 14px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.2s;
             margin-bottom: 20px;
             display: inline-block;
+            font-family: inherit;
         }
 
         .back-btn:hover {
@@ -101,19 +106,20 @@
             text-align: left;
             background: none;
             border: none;
-            padding: 14px 18px;
+            padding: 12px 14px;
             margin-bottom: 10px;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 1.05rem;
             color: var(--text-color);
             transition: all 0.2s;
             font-weight: 600;
-            border-left: 4px solid transparent;
+            border-left: 3px solid transparent;
+            font-family: inherit;
         }
 
         .chapter-btn:hover, .chapter-btn.active {
-            background-color: var(--card-hover);
+            background-color: rgba(90, 120, 107, 0.08);
             color: var(--accent-color);
             border-left-color: var(--accent-color);
         }
@@ -121,16 +127,17 @@
         .preview-pane {
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border-radius: 6px;
+            border: 1px dashed #dcd6cd;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.01);
             text-align: center;
         }
 
         .preview-image {
             width: 100%;
-            max-height: 380px;
+            max-height: 360px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 4px;
             margin-top: 15px;
         }
 
@@ -139,31 +146,36 @@
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 12px 28px;
+            padding: 10px 24px;
             font-size: 1rem;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             transition: opacity 0.2s;
+            font-family: inherit;
         }
 
         .explore-trigger-btn:hover {
             opacity: 0.9;
         }
 
-        /* View 2: Immersive Reader Workspace */
+        /* View 2: Immersive Archival Reader Workspace */
         .reader-layout {
             display: none; 
             background: var(--card-bg);
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.02);
+            border-radius: 8px;
+            border: 1px double #8c8275;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
 
         .reader-header {
             font-size: 2.2rem;
             margin: 5px 0 20px 0;
             text-align: center;
+            color: var(--ink-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .split-reader-grid {
@@ -177,9 +189,9 @@
         .map-viewer-frame {
             width: 100%;
             height: 100%;
-            border-radius: 8px;
+            border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border: 1px solid #dcd6cd;
             background: #fbfbfa;
         }
 
@@ -197,168 +209,210 @@
         }
 
         .text-content-frame::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
         .text-content-frame::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.02);
-            border-radius: 10px;
+            background: rgba(0,0,0,0.01);
         }
         .text-content-frame::-webkit-scrollbar-thumb {
-            background: rgba(90, 120, 107, 0.3);
-            border-radius: 10px;
+            background: rgba(90, 120, 107, 0.2);
+            border-radius: 4px;
         }
 
         .reader-body {
-            font-size: 1.15rem;
-            color: #3e4743;
+            font-size: 1.1rem;
+            color: #3e372e;
             margin: 0;
             white-space: pre-wrap;
+            text-align: justify;
         }
 
         .section-divider {
             text-align: center;
-            border-bottom: 1px solid #e0dddb;
+            border-bottom: 1px double #8c8275;
             line-height: 0.1em;
             margin: 40px 0;
         }
 
         .section-divider span {
             background: var(--card-bg);
-            padding: 0 15px;
-            color: var(--accent-color);
+            padding: 0 20px;
+            color: var(--ink-dark);
             font-weight: bold;
-            letter-spacing: 1.5px;
-            font-size: 0.85rem;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
         }
 
-        /* Format 1: Investigation Board Grid Styles */
-        .levers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            counter-reset: badge-counter;
+        /* Dynamic Category Archive Ledger Layout Styles */
+        .category-block {
+            margin-bottom: 35px;
         }
 
-        .lever-card {
-            background: #faf9f6; /* Parchment tone */
-            border: 1px solid #e2dfd9;
-            padding: 24px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
+        .category-header {
+            font-family: inherit;
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            border-bottom: 1px solid #e0d9cd;
+            padding-bottom: 6px;
+            margin: 0 0 15px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .ledger-rows-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            gap: 16px;
         }
 
-        .lever-badge {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.9rem;
-            font-weight: bold;
+        .ledger-row-item {
+            background: none;
+            border: none;
+            padding: 4px 0;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: 32px 1fr;
+            align-items: start;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        /* ⛵ Elegant Shipping Maritime Caravel bullet styling */
+        .ship-bullet {
+            font-size: 1.2rem;
+            line-height: 1.2;
             color: var(--accent-color);
-            background: rgba(90, 120, 107, 0.1);
-            padding: 3px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            align-self: flex-start;
-            border: 1px dashed var(--accent-color);
+            transition: transform 0.3s ease;
         }
 
-        .lever-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin: 0;
-            color: var(--text-color);
+        .ledger-content-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
-        /* Animated Left-to-Right Reveal Hook Styles */
-        .lever-hook {
+        .ledger-title-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .ledger-link-text {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--ink-dark);
+            text-decoration: underline dashed rgba(90, 120, 107, 0.4);
+            text-underline-offset: 3px;
+        }
+
+        .ledger-file-stamp {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.8rem;
+            color: #8c8275;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        /* Compact Left-to-Right Sepia Fade Hook */
+        .ledger-hook-text {
             font-size: 0.95rem;
             font-style: italic;
-            margin: 0;
+            margin: 4px 0 0 0;
             line-height: 1.4;
             
-            background: linear-gradient(to right, #2c3531 0%, #2c3531 50%, var(--accent-color) 100%);
+            background: linear-gradient(to right, #4a4339 0%, #4a4339 50%, var(--accent-color) 100%);
             background-size: 200% 100%;
             background-position: 100% 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: #666;
+            color: #70675a; /* Fallback */
             transition: background-position 0.4s ease;
         }
 
-        .lever-card:hover {
-            transform: translateY(-4px);
-            background-color: #ffffff;
-            border-color: #b0aba0;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        /* Interaction States */
+        .ledger-row-item:hover .ship-bullet {
+            transform: translate(2px, -1px) rotate(4deg);
         }
 
-        .lever-card:hover .lever-hook {
-            background-position: 0 0;
+        .ledger-row-item:hover .ledger-link-text {
+            color: var(--accent-color);
+            text-decoration-style: solid;
         }
 
-        /* Popups styling */
+        .ledger-row-item:hover .ledger-hook-text {
+            background-position: 0 0; /* Initiates smooth fading alignment */
+        }
+
+        /* Dialog Window System */
         dialog {
-            border: none;
-            border-radius: 12px;
+            border: 1px solid #8c8275;
+            border-radius: 6px;
             padding: 0;
             width: 90%;
-            max-width: 550px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            max-width: 520px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             background: #ffffff;
             overflow: hidden;
         }
 
         dialog::backdrop {
-            background: rgba(44, 53, 49, 0.5);
-            backdrop-filter: blur(5px);
+            background: rgba(30, 28, 25, 0.4);
+            backdrop-filter: blur(3px);
         }
 
         .popup-img {
             width: 100%;
-            max-height: 240px;
+            max-height: 230px;
             object-fit: cover;
             display: block;
+            border-bottom: 1px solid #e0d9cd;
         }
 
         .popup-content-box {
-            padding: 30px;
+            padding: 25px;
             position: relative;
+            background: #fdfcf9;
         }
 
         .close-x {
             position: absolute;
-            top: -210px; 
+            top: -200px; 
             right: 15px;
-            background: rgba(255, 255, 255, 0.8);
-            border: none;
-            font-size: 1.4rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ccc;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #333;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .popup-title {
+            font-size: 1.3rem;
+            margin: 0 0 12px 0;
+            color: var(--ink-dark);
         }
 
         .loading-msg {
             text-align: center;
             font-size: 1.2rem;
             padding: 50px 0;
-            color: #666;
+            color: #777;
         }
 
         @media (max-width: 750px) {
             .dashboard-layout { grid-template-columns: 1fr; }
             .split-reader-grid { grid-template-columns: 1fr; height: auto; }
-            .map-viewer-frame { height: 300px; }
+            .map-viewer-frame { height: 280px; }
             .text-content-frame { height: auto; padding-right: 0; }
             .header-row { flex-direction: column; }
             .author-name { margin-top: 5px; }
@@ -381,7 +435,7 @@
                 <ul class="chapter-list" id="menuContainer"></ul>
             </nav>
             <main class="preview-pane" id="previewContainer">
-                <div class="loading-msg">Loading history engine...</div>
+                <div class="loading-msg">Loading archive database...</div>
             </main>
         </div>
 
@@ -399,10 +453,10 @@
             </div>
 
             <div class="section-divider">
-                <span>PIECES OF THE PUZZLE: THE CATALYSTS</span>
+                <span>THE CATALYSTS: PIECES OF THE PUZZLE</span>
             </div>
 
-            <div class="levers-grid" id="leversContainer"></div>
+            <div id="categoriesMasterContainer"></div>
         </div>
     </div>
 
@@ -410,23 +464,38 @@
 
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
-        const SHEET2_GID = '714083378'; // Safely integrated your verified Sheet2 identification tag
+        const SHEET2_GID = '714083378'; 
+        
+        // ATTENTION: Put your Sheet3 GID number inside the quotes below
+        const SHEET3_GID = '0'; 
 
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
+        const CATEGORIES_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET3_GID}`;
 
         let globalChapters = {};
         let globalLevers = [];
+        let globalCategories = {};
 
         async function initSystem() {
             try {
-                const [res1, res2] = await Promise.all([fetch(CHAPTERS_URL), fetch(LEVERS_URL)]);
+                const [res1, res2, res3] = await Promise.all([fetch(CHAPTERS_URL), fetch(LEVERS_URL), fetch(CATEGORIES_URL)]);
                 const t1 = await res1.text();
                 const t2 = await res2.text();
+                const t3 = await res3.text();
 
                 const d1 = JSON.parse(t1.substr(47).slice(0, -2)).table.rows;
                 const d2 = JSON.parse(t2.substr(47).slice(0, -2)).table.rows;
+                const d3 = JSON.parse(t3.substr(47).slice(0, -2)).table.rows;
 
+                // 1. Process Sheet3 Category Mapping Layout Dictionary
+                d3.forEach((row) => {
+                    const catId = row.c[0] ? row.c[0].v : '';
+                    if (!catId || catId.toString().toLowerCase().trim() === 'category_id') return;
+                    globalCategories[catId] = row.c[1] ? row.c[1].v : `SECTION ${catId}`;
+                });
+
+                // 2. Process Sheet1 Chapter Configurations
                 let firstId = null;
                 d1.forEach((row) => {
                     const id = row.c[0] ? row.c[0].v : '';
@@ -443,24 +512,25 @@
                     };
                 });
 
+                // 3. Process Sheet2 Link Records
                 d2.forEach((row) => {
                     const cId = row.c[0] ? row.c[0].v : '';
                     if (!cId || cId.toString().toLowerCase().trim() === 'chapter_id') return;
 
-                    // DEFENSIVE FIX: Automatically maps missing or empty cells safely without breaking the script pipeline
                     globalLevers.push({
                         chapterId: cId,
                         linkText: (row.c[1] && row.c[1].v) ? row.c[1].v : '',
                         popTitle: (row.c[2] && row.c[2].v) ? row.c[2].v : '',
                         popImg: (row.c[3] && row.c[3].v) ? row.c[3].v : '',
                         popBody: (row.c[4] && row.c[4].v) ? row.c[4].v : '',
-                        popHook: (row.c[5] && row.c[5].v) ? row.c[5].v : '' 
+                        popHook: (row.c[5] && row.c[5].v) ? row.c[5].v : '',
+                        categoryId: (row.c[6] && row.c[6].v) ? row.c[6].v.toString().trim() : '1' // Maps key relation Column G
                     });
                 });
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration engine error. Please check sharing parameters.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Configuration engine error. Please check Sheet3 GID.</div>`;
                 console.error(err);
             }
         }
@@ -510,54 +580,4 @@
                 mapFrame.style.display = 'none';
             }
 
-            const matchedLevers = globalLevers.filter(l => l.chapterId === id);
-            
-            let gridHtml = '';
-            let modalHtml = '';
-
-            matchedLevers.forEach((lev, idx) => {
-                const uniqueId = `modal-${id}-${idx}`;
-                const sequenceNum = String(idx + 1).padStart(2, '0');
-                const hookText = lev.popHook ? `"${lev.popHook}"` : '';
-
-                gridHtml += `
-                    <div class="lever-card" onclick="document.getElementById('${uniqueId}').showModal()">
-                        <div class="lever-badge">[ ${sequenceNum} ]</div>
-                        <h4 class="lever-title">${lev.linkText}</h4>
-                        <p class="lever-hook">${hookText}</p>
-                    </div>
-                `;
-
-                let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Illustration">` : '';
-                
-                modalHtml += `
-                    <dialog id="${uniqueId}">
-                        ${modalImgHtml}
-                        <div class="popup-content-box">
-                            <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
-                            <h3 class="popup-title">${lev.popTitle}</h3>
-                            <p style="margin:0; font-size:1.05rem; line-height:1.5; color:#333;">${lev.popBody}</p>
-                        </div>
-                    </dialog>
-                `;
-            });
-
-            document.getElementById('leversContainer').innerHTML = gridHtml || '<p style="color:#666;">No dynamic puzzle pieces discovered for this timeline yet.</p>';
-            document.getElementById('popupMasterStack').innerHTML = modalHtml;
-
-            document.getElementById('mainHeader').style.display = 'none';
-            document.getElementById('dashboardScreen').style.display = 'none';
-            document.getElementById('readerScreen').style.display = 'block';
-            window.scrollTo(0,0);
-        }
-
-        function showDashboardView() {
-            document.getElementById('mainHeader').style.display = 'block';
-            document.getElementById('dashboardScreen').style.display = 'grid';
-            document.getElementById('readerScreen').style.display = 'none';
-        }
-
-        window.onload = initSystem;
-    </script>
-</body>
-</html>
+            const matchedLevers = globalLevers
