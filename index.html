@@ -6,45 +6,46 @@
     <title>Backstory - The Hidden Levers</title>
     <style>
         :root {
-            --bg-color: #2b221a; /* Dark, rich old leather desk background */
-            --text-color: #3d3123; /* Stained Walnut/Sepia Ink */
-            --accent-color: #4a5c51; /* Muted Maritime Navy Green */
-            --paper-bg: #eaddbd; /* Base ancient paper tan */
-            --ink-dark: #1f1812;
-            --burn-shadow: rgba(43, 26, 11, 0.45);
+            --bg-color: #1e1610; /* Heavy, dark mahogany desk backdrop */
+            --text-color: #2b1f14; /* Deep oxidized walnut ink */
+            --accent-color: #384d41; /* Antique faded iron-gall green */
+            --paper-bg: #dfd2b5; /* Richly stained, golden-era parchment base */
+            --ink-dark: #120d09;
+            --charcoal-burn: rgba(28, 15, 6, 0.75);
         }
 
-        /* 📜 Weathered Scroll & Archival Ledger CSS Architecture */
+        /* 📜 HIGH-CONTRAST ANTIQUE SCROLL TEXTURE AND LAYERING */
         html, body {
             background-color: var(--bg-color);
-            /* SVG Texturing: Adds dynamic, organic mottled fiber grain directly to the canvas base */
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3联%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+            /* Dynamic fine-fiber mesh overlay applied across the desk view */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='mesh'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mesh)' opacity='0.25'/%3E%3C/svg%3E");
             margin: 0;
             padding: 0;
             min-height: 100vh;
             font-family: Georgia, "Times New Roman", Times, serif;
         }
 
-        /* TORN SCROLL CONTAINER: Creates organic, irregular paper cuts and burns */
+        /* REALISTIC ASYMMETRICAL TORN SCROLL CORE CONTAINER */
         .scroll-wrapper-canvas {
             max-width: 1000px;
             margin: 40px auto;
             background-color: var(--paper-bg);
-            /* Double-staining paper textures layered over the main content area */
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
+            /* Heavy mottled staining patterns injected beneath the textual paths */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyStain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyStain)'/%3E%3C/svg%3E");
             padding: 50px;
             position: relative;
             box-sizing: border-box;
             
-            /* Asymmetric warping creates irregular, frayed torn outlines on the paper edge */
-            border-radius: 98% 4% 94% 6% / 5% 94% 6% 95%;
-            border: 1px solid #baa27e;
+            /* Sharp, distinct asymmetrical border radii values creating frayed edges */
+            border-radius: 95% 6% 92% 8% / 6% 95% 5% 94%;
+            border: 2px solid #a38c6b;
             
-            /* Multi-layer shadow structure: handles external drop shadow + heavy corner charcoal burns */
+            /* HIGH-CONTRAST SHADOW COMPLEX: Replicates heavy scorched paper drop edges */
             box-shadow: 
-                inset 0 0 60px var(--burn-shadow),
-                inset 0 0 20px rgba(0,0,0,0.3),
-                5px 12px 30px rgba(0, 0, 0, 0.6);
+                inset 0 0 80px var(--charcoal-burn),
+                inset 0 0 40px rgba(0, 0, 0, 0.4),
+                inset 30px 30px 100px rgba(45, 27, 12, 0.3),
+                6px 18px 45px rgba(0, 0, 0, 0.75);
         }
 
         .top-bar {
@@ -67,12 +68,12 @@
             color: var(--ink-dark);
             letter-spacing: 1px;
             text-transform: uppercase;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
         }
 
         .author-name {
             font-size: 0.85rem;
-            color: #594a3a;
+            color: #4f3925;
             font-weight: 500;
             letter-spacing: 1.5px;
             margin-top: 18px;
@@ -81,7 +82,7 @@
 
         .site-description {
             font-size: 1.1rem;
-            color: #4f3f30;
+            color: #403023;
             margin: 0;
             max-width: 750px;
             line-height: 1.6;
@@ -107,7 +108,7 @@
             color: var(--paper-bg);
         }
 
-        /* View 1: Dashboard Hub Grid Layout */
+        /* View 1: Dashboard Layout */
         .dashboard-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -139,18 +140,18 @@
         }
 
         .chapter-btn:hover, .chapter-btn.active {
-            background-color: rgba(74, 92, 81, 0.12);
+            background-color: rgba(56, 77, 65, 0.15);
             color: var(--accent-color);
             border-left-color: var(--accent-color);
         }
 
         .preview-pane {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.15);
             padding: 30px;
             border-radius: 6px;
-            border: 1px dashed #baa27e;
+            border: 1px dashed #a38c6b;
             text-align: center;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.03);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
         }
 
         .preview-image {
@@ -159,14 +160,14 @@
             object-fit: cover;
             border-radius: 4px;
             margin-top: 15px;
-            border: 1px solid #baa27e;
-            filter: sepia(0.15) contrast(0.95);
+            border: 1px solid #a38c6b;
+            filter: sepia(0.25) contrast(0.9);
         }
 
         .explore-trigger-btn {
             margin-top: 25px;
             background-color: var(--accent-color);
-            color: #fcfaf5;
+            color: #fffdec;
             border: none;
             padding: 12px 28px;
             font-size: 1.05rem;
@@ -175,14 +176,14 @@
             cursor: pointer;
             transition: opacity 0.2s;
             font-family: inherit;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
 
         .explore-trigger-btn:hover {
             opacity: 0.9;
         }
 
-        /* View 2: Reader Workspace Component */
+        /* View 2: Reader Layout Canvas */
         .reader-layout {
             display: none; 
         }
@@ -196,7 +197,69 @@
             letter-spacing: 1px;
         }
 
-        /* Balanced Split Height Screen System */
+        /* 🎙️ AUDIOPHILE TEXT-TO-SPEECH INTERFACE CONTROLS BAR STYLE */
+        .narration-deck {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(43, 26, 11, 0.06);
+            border: 1px dashed #baa27e;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            max-width: fit-content;
+        }
+
+        .audio-trigger-btn {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: transform 0.2s ease;
+        }
+
+        .audio-trigger-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .speed-panel-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-color);
+        }
+
+        .audio-speed-btn {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid #baa27e;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            color: var(--ink-dark);
+        }
+
+        .audio-speed-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .speed-tracker-display {
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--ink-dark);
+            min-width: 38px;
+            text-align: center;
+        }
+
         .split-reader-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -210,8 +273,8 @@
             height: 100%;
             border-radius: 4px;
             overflow: hidden;
-            border: 1px solid #baa27e;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+            border: 1px solid #a38c6b;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.15);
         }
 
         .map-image {
@@ -219,7 +282,7 @@
             height: 100%;
             display: block;
             object-fit: cover;
-            filter: sepia(0.2) contrast(0.95);
+            filter: sepia(0.3) contrast(0.9);
         }
 
         .text-content-frame {
@@ -235,7 +298,7 @@
             background: rgba(0,0,0,0.02);
         }
         .text-content-frame::-webkit-scrollbar-thumb {
-            background: rgba(74, 92, 81, 0.4);
+            background: rgba(56, 77, 65, 0.4);
             border-radius: 4px;
         }
 
@@ -250,13 +313,13 @@
 
         .section-divider {
             text-align: center;
-            border-bottom: 1px double #baa27e;
+            border-bottom: 1px double #a38c6b;
             line-height: 0.1em;
             margin: 45px 0;
         }
 
         .section-divider span {
-            background-color: #dfd4b7; /* Blends context tags seamlessly into document body background canvas color */
+            background-color: #d4c6a9; /* Fully blended backdrop text mask */
             padding: 0 20px;
             color: var(--ink-dark);
             font-weight: bold;
@@ -274,7 +337,7 @@
             font-size: 1.25rem;
             font-weight: bold;
             color: var(--accent-color);
-            border-bottom: 1px solid #baa27e;
+            border-bottom: 1px solid #a38c6b;
             padding-bottom: 8px;
             margin: 0 0 20px 0;
             letter-spacing: 0.5px;
@@ -325,14 +388,14 @@
             font-size: 1.15rem;
             font-weight: bold;
             color: var(--ink-dark);
-            text-decoration: underline dashed rgba(74, 92, 81, 0.5);
+            text-decoration: underline dashed rgba(56, 77, 65, 0.6);
             text-underline-offset: 4px;
         }
 
         .ledger-file-stamp {
             font-family: "Courier New", Courier, monospace;
             font-size: 0.85rem;
-            color: #6b5843;
+            color: #5c4733;
             font-weight: bold;
             letter-spacing: 0.5px;
         }
@@ -343,16 +406,16 @@
             margin: 6px 0 0 0;
             line-height: 1.4;
             
-            background: linear-gradient(to right, #544434 0%, #544434 50%, var(--accent-color) 100%);
+            background: linear-gradient(to right, #4f3b2a 0%, #4f3b2a 50%, var(--accent-color) 100%);
             background-size: 200% 100%;
             background-position: 100% 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: #544434;
+            color: #4f3b2a;
             transition: background-position 0.4s ease;
         }
 
-        /* Interactive Animation Hovers */
+        /* Interactive Animations */
         .ledger-row-item:hover .ship-bullet {
             transform: translate(3px, -1px) rotate(6deg);
         }
@@ -366,24 +429,24 @@
             background-position: 0 0;
         }
 
-        /* 🚪 Dialog Popups System */
+        /* 🚪 Dialog Window Framework Popups */
         dialog {
-            border: 1px solid #7a664d;
+            border: 1px solid #6b553b;
             border-radius: 4px;
             padding: 0;
             width: 90%;
             max-width: 550px;
-            /* Creates an interior noise parchment layer matching the main scroll context container */
-            background-color: #f2ebd9;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' opacity='0.08'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+            /* Injects local color-matched internal document stain variables to the modal card window */
+            background-color: #ebdcb9;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='popNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23popNoise)' opacity='0.09'/%3E%3C/svg%3E");
             box-shadow: 
-                inset 0 0 30px rgba(74,53,32,0.25),
-                0 15px 45px rgba(0,0,0,0.4);
+                inset 0 0 40px rgba(56,38,20,0.3),
+                0 15px 50px rgba(0,0,0,0.5);
             overflow: hidden;
         }
 
         dialog::backdrop {
-            background: rgba(20, 16, 12, 0.7);
+            background: rgba(13, 10, 7, 0.75);
             backdrop-filter: blur(4px);
         }
 
@@ -392,8 +455,8 @@
             max-height: 240px;
             object-fit: cover;
             display: block;
-            border-bottom: 1px solid #baa27e;
-            filter: sepia(0.15);
+            border-bottom: 1px solid #a38c6b;
+            filter: sepia(0.2);
         }
 
         .popup-content-box {
@@ -405,8 +468,8 @@
             position: absolute;
             top: -210px; 
             right: 15px;
-            background: #f2ebd9;
-            border: 1px solid #baa27e;
+            background: #ebdcb9;
+            border: 1px solid #a38c6b;
             font-size: 1.2rem;
             font-weight: bold;
             color: var(--ink-dark);
@@ -417,7 +480,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
         .popup-title {
@@ -426,11 +489,11 @@
             color: var(--ink-dark);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-bottom: 1px dashed #baa27e;
+            border-bottom: 1px dashed #a38c6b;
             padding-bottom: 6px;
         }
 
-        /* 🎯 SUCCESSFUL PARAGRAPH PARSING: Forces complete break preservation loop mechanics on all Column E records */
+        /* 🎯 STABLE RE-PARSING MATRIX: Retains custom formatting boundaries accurately from Google Sheets Column E */
         .popup-body-content {
             margin: 0;
             font-size: 1.15rem;
@@ -445,12 +508,12 @@
             text-align: center;
             font-size: 1.2rem;
             padding: 65px 0;
-            color: #594a3a;
+            color: #4f3925;
             font-style: italic;
         }
 
         @media (max-width: 800px) {
-            .scroll-wrapper-canvas { margin: 10px; padding: 25px; border-radius: 8px; }
+            .scroll-wrapper-canvas { margin: 10px; padding: 25px; border-radius: 6px; }
             .dashboard-layout { grid-template-columns: 1fr; gap: 25px; }
             .split-reader-grid { grid-template-columns: 1fr; height: auto; }
             .map-viewer-frame { height: 280px; }
@@ -478,18 +541,26 @@
                     <ul class="chapter-list" id="menuContainer"></ul>
                 </nav>
                 <main class="preview-pane" id="previewContainer">
-                    <div class="loading-msg">Loading archive ledger entries...</div>
+                    <div class="loading-msg">Loading ledger logs...</div>
                 </main>
             </div>
 
             <div class="reader-layout" id="readerScreen">
                 <button class="back-btn" onclick="showDashboardView()">← Back to Menu</button>
-                <div class="date" id="readerDate"></div>
+                
+                <div class="narration-deck">
+                    <button class="audio-trigger-btn" id="ttsPlaybackMasterTrigger" onclick="toggleNarrationEngine()" title="Narrate Document File">🎙️ Read Aloud</button>
+                    <div class="speed-panel-label">Pace:</div>
+                    <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(-0.1)">[ - ]</button>
+                    <div class="speed-tracker-display" id="ttsSpeedLabel">1.0x</div>
+                    <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(0.1)">[ + ]</button>
+                </div>
+
+                <div style="font-size:0.95rem; text-transform:uppercase; color:#5c4733; letter-spacing:1px; margin-bottom:5px;" id="readerDate"></div>
                 <h2 class="reader-header" id="readerTitle"></h2>
                 
                 <div class="split-reader-grid">
                     <div class="map-viewer-frame" id="mapFrameContainer"></div>
-                    
                     <div class="text-content-frame">
                         <p class="reader-body" id="readerBody"></p>
                     </div>
@@ -521,6 +592,11 @@
             "2": "SECTION II : ECONOMIC MOTIVATIONS [ THE QUEST FOR WEALTH ]"
         };
 
+        // Speech Engine Parameter States
+        let currentSpeechUtterance = null;
+        let isAudioPlaying = false;
+        let currentSpeechRate = 1.0;
+
         async function initSystem() {
             try {
                 const [res1, res2] = await Promise.all([
@@ -543,7 +619,7 @@
                         }
                     });
                 } catch(e) {
-                    console.log("Sheet3 dynamic processing fallback active.");
+                    console.log("Sheet3 connection bypass active.");
                 }
 
                 let firstId = null;
@@ -581,7 +657,7 @@
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Initialization mismatch. Please verify spreadsheet credentials.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet sharing.</div>`;
                 console.error(err);
             }
         }
@@ -617,6 +693,9 @@
         }
 
         function launchReaderView(id) {
+            // Kill any active voice lines immediately if changing views
+            stopNarrationEngine();
+
             const ch = globalChapters[id];
             document.getElementById('readerTitle').innerText = ch.title;
             document.getElementById('readerDate').innerText = ch.date;
@@ -658,7 +737,7 @@
                     const hookContent = lev.popHook ? `"${lev.popHook}"` : '';
 
                     masterCategoriesHtml += `
-                        <button class="ledger-row-item" onclick="document.getElementById('${uniqueId}').showModal()">
+                        <button class="ledger-row-item" onclick="openPopupWithVoiceMute('${uniqueId}')">
                             <div class="ship-bullet">⛵</div>
                             <div class="ledger-content-wrap">
                                 <div class="ledger-title-line">
@@ -677,8 +756,13 @@
                             ${modalImgHtml}
                             <div class="popup-content-box">
                                 <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
-                                <h3 class="popup-title">${lev.popTitle}</h3>
-                                <p class="popup-body-content">${lev.popBody}</p>
+                                
+                                <div style="display:flex; justify-content:space-between; align-items:start; gap:10px;">
+                                    <h3 class="popup-title" style="flex:1;">${lev.popTitle}</h3>
+                                    <button onclick="readPopupSegmentAloud('${uniqueId}')" style="background:none; border:none; font-size:1.3rem; cursor:pointer;" title="Read Popup Text">🎙️</button>
+                                </div>
+                                
+                                <p class="popup-body-content" id="body-text-${uniqueId}">${lev.popBody}</p>
                             </div>
                         </dialog>
                     `;
@@ -689,7 +773,7 @@
                 masterCategoriesHtml += `</div></div>`;
             });
 
-            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No custom record ledgers registered for this timeline.</p>';
+            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No record ledgers registered for this timeline.</p>';
             document.getElementById('popupMasterStack').innerHTML = modalHtml;
 
             document.getElementById('mainHeader').style.display = 'none';
@@ -698,7 +782,77 @@
             window.scrollTo(0,0);
         }
 
+        function openPopupWithVoiceMute(dialogId) {
+            // Mutes the background narrative track cleanly when exploring secondary popup fragments
+            if(window.speechSynthesis.speaking && isAudioPlaying) {
+                window.speechSynthesis.pause();
+                document.getElementById('ttsPlaybackMasterTrigger').innerText = "▶️ Resume Main Text";
+            }
+            document.getElementById(dialogId).showModal();
+        }
+
+        /* 🎙️ WEB SPEECH ENGINE NARRATION CONTROLLERS */
+        function toggleNarrationEngine() {
+            const triggerBtn = document.getElementById('ttsPlaybackMasterTrigger');
+            const mainTextContent = document.getElementById('readerBody').innerText;
+
+            if (isAudioPlaying) {
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                    triggerBtn.innerText = "⏸️ Pause Narration";
+                } else {
+                    window.speechSynthesis.pause();
+                    triggerBtn.innerText = "▶️ Resume Narration";
+                }
+            } else {
+                window.speechSynthesis.cancel(); // Cleans queue clear out
+                
+                currentSpeechUtterance = new SpeechSynthesisUtterance(mainTextContent);
+                currentSpeechUtterance.rate = currentSpeechRate;
+                
+                currentSpeechUtterance.onend = () => {
+                    stopNarrationEngine();
+                };
+
+                window.speechSynthesis.speak(currentSpeechUtterance);
+                isAudioPlaying = true;
+                triggerBtn.innerText = "⏸️ Pause Narration";
+            }
+        }
+
+        function readPopupSegmentAloud(dialogId) {
+            // Isolates narration parameters specifically onto popup data blocks
+            window.speechSynthesis.cancel();
+            const targetText = document.getElementById(`body-text-${dialogId}`).innerText;
+            const popupUtterance = new SpeechSynthesisUtterance(targetText);
+            popupUtterance.rate = currentSpeechRate;
+            window.speechSynthesis.speak(popupUtterance);
+        }
+
+        function adjustPlaybackSpeed(delta) {
+            currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
+            document.getElementById('ttsSpeedLabel').innerText = `${currentSpeechRate.toFixed(1)}x`;
+            
+            // Real-time voice parameter modulation track handling
+            if (window.speechSynthesis.speaking && isAudioPlaying) {
+                window.speechSynthesis.cancel();
+                const remainingText = document.getElementById('readerBody').innerText;
+                currentSpeechUtterance = new SpeechSynthesisUtterance(remainingText);
+                currentSpeechUtterance.rate = currentSpeechRate;
+                currentSpeechUtterance.onend = () => stopNarrationEngine();
+                window.speechSynthesis.speak(currentSpeechUtterance);
+            }
+        }
+
+        function stopNarrationEngine() {
+            window.speechSynthesis.cancel();
+            isAudioPlaying = false;
+            const trigger = document.getElementById('ttsPlaybackMasterTrigger');
+            if(trigger) trigger.innerText = "🎙️ Read Aloud";
+        }
+
         function showDashboardView() {
+            stopNarrationEngine();
             document.getElementById('mainHeader').style.display = 'block';
             document.getElementById('dashboardScreen').style.display = 'grid';
             document.getElementById('readerScreen').style.display = 'none';
