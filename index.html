@@ -80,6 +80,7 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
+            position: relative;
         }
 
         .dashboard-layout {
@@ -246,7 +247,6 @@
             text-align: center;
         }
 
-        /* 🎯 FIXED OVERLAP OPTIMIZATION: Completely tore out legacy height controls. Changed grid matrix framework to auto-flow heights organically */
         .split-reader-grid {
             display: flex;
             flex-direction: row;
@@ -278,7 +278,6 @@
             transform: scale(1.02);
         }
 
-        /* 🎯 FIXED OVERLAP OPTIMIZATION: Removed max-height constraints to let chapter prose push section cards down layout levels cleanly */
         .text-content-frame {
             width: 50%;
             height: auto;
@@ -406,6 +405,7 @@
             background-position: 0 0;
         }
 
+        /* 🎯 FIXED: Re-enforced rigid default overlay coordinates to force dialog frames to float above dashboard nodes cleanly */
         dialog {
             border: none;
             border-radius: 12px;
@@ -416,13 +416,22 @@
             background: #ffffff;
             overflow: hidden;
             max-height: 85vh; 
-            display: flex;
+            display: none;
             flex-direction: column;
-            position: relative;
+            position: fixed;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            margin: 0 !important;
         }
 
         dialog[open] {
             display: flex;
+        }
+
+        dialog::backdrop {
+            background: rgba(44, 53, 49, 0.4);
+            backdrop-filter: blur(4px);
         }
 
         .popup-img {
@@ -511,7 +520,6 @@
             background: none;
         }
 
-        /* 🎯 FIXED IMAGE LAYERING OPTIMIZATION: Lightbox configuration rewritten to launch as a standalone dialog matrix, forcing it to sit perfectly above other open popups */
         .native-lightbox-topframe {
             border: none;
             background: transparent;
@@ -525,7 +533,8 @@
             align-items: center;
             justify-content: center;
             position: fixed;
-            top: 0; left: 0;
+            top: 0 !important; left: 0 !important;
+            transform: none !important;
         }
 
         .native-lightbox-topframe[open] {
@@ -699,7 +708,7 @@
                         }
                     });
                 } catch(e) {
-                    console.log("Sheet3 layout mapping initialized.");
+                    console.log("Sheet3 system stream link stabilized.");
                 }
 
                 let firstId = null;
@@ -879,6 +888,7 @@
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('readerScreen').style.display = 'block';
             window.scrollTo(0,0);
+            attachGlobalLightboxTriggers();
         }
 
         function openPopupWithVoiceMute(dialogId) {
@@ -888,6 +898,7 @@
             }
             const modal = document.getElementById(dialogId);
             if(modal) modal.showModal();
+            attachGlobalLightboxTriggers(); 
         }
 
         function closePopupAndMute(dialogId) {
@@ -901,6 +912,7 @@
             setTimeout(() => {
                 const nextModal = document.getElementById(targetId);
                 if(nextModal) nextModal.showModal();
+                attachGlobalLightboxTriggers();
             }, 100);
         }
 
@@ -1026,16 +1038,31 @@
             isPopupAudioPlaying = false;
         }
 
-        /* 🖼️ HIGH-PRIORITY NATIVE DIALOG LIGHTBOX ROUTINES */
+        function attachGlobalLightboxTriggers() {
+            document.querySelectorAll('.preview-image, .map-image, .popup-img').forEach(img => {
+                img.removeAttribute('onclick'); 
+                img.style.cursor = 'zoom-in';
+                img.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    launchImmersiveLightbox(img.src);
+                };
+            });
+        }
+
         function launchImmersiveLightbox(imageSourceUrl) {
             const frame = document.getElementById('systemLightboxContainer');
             const targetImg = document.getElementById('lightboxTargetImage');
             
             targetImg.src = imageSourceUrl;
-            frame.showModal(); // Using showModal guarantees top layer priority over open dialog windows
+            frame.showModal(); 
         }
 
-        function closeImmersiveLightbox() {
+        function closeImmersiveLightbox(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
             const frame = document.getElementById('systemLightboxContainer');
             if(frame) frame.close();
         }
