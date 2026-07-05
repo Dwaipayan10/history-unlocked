@@ -405,7 +405,6 @@
             background-position: 0 0;
         }
 
-        /* 🎯 FIXED: Re-enforced rigid default overlay coordinates to force dialog frames to float above dashboard nodes cleanly */
         dialog {
             border: none;
             border-radius: 12px;
@@ -423,6 +422,15 @@
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
             margin: 0 !important;
+            transition: max-width 0.3s ease, max-height 0.3s ease, width 0.3s ease, height 0.3s ease;
+        }
+
+        /* ▢ DYNAMIC MAXIMIZE MODE SCALE SETTINGS */
+        dialog.maximized-mode {
+            max-width: 95vw !important;
+            max-height: 95vh !important;
+            width: 95vw !important;
+            height: 95vh !important;
         }
 
         dialog[open] {
@@ -440,6 +448,11 @@
             object-fit: cover;
             display: block;
             cursor: zoom-in;
+            transition: max-height 0.3s ease;
+        }
+
+        dialog.maximized-mode .popup-img {
+            max-height: 380px; /* Expands picture asset view inside widescreen layout environments */
         }
 
         .popup-scroll-body-container {
@@ -448,13 +461,21 @@
             flex: 1;
         }
 
-        .close-x {
+        /* 🎛️ PROFESSIONAL TRIPLE TOGGLE SYSTEM MANAGEMENT CONTAINER HEADER ELEMENT */
+        .window-control-rack {
             position: absolute;
             top: 15px; 
             right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 1000;
+        }
+
+        .window-control-btn {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid #e0dddb;
-            font-size: 1.2rem;
+            font-size: 0.85rem;
             font-weight: bold;
             color: #333;
             width: 32px;
@@ -464,20 +485,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background 0.2s, color 0.2s;
         }
 
-        .close-x:hover {
-            background-color: #f5f0eb;
+        .window-control-btn:hover {
+            background-color: #f2ede9;
             color: #000;
+        }
+
+        .window-control-btn.close-x-btn:hover {
+            background-color: #e6c2be;
+            color: #a62b2b;
+            border-color: #d9a39e;
         }
 
         .popup-title {
             font-size: 1.4rem;
             margin: 0 0 10px 0;
             color: var(--text-color);
-            padding-right: 35px;
+            padding-right: 120px; /* Insulates text track lines from smashing under right button layout coordinates */
         }
 
         .popup-body-content {
@@ -487,6 +514,57 @@
             color: #333;
             white-space: pre-wrap; 
             text-align: justify;
+        }
+
+        /* 🎙️ AUDIOPHILE COMPACT MULTI-LINE AUDIO TIMELINE DECK COMPONENT */
+        .popup-audio-module-wrap {
+            background: #fdfdfd;
+            border: 1px solid #e8e6e3;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.01);
+        }
+
+        .popup-audio-upper-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .popup-timeline-scrub-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* PROGRESS TIMELINE ELEMENT SLIDER DECK */
+        .popup-audio-timeline-bar {
+            flex: 1;
+            height: 5px;
+            background: #e8e6e3;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .popup-audio-progress-fill {
+            position: absolute;
+            top: 0; left: 0; height: 100%;
+            width: 0%; /* Updates dynamically via spoken character loops */
+            background: var(--accent-color);
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+
+        .popup-audio-clock-readout {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #666;
+            min-width: 78px;
+            text-align: right;
         }
 
         .modal-nav-footer {
@@ -535,6 +613,7 @@
             position: fixed;
             top: 0 !important; left: 0 !important;
             transform: none !important;
+            z-index: 2000000 !important;
         }
 
         .native-lightbox-topframe[open] {
@@ -570,7 +649,7 @@
             align-items: center;
             justify-content: center;
             transition: background 0.2s;
-            z-index: 200000;
+            z-index: 210000;
         }
 
         .lightbox-close-x:hover {
@@ -592,6 +671,7 @@
             .header-row { flex-direction: column; }
             .author-name { margin-top: 5px; }
             .reader-branding-meta-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .popup-title { padding-right: 0; margin-top: 40px; }
         }
     </style>
 </head>
@@ -676,6 +756,7 @@
 
         let activePopupUtterance = null;
         let isPopupAudioPlaying = false;
+        let currentPopupSpokenIndex = 0;
 
         function parseMarkdownToHtml(textString) {
             if (!textString) return '';
@@ -708,7 +789,7 @@
                         }
                     });
                 } catch(e) {
-                    console.log("Sheet3 system stream link stabilized.");
+                    console.log("Sheet3 system stream running.");
                 }
 
                 let firstId = null;
@@ -852,18 +933,31 @@
 
                     modalHtml += `
                         <dialog id="${uniqueId}">
-                            <button class="close-x" onclick="closePopupAndMute('${uniqueId}')">&times;</button>
+                            <div class="window-control-rack">
+                                <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', false)" title="Collapse View">[-]</button>
+                                <button class="window-control-btn expand-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', true)" title="Maximize View">[▢]</button>
+                                <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${uniqueId}')" title="Close Link">&times;</button>
+                            </div>
+
                             ${modalImgHtml}
                             
                             <div class="popup-scroll-body-container">
-                                <div class="narration-deck" style="margin-bottom:15px; padding:4px 12px; font-size:0.9rem;">
-                                    <button class="audio-trigger-btn" style="font-size:0.95rem;" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙 Play</button>
-                                    <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-pause-${uniqueId}" onclick="pausePopupAudioDeck('${uniqueId}')">⏸ Pause</button>
-                                    <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')"> Stop</button>
-                                    <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
-                                    <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', -0.1)">-</button>
-                                    <div class="speed-tracker-display" style="font-size:0.8rem; min-width:28px;" id="lbl-speed-${uniqueId}">1.0x</div>
-                                    <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', 0.1)">+</button>
+                                <div class="popup-audio-module-wrap">
+                                    <div class="popup-audio-upper-controls">
+                                        <button class="audio-trigger-btn" style="font-size:0.95rem;" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙 Play</button>
+                                        <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-pause-${uniqueId}" onclick="pausePopupAudioDeck('${uniqueId}')">⏸ Pause</button>
+                                        <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')">⏹ Stop</button>
+                                        <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
+                                        <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', -0.1)">-</button>
+                                        <div class="speed-tracker-display" style="font-size:0.8rem; min-width:28px;" id="lbl-speed-${uniqueId}">1.0x</div>
+                                        <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', 0.1)">+</button>
+                                    </div>
+                                    <div class="popup-timeline-scrub-row">
+                                        <div class="popup-audio-timeline-bar">
+                                            <div class="popup-audio-progress-fill" id="fill-progress-${uniqueId}"></div>
+                                        </div>
+                                        <div class="popup-audio-clock-readout" id="clock-readout-${uniqueId}">00:00 / 00:00</div>
+                                    </div>
                                 </div>
 
                                 <h3 class="popup-title">${lev.popTitle}</h3>
@@ -891,13 +985,29 @@
             attachGlobalLightboxTriggers();
         }
 
+        /* ▢ SCALE TOGGLE CONTROLLER FUNCTION MODULE ROUTINES */
+        function toggleWindowSizeState(modalId, makeMaximize) {
+            const targetModal = document.getElementById(modalId);
+            if (!targetModal) return;
+
+            if (makeMaximize) {
+                targetModal.classList.add('maximized-mode');
+            } else {
+                targetModal.classList.remove('maximized-mode');
+            }
+        }
+
         function openPopupWithVoiceMute(dialogId) {
             if(window.speechSynthesis.speaking && isAudioPlaying) {
                 window.speechSynthesis.pause();
                 document.getElementById('ttsPlaybackMasterTrigger').innerText = "▶️ Resume Main Text";
             }
             const modal = document.getElementById(dialogId);
-            if(modal) modal.showModal();
+            if(modal) {
+                modal.classList.remove('maximized-mode'); // Always reset dimension scale to default baseline on initialization launches
+                modal.showModal();
+                resetPopupClockReadout(dialogId);
+            }
             attachGlobalLightboxTriggers(); 
         }
 
@@ -911,7 +1021,11 @@
             closePopupAndMute(currentId);
             setTimeout(() => {
                 const nextModal = document.getElementById(targetId);
-                if(nextModal) nextModal.showModal();
+                if(nextModal) {
+                    nextModal.classList.remove('maximized-mode');
+                    nextModal.showModal();
+                    resetPopupClockReadout(targetId);
+                }
                 attachGlobalLightboxTriggers();
             }, 100);
         }
@@ -964,6 +1078,7 @@
             if(trigger) trigger.innerText = "🎙️ Read Aloud";
         }
 
+        /* 🎙️ PROGRESS TIMELINE PRE-CALCULATION VOICE ENGINE ARCHITECTURES */
         function togglePopupAudioDeck(modalId) {
             const btnPlay = document.getElementById(`btn-audio-${modalId}`);
             const btnPause = document.getElementById(`btn-pause-${modalId}`);
@@ -974,22 +1089,44 @@
                     window.speechSynthesis.resume();
                     btnPlay.innerText = "🎙️ Reading...";
                     btnPause.style.display = "inline-block";
-                } else {
-                    spawnPopupVoiceInstance(modalId, textToSpeak);
+                    return;
                 }
-            } else {
-                stopNarrationEngine(); 
-                spawnPopupVoiceInstance(modalId, textToSpeak);
             }
+            stopNarrationEngine(); 
+            spawnPopupVoiceInstance(modalId, textToSpeak);
         }
 
         function spawnPopupVoiceInstance(modalId, text) {
             window.speechSynthesis.cancel();
             
+            // Re-instantiate character parsing markers
+            const characterTotalCount = text.length;
+            
+            // Standard baseline timing configuration calculations (Avg speech speed: ~150 words per minute / 1000 characters per minute)
+            const estimationFactorBase = (1000 * currentSpeechRate);
+            const totalEstimatedSeconds = Math.ceil((characterTotalCount / estimationFactorBase) * 60);
+
             activePopupUtterance = new SpeechSynthesisUtterance(text);
             activePopupUtterance.rate = currentSpeechRate; 
             
             document.getElementById(`lbl-speed-${modalId}`).innerText = `${currentSpeechRate.toFixed(1)}x`;
+
+            // Spoken character point boundary trackers
+            activePopupUtterance.onboundary = (event) => {
+                if (event.name === 'word') {
+                    const characterSpokenMarker = event.charIndex;
+                    const computePercentageProgress = (characterSpokenMarker / characterTotalCount) * 100;
+                    
+                    // Update scrub bar timeline visual widths
+                    const barFillNode = document.getElementById(`fill-progress-${modalId}`);
+                    if(barFillNode) barFillNode.style.width = `${computePercentageProgress}%`;
+
+                    // Runtime dynamic digits clock renderer
+                    const rollingSecondsElapsed = Math.floor((characterSpokenMarker / characterTotalCount) * totalEstimatedSeconds);
+                    updateDynamicAudioClockVisuals(modalId, rollingSecondsElapsed, totalEstimatedSeconds);
+                }
+            };
+
             activePopupUtterance.onend = () => stopPopupAudioTrack(modalId);
 
             window.speechSynthesis.speak(activePopupUtterance);
@@ -998,6 +1135,27 @@
             document.getElementById(`btn-audio-${modalId}`).innerText = "🎙️ Reading...";
             document.getElementById(`btn-pause-${modalId}`).style.display = "inline-block";
             document.getElementById(`btn-stop-${modalId}`).style.display = "inline-block";
+        }
+
+        function updateDynamicAudioClockVisuals(modalId, elapsed, total) {
+            const clockNode = document.getElementById(`clock-readout-${modalId}`);
+            if (!clockNode) return;
+
+            const padTimeStr = (num) => String(num).padStart(2, '0');
+            
+            const elapsedMin = Math.floor(elapsed / 60);
+            const elapsedSec = elapsed % 60;
+            const totalMin = Math.floor(total / 60);
+            const totalSec = total % 60;
+
+            clockNode.innerText = `${padTimeStr(elapsedMin)}:${padTimeStr(elapsedSec)} / ${padTimeStr(totalMin)}:${padTimeStr(totalSec)}`;
+        }
+
+        function resetPopupClockReadout(modalId) {
+            const barFillNode = document.getElementById(`fill-progress-${modalId}`);
+            const clockNode = document.getElementById(`clock-readout-${modalId}`);
+            if(barFillNode) barFillNode.style.width = "0%";
+            if(clockNode) clockNode.innerText = "00:00 / 00:00";
         }
 
         function pausePopupAudioDeck(modalId) {
@@ -1031,6 +1189,7 @@
             if(p) p.innerText = "🎙️ Read Aloud";
             if(pauseBtn) pauseBtn.style.display = "none";
             if(stopBtn) stopBtn.style.display = "none";
+            resetPopupClockReadout(modalId);
         }
 
         function stopPopupNarrationEngine() {
