@@ -6,18 +6,16 @@
     <title>Backstory - The Hidden Levers</title>
     <style>
         :root {
-            --bg-color: #1e1610; /* Heavy, dark mahogany desk backdrop */
-            --text-color: #2b1f14; /* Deep oxidized walnut ink */
-            --accent-color: #384d41; /* Antique faded iron-gall green */
-            --paper-bg: #dfd2b5; /* Richly stained, golden-era parchment base */
+            --bg-color: #1e1610; 
+            --text-color: #2b1f14; 
+            --accent-color: #384d41; 
+            --paper-bg: #dfd2b5; 
             --ink-dark: #120d09;
             --charcoal-burn: rgba(28, 15, 6, 0.75);
         }
 
-        /* 📜 HIGH-CONTRAST ANTIQUE SCROLL TEXTURE AND LAYERING */
         html, body {
             background-color: var(--bg-color);
-            /* Dynamic fine-fiber mesh overlay applied across the desk view */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='mesh'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mesh)' opacity='0.25'/%3E%3C/svg%3E");
             margin: 0;
             padding: 0;
@@ -25,22 +23,16 @@
             font-family: Georgia, "Times New Roman", Times, serif;
         }
 
-        /* REALISTIC ASYMMETRICAL TORN SCROLL CORE CONTAINER */
         .scroll-wrapper-canvas {
             max-width: 1000px;
             margin: 40px auto;
             background-color: var(--paper-bg);
-            /* Heavy mottled staining patterns injected beneath the textual paths */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyStain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyStain)'/%3E%3C/svg%3E");
             padding: 50px;
             position: relative;
             box-sizing: border-box;
-            
-            /* Sharp, distinct asymmetrical border radii values creating frayed edges */
             border-radius: 95% 6% 92% 8% / 6% 95% 5% 94%;
             border: 2px solid #a38c6b;
-            
-            /* HIGH-CONTRAST SHADOW COMPLEX: Replicates heavy scorched paper drop edges */
             box-shadow: 
                 inset 0 0 80px var(--charcoal-burn),
                 inset 0 0 40px rgba(0, 0, 0, 0.4),
@@ -108,7 +100,6 @@
             color: var(--paper-bg);
         }
 
-        /* View 1: Dashboard Layout */
         .dashboard-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -183,7 +174,6 @@
             opacity: 0.9;
         }
 
-        /* View 2: Reader Layout Canvas */
         .reader-layout {
             display: none; 
         }
@@ -197,7 +187,6 @@
             letter-spacing: 1px;
         }
 
-        /* 🎙️ AUDIOPHILE TEXT-TO-SPEECH INTERFACE CONTROLS BAR STYLE */
         .narration-deck {
             display: flex;
             align-items: center;
@@ -319,7 +308,7 @@
         }
 
         .section-divider span {
-            background-color: #d4c6a9; /* Fully blended backdrop text mask */
+            background-color: #d4c6a9; 
             padding: 0 20px;
             color: var(--ink-dark);
             font-weight: bold;
@@ -327,7 +316,6 @@
             font-size: 1rem;
         }
 
-        /* Dynamic Category Archive Ledger Layout Styles */
         .category-block {
             margin-bottom: 40px;
         }
@@ -405,7 +393,6 @@
             font-style: italic;
             margin: 6px 0 0 0;
             line-height: 1.4;
-            
             background: linear-gradient(to right, #4f3b2a 0%, #4f3b2a 50%, var(--accent-color) 100%);
             background-size: 200% 100%;
             background-position: 100% 0;
@@ -415,7 +402,6 @@
             transition: background-position 0.4s ease;
         }
 
-        /* Interactive Animations */
         .ledger-row-item:hover .ship-bullet {
             transform: translate(3px, -1px) rotate(6deg);
         }
@@ -429,19 +415,15 @@
             background-position: 0 0;
         }
 
-        /* 🚪 Dialog Window Framework Popups */
         dialog {
             border: 1px solid #6b553b;
             border-radius: 4px;
             padding: 0;
             width: 90%;
             max-width: 550px;
-            /* Injects local color-matched internal document stain variables to the modal card window */
             background-color: #ebdcb9;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='popNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23popNoise)' opacity='0.09'/%3E%3C/svg%3E");
-            box-shadow: 
-                inset 0 0 40px rgba(56,38,20,0.3),
-                0 15px 50px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 40px rgba(56,38,20,0.3), 0 15px 50px rgba(0,0,0,0.5);
             overflow: hidden;
         }
 
@@ -493,7 +475,6 @@
             padding-bottom: 6px;
         }
 
-        /* 🎯 STABLE RE-PARSING MATRIX: Retains custom formatting boundaries accurately from Google Sheets Column E */
         .popup-body-content {
             margin: 0;
             font-size: 1.15rem;
@@ -526,7 +507,6 @@
 <body>
 
     <div class="scroll-wrapper-canvas">
-        
         <div class="top-bar" id="mainHeader">
             <div class="header-row">
                 <h1 class="site-title">Backstory</h1>
@@ -573,8 +553,9 @@
                 <div id="categoriesMasterContainer"></div>
             </div>
         </div>
+    </div>
 
-    </div> <div id="popupMasterStack"></div>
+    <div id="popupMasterStack"></div>
 
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
@@ -592,7 +573,6 @@
             "2": "SECTION II : ECONOMIC MOTIVATIONS [ THE QUEST FOR WEALTH ]"
         };
 
-        // Speech Engine Parameter States
         let currentSpeechUtterance = null;
         let isAudioPlaying = false;
         let currentSpeechRate = 1.0;
@@ -619,7 +599,7 @@
                         }
                     });
                 } catch(e) {
-                    console.log("Sheet3 connection bypass active.");
+                    console.log("Sheet3 fallback active.");
                 }
 
                 let firstId = null;
@@ -693,7 +673,6 @@
         }
 
         function launchReaderView(id) {
-            // Kill any active voice lines immediately if changing views
             stopNarrationEngine();
 
             const ch = globalChapters[id];
@@ -756,12 +735,10 @@
                             ${modalImgHtml}
                             <div class="popup-content-box">
                                 <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
-                                
                                 <div style="display:flex; justify-content:space-between; align-items:start; gap:10px;">
                                     <h3 class="popup-title" style="flex:1;">${lev.popTitle}</h3>
                                     <button onclick="readPopupSegmentAloud('${uniqueId}')" style="background:none; border:none; font-size:1.3rem; cursor:pointer;" title="Read Popup Text">🎙️</button>
                                 </div>
-                                
                                 <p class="popup-body-content" id="body-text-${uniqueId}">${lev.popBody}</p>
                             </div>
                         </dialog>
@@ -783,7 +760,6 @@
         }
 
         function openPopupWithVoiceMute(dialogId) {
-            // Mutes the background narrative track cleanly when exploring secondary popup fragments
             if(window.speechSynthesis.speaking && isAudioPlaying) {
                 window.speechSynthesis.pause();
                 document.getElementById('ttsPlaybackMasterTrigger').innerText = "▶️ Resume Main Text";
@@ -791,7 +767,6 @@
             document.getElementById(dialogId).showModal();
         }
 
-        /* 🎙️ WEB SPEECH ENGINE NARRATION CONTROLLERS */
         function toggleNarrationEngine() {
             const triggerBtn = document.getElementById('ttsPlaybackMasterTrigger');
             const mainTextContent = document.getElementById('readerBody').innerText;
@@ -805,7 +780,7 @@
                     triggerBtn.innerText = "▶️ Resume Narration";
                 }
             } else {
-                window.speechSynthesis.cancel(); // Cleans queue clear out
+                window.speechSynthesis.cancel(); 
                 
                 currentSpeechUtterance = new SpeechSynthesisUtterance(mainTextContent);
                 currentSpeechUtterance.rate = currentSpeechRate;
@@ -821,7 +796,6 @@
         }
 
         function readPopupSegmentAloud(dialogId) {
-            // Isolates narration parameters specifically onto popup data blocks
             window.speechSynthesis.cancel();
             const targetText = document.getElementById(`body-text-${dialogId}`).innerText;
             const popupUtterance = new SpeechSynthesisUtterance(targetText);
@@ -833,7 +807,6 @@
             currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
             document.getElementById('ttsSpeedLabel').innerText = `${currentSpeechRate.toFixed(1)}x`;
             
-            // Real-time voice parameter modulation track handling
             if (window.speechSynthesis.speaking && isAudioPlaying) {
                 window.speechSynthesis.cancel();
                 const remainingText = document.getElementById('readerBody').innerText;
@@ -862,4 +835,3 @@
     </script>
 </body>
 </html>
-
