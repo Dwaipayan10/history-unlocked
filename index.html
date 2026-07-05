@@ -8,7 +8,7 @@
         :root {
             --bg-color: #f7f6f2;
             --text-color: #2c3531;
-            --accent-color: #5a786b; /* Soothing Sage Green */
+            --accent-color: #5a786b; 
             --card-bg: #ffffff;
             --card-hover: rgba(90, 120, 107, 0.08);
         }
@@ -82,7 +82,6 @@
             margin: 0 auto;
         }
 
-        /* View 1: Dashboard Layout */
         .dashboard-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -132,6 +131,12 @@
             object-fit: cover;
             border-radius: 8px;
             margin-top: 15px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .preview-image:hover {
+            transform: scale(1.01);
         }
 
         .explore-trigger-btn {
@@ -151,7 +156,6 @@
             opacity: 0.9;
         }
 
-        /* View 2: Immersive Reader Workspace */
         .reader-layout {
             display: none; 
             background: var(--card-bg);
@@ -166,7 +170,6 @@
             text-align: center;
         }
 
-        /* 🎙️ TTS Audio Panel Styling (Matches original clean aesthetic) */
         .narration-deck {
             display: flex;
             align-items: center;
@@ -249,6 +252,12 @@
             height: 100%;
             display: block;
             object-fit: cover;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .map-image:hover {
+            transform: scale(1.02);
         }
 
         .text-content-frame {
@@ -292,7 +301,6 @@
             font-size: 0.85rem;
         }
 
-        /* Clean List Layout for Categories */
         .category-block {
             margin-bottom: 30px;
         }
@@ -388,21 +396,23 @@
             background-position: 0 0;
         }
 
-        /* Clean Popups styling */
+        /* UPGRADED SCROLLABLE POPUP MECHANICS */
         dialog {
             border: none;
             border-radius: 12px;
             padding: 0;
             width: 90%;
-            max-width: 550px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            max-width: 580px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.18);
             background: #ffffff;
             overflow: hidden;
+            max-height: 85vh; /* Prevents overflow off screen */
+            display: flex;
+            flex-direction: column;
         }
 
-        dialog::backdrop {
-            background: rgba(44, 53, 49, 0.4);
-            backdrop-filter: blur(4px);
+        dialog[open] {
+            display: flex;
         }
 
         .popup-img {
@@ -410,20 +420,23 @@
             max-height: 240px;
             object-fit: cover;
             display: block;
+            cursor: zoom-in;
         }
 
-        .popup-content-box {
-            padding: 30px;
-            position: relative;
+        /* FIXED INTERIOR HEIGHT VAULT WITH INDEPENDENT SCROLL */
+        .popup-scroll-body-container {
+            padding: 25px 30px;
+            overflow-y: auto;
+            flex: 1;
         }
 
         .close-x {
             position: absolute;
-            top: -210px; 
+            top: 15px; 
             right: 15px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.85);
             border: none;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: #333;
             width: 32px;
@@ -433,23 +446,89 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            z-index: 10;
         }
 
         .popup-title {
-            font-size: 1.3rem;
-            margin: 0 0 12px 0;
+            font-size: 1.4rem;
+            margin: 0 0 10px 0;
             color: var(--text-color);
+            padding-right: 35px;
         }
 
-        /* FIXED: Preserves your spreadsheet paragraphs perfectly */
         .popup-body-content {
-            margin: 0;
-            font-size: 1.05rem;
-            line-height: 1.6;
+            margin: 15px 0;
+            font-size: 1.08rem;
+            line-height: 1.65;
             color: #333;
             white-space: pre-wrap; 
             text-align: justify;
+        }
+
+        /* SEQUENTIAL NAVIGATION FOOTER SYSTEM */
+        .modal-nav-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding: 15px 30px;
+            background: #fafafa;
+        }
+
+        .modal-nav-link {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .modal-nav-link:hover {
+            background: rgba(90, 120, 107, 0.1);
+        }
+
+        .modal-nav-link:disabled {
+            color: #ccc;
+            cursor: not-allowed;
+            background: none;
+        }
+
+        /* 🖼️ CLICK-TO-ENLARGE IMMERSIVE LIGHTBOX CONTAINER OVERLAY */
+        #lightboxOverlayFrame {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 18, 17, 0.92);
+            z-index: 9999;
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        #lightboxOverlayFrame.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-canvas-img {
+            max-width: 92%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            transform: scale(0.95);
+            transition: transform 0.25s ease;
+        }
+
+        #lightboxOverlayFrame.active .lightbox-canvas-img {
+            transform: scale(1);
         }
 
         .loading-msg {
@@ -520,6 +599,10 @@
 
     <div id="popupMasterStack"></div>
 
+    <div id="lightboxOverlayFrame" onclick="closeImmersiveLightbox()">
+        <img src="" class="lightbox-canvas-img" id="lightboxTargetImage" alt="Expanded Archival Document View">
+    </div>
+
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
         const SHEET2_GID = '714083378'; 
@@ -539,6 +622,23 @@
         let currentSpeechUtterance = null;
         let isAudioPlaying = false;
         let currentSpeechRate = 1.0;
+
+        // Custom local popup voice trackers
+        let activePopupUtterance = null;
+        let isPopupAudioPlaying = false;
+
+        // MARKDOWN REGEX TEXT PARSING ENGINE
+        function parseMarkdownToHtml(textString) {
+            if (!textString) return '';
+            let html = textString.toString();
+            // Bold mapping (**bold**)
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            // Italic mapping (*italic*)
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            // Underline parsing (<u>underlines</u>)
+            html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
+            return html;
+        }
 
         async function initSystem() {
             try {
@@ -562,7 +662,7 @@
                         }
                     });
                 } catch(e) {
-                    console.log("Sheet3 layout dictionary backup active.");
+                    console.log("Sheet3 initialization bypass handled.");
                 }
 
                 let firstId = null;
@@ -599,8 +699,9 @@
                 });
 
                 renderMenu(firstId);
+                attachGlobalLightboxTriggers();
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet sharing parameters.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet configurations.</div>`;
                 console.error(err);
             }
         }
@@ -623,10 +724,10 @@
             const data = globalChapters[id];
             if (!data) return;
             
-            let imageSection = data.img ? `<img src="${data.img}" class="preview-image" alt="${data.title}">` : '';
+            let imageSection = data.img ? `<img src="${data.img}" class="preview-image" onclick="launchImmersiveLightbox(this.src)" alt="${data.title}">` : '';
             
             document.getElementById('previewContainer').innerHTML = `
-                <div class="date">${data.date}</div>
+                <div class="date" style="font-size:0.9rem; color:#777; text-transform:uppercase;">${data.date}</div>
                 <h2 style="margin:5px 0 15px 0; font-size:1.8rem;">${data.title}</h2>
                 ${imageSection}
                 <div>
@@ -637,15 +738,18 @@
 
         function launchReaderView(id) {
             stopNarrationEngine();
+            stopPopupNarrationEngine();
 
             const ch = globalChapters[id];
             document.getElementById('readerTitle').innerText = ch.title;
             document.getElementById('readerDate').innerText = ch.date;
-            document.getElementById('readerBody').innerText = ch.body;
+            
+            // Render markdown conversions onto main reading frame
+            document.getElementById('readerBody').innerHTML = parseMarkdownToHtml(ch.body);
 
             const mapFrame = document.getElementById('mapFrameContainer');
             if (ch.readerImg) {
-                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" alt="Historical Map Context">`;
+                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" onclick="launchImmersiveLightbox(this.src)" alt="Historical Map Context">`;
                 mapFrame.style.display = 'block';
             } else {
                 mapFrame.innerHTML = '';
@@ -657,6 +761,12 @@
             matchedLevers.forEach((lev) => {
                 if(!structuredMap[lev.categoryId]) structuredMap[lev.categoryId] = [];
                 structuredMap[lev.categoryId].push(lev);
+            });
+
+            // Linear mapping sequence computation loops
+            let flatOrderedSequence = [];
+            Object.keys(structuredMap).forEach((catId) => {
+                structuredMap[catId].forEach(item => flatOrderedSequence.push(item));
             });
 
             let masterCategoriesHtml = '';
@@ -673,9 +783,10 @@
                         <div class="ledger-rows-list">
                 `;
 
-                categoryItems.forEach((lev, idx) => {
-                    const uniqueId = `modal-${id}-${globalModalIndex}`;
-                    const fileCode = `FILE: ${catId}-${String(idx + 1).padStart(2, '0')}`;
+                categoryItems.forEach((lev) => {
+                    const currentSequenceIndex = flatOrderedSequence.findIndex(item => item.linkText === lev.linkText);
+                    const uniqueId = `modal-${id}-${currentSequenceIndex}`;
+                    const fileCode = `FILE: ${catId}-${String(categoryItems.indexOf(lev) + 1).padStart(2, '0')}`;
                     const hookContent = lev.popHook ? `"${lev.popHook}"` : '';
 
                     masterCategoriesHtml += `
@@ -691,29 +802,45 @@
                         </button>
                     `;
 
-                    let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Illustration">` : '';
+                    let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" onclick="launchImmersiveLightbox(this.src)" alt="History Illustration">` : '';
                     
+                    const hasPrev = currentSequenceIndex > 0;
+                    const hasNext = currentSequenceIndex < flatOrderedSequence.length - 1;
+                    const prevId = `modal-${id}-${currentSequenceIndex - 1}`;
+                    const nextId = `modal-${id}-${currentSequenceIndex + 1}`;
+
                     modalHtml += `
                         <dialog id="${uniqueId}">
+                            <button class="close-x" onclick="closePopupAndMute('${uniqueId}')">&times;</button>
                             ${modalImgHtml}
-                            <div class="popup-content-box">
-                                <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
-                                <div style="display:flex; justify-content:space-between; align-items:start; gap:10px;">
-                                    <h3 class="popup-title" style="flex:1; margin:0 0 15px 0;">${lev.popTitle}</h3>
-                                    <button onclick="readPopupSegmentAloud('${uniqueId}')" style="background:none; border:none; font-size:1.3rem; cursor:pointer;" title="Read Popup Text">🎙️</button>
+                            
+                            <div class="popup-scroll-body-container">
+                                <div class="narration-deck" style="margin-bottom:15px; padding:4px 12px; font-size:0.9rem;">
+                                    <button class="audio-trigger-btn" style="font-size:0.95rem;" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙️ Play</button>
+                                    <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-pause-${uniqueId}" onclick="pausePopupAudioDeck('${uniqueId}')">⏸️ Pause</button>
+                                    <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')">⏹️ Stop</button>
+                                    <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
+                                    <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', -0.1)">-</button>
+                                    <div class="speed-tracker-display" style="font-size:0.8rem; min-width:28px;" id="lbl-speed-${uniqueId}">1.0x</div>
+                                    <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', 0.1)">+</button>
                                 </div>
-                                <p class="popup-body-content" id="body-text-${uniqueId}">${lev.popBody}</p>
+
+                                <h3 class="popup-title">${lev.popTitle}</h3>
+                                <div class="popup-body-content" id="raw-text-${uniqueId}">${parseMarkdownToHtml(lev.popBody)}</div>
+                            </div>
+
+                            <div class="modal-nav-footer">
+                                <button class="modal-nav-link" ${hasPrev ? `onclick="switchActivePopup('${uniqueId}', '${prevId}')"` : 'disabled'}>« Previous File</button>
+                                <button class="modal-nav-link" ${hasNext ? `onclick="switchActivePopup('${uniqueId}', '${nextId}')"` : 'disabled'}>Next File »</button>
                             </div>
                         </dialog>
                     `;
-
-                    globalModalIndex++;
                 });
 
                 masterCategoriesHtml += `</div></div>`;
             });
 
-            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No record links registered for this timeline.</p>';
+            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No record nodes discovered for this timeframe.</p>';
             document.getElementById('popupMasterStack').innerHTML = modalHtml;
 
             document.getElementById('mainHeader').style.display = 'none';
@@ -727,12 +854,29 @@
                 window.speechSynthesis.pause();
                 document.getElementById('ttsPlaybackMasterTrigger').innerText = "▶️ Resume Main Text";
             }
-            document.getElementById(dialogId).showModal();
+            const modal = document.getElementById(dialogId);
+            if(modal) modal.showModal();
         }
 
+        function closePopupAndMute(dialogId) {
+            stopPopupAudioTrack(dialogId);
+            const modal = document.getElementById(dialogId);
+            if(modal) modal.close();
+        }
+
+        function switchActivePopup(currentId, targetId) {
+            closePopupAndMute(currentId);
+            setTimeout(() => {
+                const nextModal = document.getElementById(targetId);
+                if(nextModal) nextModal.showModal();
+            }, 100);
+        }
+
+        /* 🎙️ MAIN DOCUMENT VOICE NARRATION MODULES */
         function toggleNarrationEngine() {
             const triggerBtn = document.getElementById('ttsPlaybackMasterTrigger');
-            const mainTextContent = document.getElementById('readerBody').innerText;
+            // Grabs flat processed innerText without html regex boundaries parsing contamination
+            const cleanText = document.getElementById('readerBody').innerText;
 
             if (isAudioPlaying) {
                 if (window.speechSynthesis.paused) {
@@ -743,27 +887,18 @@
                     triggerBtn.innerText = "▶️ Resume Narration";
                 }
             } else {
+                stopPopupNarrationEngine();
                 window.speechSynthesis.cancel(); 
                 
-                currentSpeechUtterance = new SpeechSynthesisUtterance(mainTextContent);
+                currentSpeechUtterance = new SpeechSynthesisUtterance(cleanText);
                 currentSpeechUtterance.rate = currentSpeechRate;
                 
-                currentSpeechUtterance.onend = () => {
-                    stopNarrationEngine();
-                };
+                currentSpeechUtterance.onend = () => stopNarrationEngine();
 
                 window.speechSynthesis.speak(currentSpeechUtterance);
                 isAudioPlaying = true;
                 triggerBtn.innerText = "⏸️ Pause Narration";
             }
-        }
-
-        function readPopupSegmentAloud(dialogId) {
-            window.speechSynthesis.cancel();
-            const targetText = document.getElementById(`body-text-${dialogId}`).innerText;
-            const popupUtterance = new SpeechSynthesisUtterance(targetText);
-            popupUtterance.rate = currentSpeechRate;
-            window.speechSynthesis.speak(popupUtterance);
         }
 
         function adjustPlaybackSpeed(delta) {
@@ -772,8 +907,8 @@
             
             if (window.speechSynthesis.speaking && isAudioPlaying) {
                 window.speechSynthesis.cancel();
-                const remainingText = document.getElementById('readerBody').innerText;
-                currentSpeechUtterance = new SpeechSynthesisUtterance(remainingText);
+                const remainder = document.getElementById('readerBody').innerText;
+                currentSpeechUtterance = new SpeechSynthesisUtterance(remainder);
                 currentSpeechUtterance.rate = currentSpeechRate;
                 currentSpeechUtterance.onend = () => stopNarrationEngine();
                 window.speechSynthesis.speak(currentSpeechUtterance);
@@ -787,8 +922,119 @@
             if(trigger) trigger.innerText = "🎙️ Read Aloud";
         }
 
+        /* 🎙️ DEDICATED INDEPENDENT LOCAL POPUP AUDIO DECKS MATRIX */
+        function togglePopupAudioDeck(modalId) {
+            const btnPlay = document.getElementById(`btn-audio-${modalId}`);
+            const btnPause = document.getElementById(`btn-pause-${modalId}`);
+            const btnStop = document.getElementById(`btn-stop-${modalId}`);
+            const textToSpeak = document.getElementById(`raw-text-${modalId}`).innerText;
+
+            if (isPopupAudioPlaying) {
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                    btnPlay.innerText = "🎙️ Reading...";
+                    btnPause.style.display = "inline-block";
+                } else {
+                    // Start fresh if triggered while completely idle background threads exist
+                    spawnPopupVoiceInstance(modalId, textToSpeak);
+                }
+            } else {
+                stopNarrationEngine(); // Kill any main document tracks running
+                spawnPopupVoiceInstance(modalId, textToSpeak);
+            }
+        }
+
+        function spawnPopupVoiceInstance(modalId, text) {
+            window.speechSynthesis.cancel();
+            
+            activePopupUtterance = new SpeechSynthesisUtterance(text);
+            activePopupUtterance.rate = currentSpeechRate; // Inherits current global layout velocity factor setting
+            
+            document.getElementById(`lbl-speed-${modalId}`).innerText = `${currentSpeechRate.toFixed(1)}x`;
+
+            activePopupUtterance.onend = () => stopPopupAudioTrack(modalId);
+
+            window.speechSynthesis.speak(activePopupUtterance);
+            isPopupAudioPlaying = true;
+
+            document.getElementById(`btn-audio-${modalId}`).innerText = "🎙️ Reading...";
+            document.getElementById(`btn-pause-${modalId}`).style.display = "inline-block";
+            document.getElementById(`btn-stop-${modalId}`).style.display = "inline-block";
+        }
+
+        function pausePopupAudioDeck(modalId) {
+            if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+                window.speechSynthesis.pause();
+                document.getElementById(`btn-audio-${modalId}`).innerText = "▶️ Resume";
+                document.getElementById(`btn-pause-${modalId}`).style.display = "none";
+            }
+        }
+
+        function modPopupAudioSpeed(modalId, delta) {
+            currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
+            document.getElementById(`lbl-speed-${modalId}`).innerText = `${currentSpeechRate.toFixed(1)}x`;
+            // Synchs the central layout speed visual tracker node text cleanly
+            const mainLabel = document.getElementById('ttsSpeedLabel');
+            if(mainLabel) mainLabel.innerText = `${currentSpeechRate.toFixed(1)}x`;
+
+            if (window.speechSynthesis.speaking && isPopupAudioPlaying) {
+                const text = document.getElementById(`raw-text-${modalId}`).innerText;
+                spawnPopupVoiceInstance(modalId, text);
+            }
+        }
+
+        function stopPopupAudioTrack(modalId) {
+            window.speechSynthesis.cancel();
+            isPopupAudioPlaying = false;
+            
+            const p = document.getElementById(`btn-audio-${modalId}`);
+            const pauseBtn = document.getElementById(`btn-pause-${modalId}`);
+            const stopBtn = document.getElementById(`btn-stop-${modalId}`);
+            
+            if(p) p.innerText = "🎙️ Read Aloud";
+            if(pauseBtn) pauseBtn.style.display = "none";
+            if(stopBtn) stopBtn.style.display = "none";
+        }
+
+        function stopPopupNarrationEngine() {
+            window.speechSynthesis.cancel();
+            isPopupAudioPlaying = false;
+        }
+
+        /* 🖼️ INTERACTIVE LIGHTBOX SYSTEM CONTROLLER CODE ROUTINES */
+        function attachGlobalLightboxTriggers() {
+            // Catches general fallback elements across default dashboard preview screens
+            document.querySelectorAll('.preview-image, .map-image, .popup-img').forEach(img => {
+                img.addEventListener('click', () => launchImmersiveLightbox(img.src));
+            });
+        }
+
+        function launchImmersiveLightbox(imageSourceUrl) {
+            const frame = document.getElementById('lightboxOverlayFrame');
+            const targetImg = document.getElementById('lightboxTargetImage');
+            
+            targetImg.src = imageSourceUrl;
+            frame.classList.add('active');
+            
+            // Trap accessibility escape keys
+            document.addEventListener('keydown', handleLightboxKeyboardEsc);
+        }
+
+        function closeImmersiveLightbox() {
+            const frame = document.getElementById('lightboxOverlayFrame');
+            frame.classList.remove('active');
+            document.removeEventListener('keydown', handleLightboxKeyboardEsc);
+        }
+
+        function handleLightboxKeyboardEsc(event) {
+            if (event.key === 'Escape' || event.keyCode === 27) {
+                closeImmersiveLightbox();
+            }
+        }
+
         function showDashboardView() {
             stopNarrationEngine();
+            stopPopupNarrationEngine();
             document.getElementById('mainHeader').style.display = 'block';
             document.getElementById('dashboardScreen').style.display = 'grid';
             document.getElementById('readerScreen').style.display = 'none';
