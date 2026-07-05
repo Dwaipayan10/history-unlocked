@@ -6,28 +6,56 @@
     <title>Backstory - The Hidden Levers</title>
     <style>
         :root {
-            --bg-color: #f4f0e6; /* Antique Ledger Parchment Background */
-            --text-color: #2c3531;
-            --accent-color: #5a786b; /* Sepia/Sage Ink Green */
-            --card-bg: #ffffff;
-            --card-hover: rgba(90, 120, 107, 0.05);
-            --ink-dark: #1b201e;
+            --bg-color: #e5dac1; /* Deep Aged Parchment Rim */
+            --text-color: #362e24; /* Faded Sepia Ink */
+            --accent-color: #4a6356; /* Weathered Maritime Green */
+            --paper-bg: #f5f0e1; /* Main Scroll Document Base */
+            --ink-dark: #211c16;
+            --charcoal-burn: rgba(45, 35, 25, 0.85);
         }
 
-        body {
-            font-family: Georgia, "Times New Roman", Times, serif;
+        /* 📜 Universal Weathered Scroll Styling Framework */
+        html, body {
             background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", Times, serif;
+        }
+
+        /* Wraps the entire webpage view to look like a torn archival artifact */
+        .scroll-wrapper-canvas {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: var(--paper-bg);
+            padding: 40px;
+            position: relative;
+            box-sizing: border-box;
+            
+            /* Realistic double-inked document boundaries */
+            border: 1px solid #bfb399;
+            box-shadow: 
+                0 0 0 8px var(--paper-bg),
+                0 0 0 9px #cdbf9f,
+                0 15px 35px rgba(33, 28, 22, 0.3);
+        }
+
+        /* Pure CSS generation mimicking aged frayed and burnt irregular torn paper borders */
+        .scroll-wrapper-canvas::before {
+            content: "";
+            position: absolute;
+            top: -4px; bottom: -4px; left: -4px; right: -4px;
+            border: 2px solid #2d2319;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0.15;
+            mask-image: radial-gradient(circle, #000 85%, transparent 100%);
         }
 
         .top-bar {
-            max-width: 900px;
-            margin: 0 auto 30px auto;
             border-bottom: 2px double var(--accent-color);
             padding-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .header-row {
@@ -38,28 +66,29 @@
         }
 
         .site-title {
-            font-size: 2.4rem;
+            font-size: 2.6rem;
             margin: 0;
             font-weight: bold;
             color: var(--ink-dark);
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .author-name {
             font-size: 0.85rem;
-            color: #665f55;
+            color: #615545;
             font-weight: 500;
             letter-spacing: 1px;
-            margin-top: 14px;
+            margin-top: 16px;
             text-transform: uppercase;
         }
 
         .site-description {
             font-size: 1.05rem;
-            color: #4a4339;
+            color: #4f4435;
             margin: 0;
-            max-width: 700px;
-            line-height: 1.5;
+            max-width: 750px;
+            line-height: 1.6;
             font-style: italic;
         }
 
@@ -72,26 +101,21 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.2s;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: inline-block;
             font-family: inherit;
         }
 
         .back-btn:hover {
             background-color: var(--accent-color);
-            color: white;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+            color: var(--paper-bg);
         }
 
         /* View 1: Dashboard Layout */
         .dashboard-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
-            gap: 30px;
+            gap: 40px;
         }
 
         .chapter-list {
@@ -107,10 +131,10 @@
             background: none;
             border: none;
             padding: 12px 14px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: var(--text-color);
             transition: all 0.2s;
             font-weight: 600;
@@ -119,17 +143,16 @@
         }
 
         .chapter-btn:hover, .chapter-btn.active {
-            background-color: rgba(90, 120, 107, 0.08);
+            background-color: rgba(74, 99, 86, 0.08);
             color: var(--accent-color);
             border-left-color: var(--accent-color);
         }
 
         .preview-pane {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.4);
             padding: 30px;
-            border-radius: 6px;
-            border: 1px dashed #dcd6cd;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.01);
+            border-radius: 4px;
+            border: 1px dashed #c0b49c;
             text-align: center;
         }
 
@@ -137,17 +160,18 @@
             width: 100%;
             max-height: 360px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 2px;
             margin-top: 15px;
+            border: 1px solid #c0b49c;
         }
 
         .explore-trigger-btn {
             margin-top: 25px;
             background-color: var(--accent-color);
-            color: white;
+            color: var(--paper-bg);
             border: none;
-            padding: 10px 24px;
-            font-size: 1rem;
+            padding: 12px 28px;
+            font-size: 1.05rem;
             font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
@@ -162,16 +186,11 @@
         /* View 2: Immersive Archival Reader Workspace */
         .reader-layout {
             display: none; 
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 8px;
-            border: 1px double #8c8275;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
 
         .reader-header {
-            font-size: 2.2rem;
-            margin: 5px 0 20px 0;
+            font-size: 2.4rem;
+            margin: 5px 0 25px 0;
             text-align: center;
             color: var(--ink-dark);
             text-transform: uppercase;
@@ -181,9 +200,9 @@
         .split-reader-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 35px;
             margin-bottom: 40px;
-            height: 450px;
+            height: 470px;
         }
 
         .map-viewer-frame {
@@ -191,8 +210,8 @@
             height: 100%;
             border-radius: 4px;
             overflow: hidden;
-            border: 1px solid #dcd6cd;
-            background: #fbfbfa;
+            border: 1px solid #bfb399;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
         .map-image {
@@ -215,47 +234,48 @@
             background: rgba(0,0,0,0.01);
         }
         .text-content-frame::-webkit-scrollbar-thumb {
-            background: rgba(90, 120, 107, 0.2);
+            background: rgba(74, 99, 86, 0.3);
             border-radius: 4px;
         }
 
         .reader-body {
-            font-size: 1.1rem;
-            color: #3e372e;
+            font-size: 1.15rem;
+            color: var(--text-color);
             margin: 0;
             white-space: pre-wrap;
             text-align: justify;
+            line-height: 1.65;
         }
 
         .section-divider {
             text-align: center;
             border-bottom: 1px double #8c8275;
             line-height: 0.1em;
-            margin: 40px 0;
+            margin: 45px 0;
         }
 
         .section-divider span {
-            background: var(--card-bg);
+            background: var(--paper-bg);
             padding: 0 20px;
             color: var(--ink-dark);
             font-weight: bold;
             letter-spacing: 2px;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         /* Dynamic Category Archive Ledger Layout Styles */
         .category-block {
-            margin-bottom: 35px;
+            margin-bottom: 40px;
         }
 
         .category-header {
             font-family: inherit;
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: var(--accent-color);
-            border-bottom: 1px solid #e0d9cd;
-            padding-bottom: 6px;
-            margin: 0 0 15px 0;
+            border-bottom: 1px solid #bfb399;
+            padding-bottom: 8px;
+            margin: 0 0 20px 0;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
@@ -263,7 +283,7 @@
         .ledger-rows-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
 
         .ledger-row-item {
@@ -274,14 +294,14 @@
             text-align: left;
             cursor: pointer;
             display: grid;
-            grid-template-columns: 32px 1fr;
+            grid-template-columns: 35px 1fr;
             align-items: start;
             gap: 4px;
             transition: all 0.2s ease;
         }
 
         .ship-bullet {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             line-height: 1.2;
             color: var(--accent-color);
             transition: transform 0.3s ease;
@@ -301,38 +321,39 @@
         }
 
         .ledger-link-text {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: var(--ink-dark);
-            text-decoration: underline dashed rgba(90, 120, 107, 0.4);
-            text-underline-offset: 3px;
+            text-decoration: underline dashed rgba(74, 99, 86, 0.4);
+            text-underline-offset: 4px;
         }
 
         .ledger-file-stamp {
             font-family: "Courier New", Courier, monospace;
-            font-size: 0.8rem;
-            color: #8c8275;
+            font-size: 0.85rem;
+            color: #7a6e5d;
             font-weight: bold;
             letter-spacing: 0.5px;
         }
 
         .ledger-hook-text {
-            font-size: 0.95rem;
+            font-size: 0.98rem;
             font-style: italic;
-            margin: 4px 0 0 0;
+            margin: 6px 0 0 0;
             line-height: 1.4;
             
-            background: linear-gradient(to right, #4a4339 0%, #4a4339 50%, var(--accent-color) 100%);
+            background: linear-gradient(to right, #4f4435 0%, #4f4435 50%, var(--accent-color) 100%);
             background-size: 200% 100%;
             background-position: 100% 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: #70675a;
+            color: #6b5e4c;
             transition: background-position 0.4s ease;
         }
 
+        /* Interaction States */
         .ledger-row-item:hover .ship-bullet {
-            transform: translate(2px, -1px) rotate(4deg);
+            transform: translate(3px, -1px) rotate(5deg);
         }
 
         .ledger-row-item:hover .ledger-link-text {
@@ -344,70 +365,87 @@
             background-position: 0 0;
         }
 
-        /* Dialog Window System */
+        /* 🚪 Dialog Window System */
         dialog {
-            border: 1px solid #8c8275;
-            border-radius: 6px;
+            border: 1px solid #7a6e5d;
+            border-radius: 4px;
             padding: 0;
             width: 90%;
-            max-width: 520px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            background: #ffffff;
+            max-width: 550px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+            background: var(--paper-bg); /* Continuous scroll parchment style color matched */
             overflow: hidden;
         }
 
         dialog::backdrop {
-            background: rgba(30, 28, 25, 0.4);
-            backdrop-filter: blur(3px);
+            background: rgba(27, 23, 18, 0.55);
+            backdrop-filter: blur(4px);
         }
 
         .popup-img {
             width: 100%;
-            max-height: 230px;
+            max-height: 240px;
             object-fit: cover;
             display: block;
-            border-bottom: 1px solid #e0d9cd;
+            border-bottom: 1px solid #bfb399;
         }
 
         .popup-content-box {
-            padding: 25px;
+            padding: 30px;
             position: relative;
-            background: #fdfcf9;
         }
 
         .close-x {
             position: absolute;
-            top: -200px; 
+            top: -210px; 
             right: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ccc;
+            background: rgba(245, 240, 225, 0.95);
+            border: 1px solid #aa9c84;
             font-size: 1.2rem;
             font-weight: bold;
             color: #333;
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
         .popup-title {
-            font-size: 1.3rem;
-            margin: 0 0 12px 0;
+            font-size: 1.4rem;
+            margin: 0 0 15px 0;
             color: var(--ink-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px dashed #bfb399;
+            padding-bottom: 6px;
+        }
+
+        /* 🎯 CRITICAL BUGFIX: Preserves multi-paragraph spacing patterns from Column E cells perfectly */
+        .popup-body-content {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.65;
+            color: var(--text-color);
+            font-family: Georgia, serif;
+            white-space: pre-wrap; 
+            text-align: justify;
         }
 
         .loading-msg {
             text-align: center;
             font-size: 1.2rem;
-            padding: 50px 0;
-            color: #777;
+            padding: 65px 0;
+            color: #6b5e4c;
+            font-style: italic;
         }
 
-        @media (max-width: 750px) {
-            .dashboard-layout { grid-template-columns: 1fr; }
+        @media (max-width: 800px) {
+            .scroll-wrapper-canvas { margin: 10px; padding: 20px; }
+            .dashboard-layout { grid-template-columns: 1fr; gap: 25px; }
             .split-reader-grid { grid-template-columns: 1fr; height: auto; }
             .map-viewer-frame { height: 280px; }
             .text-content-frame { height: auto; padding-right: 0; }
@@ -418,51 +456,53 @@
 </head>
 <body>
 
-    <div class="top-bar" id="mainHeader">
-        <div class="header-row">
-            <h1 class="site-title">Backstory</h1>
-            <div class="author-name">Dwaipayan Sinha</div>
-        </div>
-        <p class="site-description">Every major event has a hidden beginning. Discover the secret motives, accidental choices, and forgotten human drama that shaped our world.</p>
-    </div>
+    <div class="scroll-wrapper-canvas">
 
-    <div class="container">
-        <div class="dashboard-layout" id="dashboardScreen">
-            <nav>
-                <ul class="chapter-list" id="menuContainer"></ul>
-            </nav>
-            <main class="preview-pane" id="previewContainer">
-                <div class="loading-msg">Loading archive database...</div>
-            </main>
+        <div class="top-bar" id="mainHeader">
+            <div class="header-row">
+                <h1 class="site-title">Backstory</h1>
+                <div class="author-name">Dwaipayan Sinha</div>
+            </div>
+            <p class="site-description">Every major event has a hidden beginning. Discover the secret motives, accidental choices, and forgotten human drama that shaped our world.</p>
         </div>
 
-        <div class="reader-layout" id="readerScreen">
-            <button class="back-btn" onclick="showDashboardView()">← Back to Menu</button>
-            <div class="date" id="readerDate"></div>
-            <h2 class="reader-header" id="readerTitle"></h2>
-            
-            <div class="split-reader-grid">
-                <div class="map-viewer-frame" id="mapFrameContainer"></div>
+        <div class="container">
+            <div class="dashboard-layout" id="dashboardScreen">
+                <nav>
+                    <ul class="chapter-list" id="menuContainer"></ul>
+                </nav>
+                <main class="preview-pane" id="previewContainer">
+                    <div class="loading-msg">Loading archive ledger entries...</div>
+                </main>
+            </div>
+
+            <div class="reader-layout" id="readerScreen">
+                <button class="back-btn" onclick="showDashboardView()">← Back to Menu</button>
+                <div class="date" id="readerDate"></div>
+                <h2 class="reader-header" id="readerTitle"></h2>
                 
-                <div class="text-content-frame">
-                    <p class="reader-body" id="readerBody"></p>
+                <div class="split-reader-grid">
+                    <div class="map-viewer-frame" id="mapFrameContainer"></div>
+                    
+                    <div class="text-content-frame">
+                        <p class="reader-body" id="readerBody"></p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="section-divider">
-                <span>THE CATALYSTS: PIECES OF THE PUZZLE</span>
-            </div>
+                <div class="section-divider">
+                    <span>THE CATALYSTS: PIECES OF THE PUZZLE</span>
+                </div>
 
-            <div id="categoriesMasterContainer"></div>
+                <div id="categoriesMasterContainer"></div>
+            </div>
         </div>
-    </div>
 
-    <div id="popupMasterStack"></div>
+    </div> <div id="popupMasterStack"></div>
 
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
         const SHEET2_GID = '714083378'; 
-        const SHEET3_GID = '714083378'; // Set to Sheet2 or Sheet3 placeholder safely
+        const SHEET3_GID = '714083378'; 
 
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
@@ -477,7 +517,6 @@
 
         async function initSystem() {
             try {
-                // 1. Fetch data packages with full structural independence
                 const [res1, res2] = await Promise.all([
                     fetch(CHAPTERS_URL).then(r => r.text()),
                     fetch(LEVERS_URL).then(r => r.text())
@@ -486,7 +525,6 @@
                 const d1 = JSON.parse(res1.substr(47).slice(0, -2)).table.rows;
                 const d2 = JSON.parse(res2.substr(47).slice(0, -2)).table.rows;
 
-                // Attempt optional Sheet3 processing safely without script blockage loops
                 try {
                     const res3 = await fetch(CATEGORIES_URL).then(r => r.text());
                     const d3 = JSON.parse(res3.substr(47).slice(0, -2)).table.rows;
@@ -499,10 +537,9 @@
                         }
                     });
                 } catch(e) {
-                    console.log("Sheet3 fallback active. Using default category headers.");
+                    console.log("Sheet3 processing bypassed. Default headings engaged safely.");
                 }
 
-                // 2. Process Chapter Hub Configs
                 let firstId = null;
                 d1.forEach((row) => {
                     if(!row || !row.c || !row.c[0]) return;
@@ -520,7 +557,6 @@
                     };
                 });
 
-                // 3. Process Link rows defensively
                 d2.forEach((row) => {
                     if(!row || !row.c || !row.c[0]) return;
                     const cId = row.c[0].v;
@@ -539,7 +575,7 @@
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">System Initialization Mismatch. Check Google Sheets sharing properties.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">System Initialization Mismatch. Check Google Sheets sharing parameters.</div>`;
                 console.error(err);
             }
         }
@@ -565,8 +601,8 @@
             let imageSection = data.img ? `<img src="${data.img}" class="preview-image" alt="${data.title}">` : '';
             
             document.getElementById('previewContainer').innerHTML = `
-                <div class="date">${data.date}</div>
-                <h2 style="margin:5px 0 15px 0; font-size:1.8rem;">${data.title}</h2>
+                <div style="font-size:0.95rem; text-transform:uppercase; color:#7a6e5d; letter-spacing:1px; margin-bottom:5px;">${data.date}</div>
+                <h2 style="margin:5px 0 15px 0; font-size:1.9rem; color:var(--ink-dark);">${data.title}</h2>
                 ${imageSection}
                 <div>
                     <button class="explore-trigger-btn" onclick="launchReaderView('${id}')">Open Interactive Chapter</button>
@@ -637,7 +673,7 @@
                             <div class="popup-content-box">
                                 <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
                                 <h3 class="popup-title">${lev.popTitle}</h3>
-                                <p style="margin:0; font-size:1.05rem; line-height:1.5; color:#333; font-family:Georgia, serif;">${lev.popBody}</p>
+                                <p class="popup-body-content">${lev.popBody}</p>
                             </div>
                         </dialog>
                     `;
