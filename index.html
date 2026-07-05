@@ -6,44 +6,27 @@
     <title>Backstory - The Hidden Levers</title>
     <style>
         :root {
-            --bg-color: #1e1610; 
-            --text-color: #2b1f14; 
-            --accent-color: #384d41; 
-            --paper-bg: #dfd2b5; 
-            --ink-dark: #120d09;
-            --charcoal-burn: rgba(28, 15, 6, 0.75);
+            --bg-color: #f7f6f2;
+            --text-color: #2c3531;
+            --accent-color: #5a786b; /* Soothing Sage Green */
+            --card-bg: #ffffff;
+            --card-hover: rgba(90, 120, 107, 0.08);
         }
 
-        html, body {
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif;
             background-color: var(--bg-color);
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='mesh'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mesh)' opacity='0.25'/%3E%3C/svg%3E");
+            color: var(--text-color);
+            line-height: 1.6;
             margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            font-family: Georgia, "Times New Roman", Times, serif;
-        }
-
-        .scroll-wrapper-canvas {
-            max-width: 1000px;
-            margin: 40px auto;
-            background-color: var(--paper-bg);
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyStain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyStain)'/%3E%3C/svg%3E");
-            padding: 50px;
-            position: relative;
-            box-sizing: border-box;
-            border-radius: 95% 6% 92% 8% / 6% 95% 5% 94%;
-            border: 2px solid #a38c6b;
-            box-shadow: 
-                inset 0 0 80px var(--charcoal-burn),
-                inset 0 0 40px rgba(0, 0, 0, 0.4),
-                inset 30px 30px 100px rgba(45, 27, 12, 0.3),
-                6px 18px 45px rgba(0, 0, 0, 0.75);
+            padding: 20px;
         }
 
         .top-bar {
-            border-bottom: 2px double var(--accent-color);
-            padding-bottom: 22px;
-            margin-bottom: 35px;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
         }
 
         .header-row {
@@ -54,56 +37,56 @@
         }
 
         .site-title {
-            font-size: 2.7rem;
+            font-size: 2.2rem;
             margin: 0;
             font-weight: bold;
-            color: var(--ink-dark);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
+            color: var(--text-color);
         }
 
         .author-name {
             font-size: 0.85rem;
-            color: #4f3925;
+            color: #777;
             font-weight: 500;
-            letter-spacing: 1.5px;
-            margin-top: 18px;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
         }
 
         .site-description {
-            font-size: 1.1rem;
-            color: #403023;
+            font-size: 1.05rem;
+            color: #555;
             margin: 0;
-            max-width: 750px;
-            line-height: 1.6;
-            font-style: italic;
+            max-width: 700px;
+            line-height: 1.5;
         }
 
         .back-btn {
             background: none;
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 6px 14px;
-            border-radius: 4px;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.2s;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             display: inline-block;
-            font-family: inherit;
         }
 
         .back-btn:hover {
             background-color: var(--accent-color);
-            color: var(--paper-bg);
+            color: white;
         }
 
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* View 1: Dashboard Layout */
         .dashboard-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
-            gap: 40px;
+            gap: 30px;
         }
 
         .chapter-list {
@@ -118,152 +101,147 @@
             text-align: left;
             background: none;
             border: none;
-            padding: 12px 14px;
-            margin-bottom: 12px;
-            border-radius: 4px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--text-color);
             transition: all 0.2s;
             font-weight: 600;
-            border-left: 3px solid transparent;
-            font-family: inherit;
+            border-left: 4px solid transparent;
         }
 
         .chapter-btn:hover, .chapter-btn.active {
-            background-color: rgba(56, 77, 65, 0.15);
+            background-color: var(--card-hover);
             color: var(--accent-color);
             border-left-color: var(--accent-color);
         }
 
         .preview-pane {
-            background: rgba(255, 255, 255, 0.15);
+            background: var(--card-bg);
             padding: 30px;
-            border-radius: 6px;
-            border: 1px dashed #a38c6b;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
             text-align: center;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
         }
 
         .preview-image {
             width: 100%;
-            max-height: 360px;
+            max-height: 380px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-top: 15px;
-            border: 1px solid #a38c6b;
-            filter: sepia(0.25) contrast(0.9);
         }
 
         .explore-trigger-btn {
             margin-top: 25px;
             background-color: var(--accent-color);
-            color: #fffdec;
+            color: white;
             border: none;
             padding: 12px 28px;
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: bold;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             transition: opacity 0.2s;
-            font-family: inherit;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
 
         .explore-trigger-btn:hover {
             opacity: 0.9;
         }
 
+        /* View 2: Immersive Reader Workspace */
         .reader-layout {
             display: none; 
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.02);
         }
 
         .reader-header {
-            font-size: 2.5rem;
-            margin: 5px 0 25px 0;
+            font-size: 2.2rem;
+            margin: 5px 0 20px 0;
             text-align: center;
-            color: var(--ink-dark);
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
+        /* 🎙️ TTS Audio Panel Styling (Matches original clean aesthetic) */
         .narration-deck {
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: rgba(43, 26, 11, 0.06);
-            border: 1px dashed #baa27e;
-            padding: 8px 16px;
-            border-radius: 4px;
+            gap: 12px;
+            background: #fdfdfd;
+            border: 1px solid #e0dddb;
+            padding: 6px 14px;
+            border-radius: 20px;
             margin-bottom: 25px;
             max-width: fit-content;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
         .audio-trigger-btn {
             background: none;
             border: none;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 4px;
-            transition: transform 0.2s ease;
-        }
-
-        .audio-trigger-btn:hover {
-            transform: scale(1.15);
+            gap: 6px;
+            font-weight: 600;
+            color: var(--accent-color);
         }
 
         .speed-panel-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-color);
+            color: #777;
+            margin-left: 8px;
         }
 
         .audio-speed-btn {
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid #baa27e;
+            background: #f4f3ef;
+            border: 1px solid #d1cfcb;
             font-family: monospace;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             padding: 2px 8px;
-            border-radius: 3px;
+            border-radius: 12px;
             cursor: pointer;
-            color: var(--ink-dark);
+            color: var(--text-color);
         }
 
         .audio-speed-btn:hover {
             background: var(--accent-color);
             color: white;
+            border-color: var(--accent-color);
         }
 
         .speed-tracker-display {
             font-family: monospace;
             font-weight: bold;
-            font-size: 0.95rem;
-            color: var(--ink-dark);
-            min-width: 38px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            min-width: 35px;
             text-align: center;
         }
 
         .split-reader-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 35px;
-            margin-bottom: 45px;
-            height: 470px;
+            gap: 30px;
+            margin-bottom: 40px;
+            height: 450px;
         }
 
         .map-viewer-frame {
             width: 100%;
             height: 100%;
-            border-radius: 4px;
+            border-radius: 8px;
             overflow: hidden;
-            border: 1px solid #a38c6b;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            background: #fbfbfa;
         }
 
         .map-image {
@@ -271,7 +249,6 @@
             height: 100%;
             display: block;
             object-fit: cover;
-            filter: sepia(0.3) contrast(0.9);
         }
 
         .text-content-frame {
@@ -281,61 +258,60 @@
         }
 
         .text-content-frame::-webkit-scrollbar {
-            width: 5px;
+            width: 6px;
         }
         .text-content-frame::-webkit-scrollbar-track {
             background: rgba(0,0,0,0.02);
+            border-radius: 10px;
         }
         .text-content-frame::-webkit-scrollbar-thumb {
-            background: rgba(56, 77, 65, 0.4);
-            border-radius: 4px;
+            background: rgba(90, 120, 107, 0.3);
+            border-radius: 10px;
         }
 
         .reader-body {
             font-size: 1.15rem;
-            color: var(--text-color);
+            color: #3e4743;
             margin: 0;
             white-space: pre-wrap;
-            text-align: justify;
-            line-height: 1.7;
         }
 
         .section-divider {
             text-align: center;
-            border-bottom: 1px double #a38c6b;
+            border-bottom: 1px solid #e0dddb;
             line-height: 0.1em;
-            margin: 45px 0;
+            margin: 40px 0;
         }
 
         .section-divider span {
-            background-color: #d4c6a9; 
-            padding: 0 20px;
-            color: var(--ink-dark);
+            background: var(--card-bg);
+            padding: 0 15px;
+            color: var(--accent-color);
             font-weight: bold;
-            letter-spacing: 2px;
-            font-size: 1rem;
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
         }
 
+        /* Clean List Layout for Categories */
         .category-block {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .category-header {
-            font-family: inherit;
-            font-size: 1.25rem;
-            font-weight: bold;
+            font-size: 1.15rem;
+            font-weight: 700;
             color: var(--accent-color);
-            border-bottom: 1px solid #a38c6b;
-            padding-bottom: 8px;
-            margin: 0 0 20px 0;
-            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e8e6e3;
+            padding-bottom: 6px;
+            margin: 0 0 15px 0;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .ledger-rows-list {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 14px;
         }
 
         .ledger-row-item {
@@ -346,23 +322,21 @@
             text-align: left;
             cursor: pointer;
             display: grid;
-            grid-template-columns: 35px 1fr;
+            grid-template-columns: 28px 1fr;
             align-items: start;
             gap: 4px;
-            transition: all 0.2s ease;
         }
 
         .ship-bullet {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             line-height: 1.2;
             color: var(--accent-color);
-            transition: transform 0.3s ease;
+            transition: transform 0.2s ease;
         }
 
         .ledger-content-wrap {
             display: flex;
             flex-direction: column;
-            gap: 2px;
         }
 
         .ledger-title-line {
@@ -373,37 +347,36 @@
         }
 
         .ledger-link-text {
-            font-size: 1.15rem;
-            font-weight: bold;
-            color: var(--ink-dark);
-            text-decoration: underline dashed rgba(56, 77, 65, 0.6);
-            text-underline-offset: 4px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: underline dashed rgba(90, 120, 107, 0.4);
+            text-underline-offset: 3px;
         }
 
         .ledger-file-stamp {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.85rem;
-            color: #5c4733;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #888;
             font-weight: bold;
-            letter-spacing: 0.5px;
         }
 
         .ledger-hook-text {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-style: italic;
-            margin: 6px 0 0 0;
+            margin: 4px 0 0 0;
             line-height: 1.4;
-            background: linear-gradient(to right, #4f3b2a 0%, #4f3b2a 50%, var(--accent-color) 100%);
+            background: linear-gradient(to right, #2c3531 0%, #2c3531 50%, var(--accent-color) 100%);
             background-size: 200% 100%;
             background-position: 100% 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: #4f3b2a;
+            color: #666;
             transition: background-position 0.4s ease;
         }
 
         .ledger-row-item:hover .ship-bullet {
-            transform: translate(3px, -1px) rotate(6deg);
+            transform: translate(2px, -1px);
         }
 
         .ledger-row-item:hover .ledger-link-text {
@@ -415,20 +388,20 @@
             background-position: 0 0;
         }
 
+        /* Clean Popups styling */
         dialog {
-            border: 1px solid #6b553b;
-            border-radius: 4px;
+            border: none;
+            border-radius: 12px;
             padding: 0;
             width: 90%;
             max-width: 550px;
-            background-color: #ebdcb9;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='popNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23popNoise)' opacity='0.09'/%3E%3C/svg%3E");
-            box-shadow: inset 0 0 40px rgba(56,38,20,0.3), 0 15px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            background: #ffffff;
             overflow: hidden;
         }
 
         dialog::backdrop {
-            background: rgba(13, 10, 7, 0.75);
+            background: rgba(44, 53, 49, 0.4);
             backdrop-filter: blur(4px);
         }
 
@@ -437,8 +410,6 @@
             max-height: 240px;
             object-fit: cover;
             display: block;
-            border-bottom: 1px solid #a38c6b;
-            filter: sepia(0.2);
         }
 
         .popup-content-box {
@@ -450,37 +421,33 @@
             position: absolute;
             top: -210px; 
             right: 15px;
-            background: #ebdcb9;
-            border: 1px solid #a38c6b;
-            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            font-size: 1.4rem;
             font-weight: bold;
-            color: var(--ink-dark);
-            width: 30px;
-            height: 30px;
+            color: #333;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .popup-title {
-            font-size: 1.4rem;
-            margin: 0 0 15px 0;
-            color: var(--ink-dark);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 1px dashed #a38c6b;
-            padding-bottom: 6px;
+            font-size: 1.3rem;
+            margin: 0 0 12px 0;
+            color: var(--text-color);
         }
 
+        /* FIXED: Preserves your spreadsheet paragraphs perfectly */
         .popup-body-content {
             margin: 0;
-            font-size: 1.15rem;
-            line-height: 1.65;
-            color: var(--text-color);
-            font-family: Georgia, serif;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #333;
             white-space: pre-wrap; 
             text-align: justify;
         }
@@ -488,16 +455,14 @@
         .loading-msg {
             text-align: center;
             font-size: 1.2rem;
-            padding: 65px 0;
-            color: #4f3925;
-            font-style: italic;
+            padding: 50px 0;
+            color: #666;
         }
 
-        @media (max-width: 800px) {
-            .scroll-wrapper-canvas { margin: 10px; padding: 25px; border-radius: 6px; }
-            .dashboard-layout { grid-template-columns: 1fr; gap: 25px; }
+        @media (max-width: 750px) {
+            .dashboard-layout { grid-template-columns: 1fr; }
             .split-reader-grid { grid-template-columns: 1fr; height: auto; }
-            .map-viewer-frame { height: 280px; }
+            .map-viewer-frame { height: 300px; }
             .text-content-frame { height: auto; padding-right: 0; }
             .header-row { flex-direction: column; }
             .author-name { margin-top: 5px; }
@@ -506,52 +471,50 @@
 </head>
 <body>
 
-    <div class="scroll-wrapper-canvas">
-        <div class="top-bar" id="mainHeader">
-            <div class="header-row">
-                <h1 class="site-title">Backstory</h1>
-                <div class="author-name">Dwaipayan Sinha</div>
-            </div>
-            <p class="site-description">Every major event has a hidden beginning. Discover the secret motives, accidental choices, and forgotten human drama that shaped our world.</p>
+    <div class="top-bar" id="mainHeader">
+        <div class="header-row">
+            <h1 class="site-title">Backstory</h1>
+            <div class="author-name">Dwaipayan Sinha</div>
+        </div>
+        <p class="site-description">Every major event has a hidden beginning. Discover the secret motives, accidental choices, and forgotten human drama that shaped our world.</p>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-layout" id="dashboardScreen">
+            <nav>
+                <ul class="chapter-list" id="menuContainer"></ul>
+            </nav>
+            <main class="preview-pane" id="previewContainer">
+                <div class="loading-msg">Loading history engine...</div>
+            </main>
         </div>
 
-        <div class="container">
-            <div class="dashboard-layout" id="dashboardScreen">
-                <nav>
-                    <ul class="chapter-list" id="menuContainer"></ul>
-                </nav>
-                <main class="preview-pane" id="previewContainer">
-                    <div class="loading-msg">Loading ledger logs...</div>
-                </main>
+        <div class="reader-layout" id="readerScreen">
+            <button class="back-btn" onclick="showDashboardView()">← Back to Menu</button>
+            
+            <div class="narration-deck">
+                <button class="audio-trigger-btn" id="ttsPlaybackMasterTrigger" onclick="toggleNarrationEngine()">🎙️ Read Aloud</button>
+                <div class="speed-panel-label">Speed:</div>
+                <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(-0.1)">-</button>
+                <div class="speed-tracker-display" id="ttsSpeedLabel">1.0x</div>
+                <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(0.1)">+</button>
             </div>
 
-            <div class="reader-layout" id="readerScreen">
-                <button class="back-btn" onclick="showDashboardView()">← Back to Menu</button>
-                
-                <div class="narration-deck">
-                    <button class="audio-trigger-btn" id="ttsPlaybackMasterTrigger" onclick="toggleNarrationEngine()" title="Narrate Document File">🎙️ Read Aloud</button>
-                    <div class="speed-panel-label">Pace:</div>
-                    <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(-0.1)">[ - ]</button>
-                    <div class="speed-tracker-display" id="ttsSpeedLabel">1.0x</div>
-                    <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(0.1)">[ + ]</button>
+            <div class="date" id="readerDate" style="font-size: 0.9rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;"></div>
+            <h2 class="reader-header" id="readerTitle" style="text-align: left; margin-top: 0;"></h2>
+            
+            <div class="split-reader-grid">
+                <div class="map-viewer-frame" id="mapFrameContainer"></div>
+                <div class="text-content-frame">
+                    <p class="reader-body" id="readerBody"></p>
                 </div>
-
-                <div style="font-size:0.95rem; text-transform:uppercase; color:#5c4733; letter-spacing:1px; margin-bottom:5px;" id="readerDate"></div>
-                <h2 class="reader-header" id="readerTitle"></h2>
-                
-                <div class="split-reader-grid">
-                    <div class="map-viewer-frame" id="mapFrameContainer"></div>
-                    <div class="text-content-frame">
-                        <p class="reader-body" id="readerBody"></p>
-                    </div>
-                </div>
-
-                <div class="section-divider">
-                    <span>THE CATALYSTS: PIECES OF THE PUZZLE</span>
-                </div>
-
-                <div id="categoriesMasterContainer"></div>
             </div>
+
+            <div class="section-divider">
+                <span>THE CATALYSTS: PIECES OF THE PUZZLE</span>
+            </div>
+
+            <div id="categoriesMasterContainer"></div>
         </div>
     </div>
 
@@ -560,7 +523,7 @@
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
         const SHEET2_GID = '714083378'; 
-        const SHEET3_GID = '448625302'; 
+        const SHEET3_GID = '714083378'; 
 
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
@@ -599,7 +562,7 @@
                         }
                     });
                 } catch(e) {
-                    console.log("Sheet3 fallback active.");
+                    console.log("Sheet3 layout dictionary backup active.");
                 }
 
                 let firstId = null;
@@ -637,7 +600,7 @@
 
                 renderMenu(firstId);
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet sharing.</div>`;
+                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet sharing parameters.</div>`;
                 console.error(err);
             }
         }
@@ -663,8 +626,8 @@
             let imageSection = data.img ? `<img src="${data.img}" class="preview-image" alt="${data.title}">` : '';
             
             document.getElementById('previewContainer').innerHTML = `
-                <div style="font-size:0.95rem; text-transform:uppercase; color:#6b5843; letter-spacing:1px; margin-bottom:5px;">${data.date}</div>
-                <h2 style="margin:5px 0 15px 0; font-size:1.9rem; color:var(--ink-dark);">${data.title}</h2>
+                <div class="date">${data.date}</div>
+                <h2 style="margin:5px 0 15px 0; font-size:1.8rem;">${data.title}</h2>
                 ${imageSection}
                 <div>
                     <button class="explore-trigger-btn" onclick="launchReaderView('${id}')">Open Interactive Chapter</button>
@@ -736,7 +699,7 @@
                             <div class="popup-content-box">
                                 <button class="close-x" onclick="document.getElementById('${uniqueId}').close()">&times;</button>
                                 <div style="display:flex; justify-content:space-between; align-items:start; gap:10px;">
-                                    <h3 class="popup-title" style="flex:1;">${lev.popTitle}</h3>
+                                    <h3 class="popup-title" style="flex:1; margin:0 0 15px 0;">${lev.popTitle}</h3>
                                     <button onclick="readPopupSegmentAloud('${uniqueId}')" style="background:none; border:none; font-size:1.3rem; cursor:pointer;" title="Read Popup Text">🎙️</button>
                                 </div>
                                 <p class="popup-body-content" id="body-text-${uniqueId}">${lev.popBody}</p>
@@ -750,7 +713,7 @@
                 masterCategoriesHtml += `</div></div>`;
             });
 
-            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No record ledgers registered for this timeline.</p>';
+            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No record links registered for this timeline.</p>';
             document.getElementById('popupMasterStack').innerHTML = modalHtml;
 
             document.getElementById('mainHeader').style.display = 'none';
