@@ -247,17 +247,19 @@
             text-align: center;
         }
 
+        /* 🎯 SYMMETRICAL SPLIT-VAULT GRID ENGINE */
         .split-reader-grid {
             display: flex;
             flex-direction: row;
             gap: 30px;
             margin-bottom: 40px;
-            height: auto;
+            height: 480px; /* Rigid ceiling locks lower lines identically */
+            align-items: stretch;
         }
 
         .map-viewer-frame {
             width: 50%;
-            height: 450px; 
+            height: 100%;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.06);
@@ -278,10 +280,25 @@
             transform: scale(1.02);
         }
 
+        /* 🎯 DYNAMIC INTERNAL CHRONICLE SCROLLER SCALING DECK */
         .text-content-frame {
             width: 50%;
-            height: auto;
-            overflow: visible;
+            height: 100%;
+            overflow-y: auto; /* Injects vertical scroll mechanics inside locked boundary boundaries */
+            padding-right: 15px;
+            box-sizing: border-box;
+        }
+
+        .text-content-frame::-webkit-scrollbar {
+            width: 6px;
+        }
+        .text-content-frame::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.02);
+            border-radius: 10px;
+        }
+        .text-content-frame::-webkit-scrollbar-thumb {
+            background: rgba(90, 120, 107, 0.3);
+            border-radius: 10px;
         }
 
         .reader-body {
@@ -309,26 +326,70 @@
             font-size: 0.85rem;
         }
 
+        /* 🎯 ACCORDION SUMMARY DROPDOWN STRUCTURAL PLATFORMS */
         .category-block {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             clear: both;
+            border: 1px solid #e8e6e3;
+            border-radius: 8px;
+            background: #ffffff;
+            overflow: hidden;
         }
 
-        .category-header {
-            font-size: 1.15rem;
+        .category-block[open] {
+            padding-bottom: 20px;
+        }
+
+        .category-header-summary {
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--accent-color);
-            border-bottom: 1px solid #e8e6e3;
-            padding-bottom: 6px;
-            margin: 0 0 15px 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            background: #fafafa;
+            cursor: pointer;
+            user-select: none;
+            outline: none;
+            list-style: none; /* Strip browser default native bullets */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid transparent;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .category-block[open] .category-header-summary {
+            background: #ffffff;
+            border-bottom-color: #e8e6e3;
+            margin-bottom: 15px;
+        }
+
+        .category-header-summary:hover {
+            background: #f5f3f0;
+        }
+
+        /* Injects semantic rotatable arrow indicator */
+        .category-header-summary::before {
+            content: "▶";
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            transition: transform 0.25s ease;
+            display: inline-block;
+        }
+
+        .category-block[open] .category-header-summary::before {
+            transform: rotate(90deg);
+        }
+
+        /* Webkit fallback wrapper rules for safari browser alignments */
+        .category-header-summary::-webkit-details-marker {
+            display: none;
         }
 
         .ledger-rows-list {
             display: flex;
             flex-direction: column;
             gap: 14px;
+            padding: 0 20px; /* Pads ledger rows out from accordion shell walls cleanly */
         }
 
         .ledger-row-item {
@@ -425,7 +486,6 @@
             transition: max-width 0.3s ease, max-height 0.3s ease, width 0.3s ease, height 0.3s ease;
         }
 
-        /* ▢ DYNAMIC MAXIMIZE MODE SCALE SETTINGS */
         dialog.maximized-mode {
             max-width: 95vw !important;
             max-height: 95vh !important;
@@ -452,7 +512,7 @@
         }
 
         dialog.maximized-mode .popup-img {
-            max-height: 380px; /* Expands picture asset view inside widescreen layout environments */
+            max-height: 380px; 
         }
 
         .popup-scroll-body-container {
@@ -461,7 +521,6 @@
             flex: 1;
         }
 
-        /* 🎛️ PROFESSIONAL TRIPLE TOGGLE SYSTEM MANAGEMENT CONTAINER HEADER ELEMENT */
         .window-control-rack {
             position: absolute;
             top: 15px; 
@@ -504,7 +563,7 @@
             font-size: 1.4rem;
             margin: 0 0 10px 0;
             color: var(--text-color);
-            padding-right: 120px; /* Insulates text track lines from smashing under right button layout coordinates */
+            padding-right: 120px; 
         }
 
         .popup-body-content {
@@ -516,7 +575,6 @@
             text-align: justify;
         }
 
-        /* 🎙️ AUDIOPHILE COMPACT MULTI-LINE AUDIO TIMELINE DECK COMPONENT */
         .popup-audio-module-wrap {
             background: #fdfdfd;
             border: 1px solid #e8e6e3;
@@ -539,7 +597,6 @@
             gap: 12px;
         }
 
-        /* PROGRESS TIMELINE ELEMENT SLIDER DECK */
         .popup-audio-timeline-bar {
             flex: 1;
             height: 5px;
@@ -553,7 +610,7 @@
         .popup-audio-progress-fill {
             position: absolute;
             top: 0; left: 0; height: 100%;
-            width: 0%; /* Updates dynamically via spoken character loops */
+            width: 0%; 
             background: var(--accent-color);
             border-radius: 4px;
             transition: width 0.1s linear;
@@ -665,13 +722,14 @@
 
         @media (max-width: 750px) {
             .dashboard-layout { grid-template-columns: 1fr; }
-            .split-reader-grid { flex-direction: column; }
+            .split-reader-grid { flex-direction: column; height: auto; }
             .map-viewer-frame { width: 100%; height: 300px; }
-            .text-content-frame { width: 100%; }
+            .text-content-frame { width: 100%; height: auto; max-height: none; overflow: visible; }
             .header-row { flex-direction: column; }
             .author-name { margin-top: 5px; }
             .reader-branding-meta-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
             .popup-title { padding-right: 0; margin-top: 40px; }
+            .category-block { border-radius: 0; border-left: none; border-right: none; }
         }
     </style>
 </head>
@@ -756,7 +814,6 @@
 
         let activePopupUtterance = null;
         let isPopupAudioPlaying = false;
-        let currentPopupSpokenIndex = 0;
 
         function parseMarkdownToHtml(textString) {
             if (!textString) return '';
@@ -789,7 +846,7 @@
                         }
                     });
                 } catch(e) {
-                    console.log("Sheet3 system stream running.");
+                    console.log("Sheet3 accordion linking active.");
                 }
 
                 let firstId = null;
@@ -899,9 +956,10 @@
                 const categoryTitle = globalCategories[catId] || `SECTION ${catId}`;
                 const categoryItems = structuredMap[catId];
 
+                // 🎯 RE-ENGINEERED ACCORDION: Switched legacy block tags to native collapsible markup containers
                 masterCategoriesHtml += `
-                    <div class="category-block">
-                        <h4 class="category-header">${categoryTitle}</h4>
+                    <details class="category-block">
+                        <summary class="category-header-summary">${categoryTitle}</summary>
                         <div class="ledger-rows-list">
                 `;
 
@@ -946,7 +1004,7 @@
                                     <div class="popup-audio-upper-controls">
                                         <button class="audio-trigger-btn" style="font-size:0.95rem;" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙 Play</button>
                                         <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-pause-${uniqueId}" onclick="pausePopupAudioDeck('${uniqueId}')">⏸ Pause</button>
-                                        <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')">⏹ Stop</button>
+                                        <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')"> Stop</button>
                                         <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
                                         <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', -0.1)">-</button>
                                         <div class="speed-tracker-display" style="font-size:0.8rem; min-width:28px;" id="lbl-speed-${uniqueId}">1.0x</div>
@@ -972,7 +1030,7 @@
                     `;
                 });
 
-                masterCategoriesHtml += `</div></div>`;
+                masterCategoriesHtml += `</div></details>`;
             });
 
             document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No record nodes discovered for this timeframe.</p>';
@@ -982,10 +1040,8 @@
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('readerScreen').style.display = 'block';
             window.scrollTo(0,0);
-            attachGlobalLightboxTriggers();
         }
 
-        /* ▢ SCALE TOGGLE CONTROLLER FUNCTION MODULE ROUTINES */
         function toggleWindowSizeState(modalId, makeMaximize) {
             const targetModal = document.getElementById(modalId);
             if (!targetModal) return;
@@ -1004,7 +1060,7 @@
             }
             const modal = document.getElementById(dialogId);
             if(modal) {
-                modal.classList.remove('maximized-mode'); // Always reset dimension scale to default baseline on initialization launches
+                modal.classList.remove('maximized-mode'); 
                 modal.showModal();
                 resetPopupClockReadout(dialogId);
             }
@@ -1078,7 +1134,6 @@
             if(trigger) trigger.innerText = "🎙️ Read Aloud";
         }
 
-        /* 🎙️ PROGRESS TIMELINE PRE-CALCULATION VOICE ENGINE ARCHITECTURES */
         function togglePopupAudioDeck(modalId) {
             const btnPlay = document.getElementById(`btn-audio-${modalId}`);
             const btnPause = document.getElementById(`btn-pause-${modalId}`);
@@ -1099,10 +1154,7 @@
         function spawnPopupVoiceInstance(modalId, text) {
             window.speechSynthesis.cancel();
             
-            // Re-instantiate character parsing markers
             const characterTotalCount = text.length;
-            
-            // Standard baseline timing configuration calculations (Avg speech speed: ~150 words per minute / 1000 characters per minute)
             const estimationFactorBase = (1000 * currentSpeechRate);
             const totalEstimatedSeconds = Math.ceil((characterTotalCount / estimationFactorBase) * 60);
 
@@ -1111,17 +1163,14 @@
             
             document.getElementById(`lbl-speed-${modalId}`).innerText = `${currentSpeechRate.toFixed(1)}x`;
 
-            // Spoken character point boundary trackers
             activePopupUtterance.onboundary = (event) => {
                 if (event.name === 'word') {
                     const characterSpokenMarker = event.charIndex;
                     const computePercentageProgress = (characterSpokenMarker / characterTotalCount) * 100;
                     
-                    // Update scrub bar timeline visual widths
                     const barFillNode = document.getElementById(`fill-progress-${modalId}`);
                     if(barFillNode) barFillNode.style.width = `${computePercentageProgress}%`;
 
-                    // Runtime dynamic digits clock renderer
                     const rollingSecondsElapsed = Math.floor((characterSpokenMarker / characterTotalCount) * totalEstimatedSeconds);
                     updateDynamicAudioClockVisuals(modalId, rollingSecondsElapsed, totalEstimatedSeconds);
                 }
