@@ -247,7 +247,6 @@
             text-align: center;
         }
 
-        /* 🎯 RE-REFINED VAULT FRAME: Perfectly locks left picture and right prose grids at 480px */
         .split-reader-grid {
             display: flex;
             flex-direction: row;
@@ -280,7 +279,6 @@
             transform: scale(1.02);
         }
 
-        /* 🎯 RE-REFINED VAULT SCROLLER: Isolates the vertical narrative flow to prevent MacBook overflow bleeding */
         .text-content-frame {
             width: 50%;
             height: 100%;
@@ -717,16 +715,51 @@
             color: #666;
         }
 
+        /* 🎯 COHESIVE TABLET / IPAD VIEWPORT MEDIA RESPONSIVE SCALING DECK */
+        @media (max-width: 930px) {
+            body { padding: 15px; }
+            .split-reader-grid { height: 420px; gap: 20px; }
+            .reader-layout { padding: 25px; }
+        }
+
+        /* 🎯 COMPLETE MOBILE SCREEN RESPONSIVE RESPONSIVE SCALING BLUEPRINTS */
         @media (max-width: 750px) {
-            .dashboard-layout { grid-template-columns: 1fr; }
-            .split-reader-grid { flex-direction: column; height: auto; }
-            .map-viewer-frame { width: 100%; height: 300px; }
-            .text-content-frame { width: 100%; height: auto; max-height: none; overflow: visible; }
+            body { padding: 10px; }
+            
+            /* Typography optimizations to downscale text bloat on phone screen bounds */
+            .site-title { font-size: 1.65rem; }
+            .site-description { font-size: 0.92rem; }
+            .reader-header { font-size: 1.5rem; margin: 5px 0 15px 0; }
+            .reader-body { font-size: 0.95rem; line-height: 1.55; }
+            
+            .dashboard-layout { grid-template-columns: 1fr; gap: 20px; }
+            
+            /* Break the horizontal desktop tracks into clean vertical column levels */
+            .split-reader-grid { flex-direction: column; height: auto; gap: 20px; }
+            .map-viewer-frame { width: 100%; height: 260px; }
+            .text-content-frame { width: 100%; height: auto; max-height: none; overflow: visible; padding-right: 0; }
+            
             .header-row { flex-direction: column; }
-            .author-name { margin-top: 5px; }
-            .reader-branding-meta-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .popup-title { padding-right: 0; margin-top: 40px; }
-            .category-block { border-radius: 0; border-left: none; border-right: none; }
+            .author-name { margin-top: 4px; font-size: 0.8rem; }
+            .reader-branding-meta-bar { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 15px; }
+            
+            /* Pop up window viewport structural optimization updates */
+            dialog { width: 96%; max-height: 92vh; }
+            .popup-scroll-body-container { padding: 18px 20px; }
+            .popup-title { font-size: 1.2rem; padding-right: 0; margin-top: 42px; }
+            .popup-body-content { font-size: 0.94rem; line-height: 1.6; }
+            .popup-img { max-height: 180px; }
+            .modal-nav-footer { padding: 12px 20px; }
+            .modal-nav-link { font-size: 0.85rem; }
+            .window-control-rack { top: 12px; right: 12px; }
+            
+            .category-header-summary { font-size: 0.95rem; padding: 14px 16px; }
+            .category-block { border-radius: 6px; }
+            .ledger-rows-list { padding: 0 16px; }
+            .ledger-link-text { font-size: 0.92rem; }
+            .ledger-hook-text { font-size: 0.85rem; }
+            .ledger-file-stamp { font-size: 0.72rem; }
+            .ship-bullet { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -792,7 +825,7 @@
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
         const SHEET2_GID = '714083378'; 
-        const SHEET3_GID = '448625302'; /* Updated to target GID 448625302 directly based on your live sheet configurations */
+        const SHEET3_GID = '448625302'; 
 
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
@@ -800,7 +833,7 @@
 
         let globalChapters = {};
         let globalLevers = [];
-        let globalCategories = {}; // 🎯 CLEAR WORKSPACE: Cleared legacy hardcoded elements to pull directly from live cells instead
+        let globalCategories = {}; 
 
         let currentSpeechUtterance = null;
         let isAudioPlaying = false;
@@ -820,7 +853,6 @@
 
         async function initSystem() {
             try {
-                // 🎯 LIVE SYNCING ENGINE: Fetch all 3 sheets in parallel upfront
                 const [res1, res2, res3] = await Promise.all([
                     fetch(CHAPTERS_URL).then(r => r.text()),
                     fetch(LEVERS_URL).then(r => r.text()),
@@ -831,7 +863,6 @@
                 const d2 = JSON.parse(res2.substr(47).slice(0, -2)).table.rows;
                 const d3 = JSON.parse(res3.substr(47).slice(0, -2)).table.rows;
 
-                // 🎯 FIXED DYNAMIC MAP: Iterates through row vectors in Sheet 3 to capture custom category names
                 d3.forEach((row) => {
                     if (row && row.c && row.c[0] && row.c[1]) {
                         const catId = row.c[0].v ? row.c[0].v.toString().trim() : '';
@@ -946,11 +977,9 @@
             let modalHtml = '';
 
             Object.keys(structuredMap).forEach((catId) => {
-                // Pulls custom names from your sheet data vector map dynamically
                 const categoryTitle = globalCategories[catId] || `SECTION ${catId}`;
                 const categoryItems = structuredMap[catId];
 
-                // 🎯 EXCLUSIVE COLLAPSE TRIGGER: Added name="catalyst-accordion" attribute directly onto loop block outputs
                 masterCategoriesHtml += `
                     <details class="category-block" name="catalyst-accordion">
                         <summary class="category-header-summary">${categoryTitle}</summary>
