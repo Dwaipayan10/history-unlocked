@@ -9,6 +9,7 @@
             --bg-color: #f7f6f2;
             --text-color: #2c3531;
             --accent-color: #5a786b; 
+            --india-accent: #b86b32;
             --card-bg: #ffffff;
             --card-hover: rgba(90, 120, 107, 0.08);
         }
@@ -169,7 +170,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             padding-bottom: 10px;
             border-bottom: 1px dashed #e0dddb;
         }
@@ -179,6 +180,40 @@
             color: #777;
             font-weight: 500;
             letter-spacing: 0.5px;
+        }
+
+        /* 🎯 RE-ENGINEERED: BOOK CHAPTER NAVIGATOR BUTTON LAYER PANEL */
+        .book-chapter-tab-deck {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e8e6e3;
+            padding-bottom: 2px;
+            overflow-x: auto;
+        }
+
+        .book-tab-link {
+            background: none;
+            border: none;
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .book-tab-link:hover {
+            color: var(--accent-color);
+            background: rgba(90, 120, 107, 0.04);
+        }
+
+        .book-tab-link.active-tab {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+            background: rgba(90, 120, 107, 0.06);
         }
 
         .reader-header {
@@ -337,6 +372,7 @@
             padding-bottom: 20px;
         }
 
+        /* 🎯 RE-STYLED TIMELINE CONTAINER HEADER GRID WITH OPTION 1 DOCK FLEX SPACING */
         .category-header-summary {
             font-size: 1.05rem;
             font-weight: 700;
@@ -349,7 +385,8 @@
             list-style: none; 
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between; /* Pushes Ribbon elements right against container tracking borders */
+            gap: 15px;
             border-bottom: 1px solid transparent;
             transition: background 0.2s, border-color 0.2s;
         }
@@ -364,7 +401,13 @@
             background: #f5f3f0;
         }
 
-        .category-header-summary::before {
+        .summary-left-segment-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-left-segment-wrap::before {
             content: "▶";
             font-size: 0.75rem;
             color: var(--accent-color);
@@ -372,12 +415,34 @@
             display: inline-block;
         }
 
-        .category-block[open] .category-header-summary::before {
+        .category-block[open] .summary-left-segment-wrap::before {
             transform: rotate(90deg);
         }
 
         .category-header-summary::-webkit-details-marker {
             display: none;
+        }
+
+        /* 🇮🇳 DESIGN OPTION 1: THE INTEGRATED TIMELINE RIBBON ELEMENT STYLE */
+        .india-timeline-ribbon-trigger {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--india-accent);
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            background: transparent;
+            white-space: nowrap;
+        }
+
+        .india-timeline-ribbon-trigger:hover {
+            border-color: var(--india-accent);
+            background: rgba(184, 107, 50, 0.05);
+            transform: translateX(-2px);
         }
 
         .ledger-rows-list {
@@ -439,13 +504,7 @@
             font-style: italic;
             margin: 4px 0 0 0;
             line-height: 1.4;
-            background: linear-gradient(to right, #2c3531 0%, #2c3531 50%, var(--accent-color) 100%);
-            background-size: 200% 100%;
-            background-position: 100% 0;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             color: #666;
-            transition: background-position 0.4s ease;
         }
 
         .ledger-row-item:hover .ship-bullet {
@@ -455,10 +514,6 @@
         .ledger-row-item:hover .ledger-link-text {
             color: var(--accent-color);
             text-decoration-style: solid;
-        }
-
-        .ledger-row-item:hover .ledger-hook-text {
-            background-position: 0 0;
         }
 
         dialog {
@@ -611,6 +666,11 @@
             transition: width 0.1s linear;
         }
 
+        /* Distinct color treatment for India Audio Tracks */
+        .india-modal-container .popup-audio-progress-fill {
+            background: var(--india-accent);
+        }
+
         .popup-audio-clock-readout {
             font-family: monospace;
             font-size: 0.8rem;
@@ -665,7 +725,7 @@
             position: fixed;
             top: 0 !important; left: 0 !important;
             transform: none !important;
-            z-index: 2000000 !important;
+            z-index: 3000000 !important;
         }
 
         .native-lightbox-topframe[open] {
@@ -701,11 +761,7 @@
             align-items: center;
             justify-content: center;
             transition: background 0.2s;
-            z-index: 210000;
-        }
-
-        .lightbox-close-x:hover {
-            background: rgba(255, 255, 255, 0.3);
+            z-index: 310000;
         }
 
         .loading-msg {
@@ -715,51 +771,29 @@
             color: #666;
         }
 
-        /* 🎯 COHESIVE TABLET / IPAD VIEWPORT MEDIA RESPONSIVE SCALING DECK */
         @media (max-width: 930px) {
             body { padding: 15px; }
             .split-reader-grid { height: 420px; gap: 20px; }
             .reader-layout { padding: 25px; }
         }
 
-        /* 🎯 COMPLETE MOBILE SCREEN RESPONSIVE RESPONSIVE SCALING BLUEPRINTS */
         @media (max-width: 750px) {
             body { padding: 10px; }
-            
-            /* Typography optimizations to downscale text bloat on phone screen bounds */
             .site-title { font-size: 1.65rem; }
             .site-description { font-size: 0.92rem; }
-            .reader-header { font-size: 1.5rem; margin: 5px 0 15px 0; }
-            .reader-body { font-size: 0.95rem; line-height: 1.55; }
-            
+            .reader-header { font-size: 1.5rem; }
+            .reader-body { font-size: 0.95rem; }
             .dashboard-layout { grid-template-columns: 1fr; gap: 20px; }
-            
-            /* Break the horizontal desktop tracks into clean vertical column levels */
             .split-reader-grid { flex-direction: column; height: auto; gap: 20px; }
             .map-viewer-frame { width: 100%; height: 260px; }
             .text-content-frame { width: 100%; height: auto; max-height: none; overflow: visible; padding-right: 0; }
-            
             .header-row { flex-direction: column; }
-            .author-name { margin-top: 4px; font-size: 0.8rem; }
-            .reader-branding-meta-bar { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 15px; }
-            
-            /* Pop up window viewport structural optimization updates */
+            .reader-branding-meta-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
             dialog { width: 96%; max-height: 92vh; }
-            .popup-scroll-body-container { padding: 18px 20px; }
             .popup-title { font-size: 1.2rem; padding-right: 0; margin-top: 42px; }
-            .popup-body-content { font-size: 0.94rem; line-height: 1.6; }
-            .popup-img { max-height: 180px; }
-            .modal-nav-footer { padding: 12px 20px; }
-            .modal-nav-link { font-size: 0.85rem; }
-            .window-control-rack { top: 12px; right: 12px; }
-            
-            .category-header-summary { font-size: 0.95rem; padding: 14px 16px; }
-            .category-block { border-radius: 6px; }
-            .ledger-rows-list { padding: 0 16px; }
-            .ledger-link-text { font-size: 0.92rem; }
-            .ledger-hook-text { font-size: 0.85rem; }
-            .ledger-file-stamp { font-size: 0.72rem; }
-            .ship-bullet { font-size: 0.95rem; }
+            .popup-body-content { font-size: 0.94rem; }
+            .category-header-summary { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .india-timeline-ribbon-trigger { align-self: flex-end; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -789,6 +823,8 @@
                 <div class="reader-signature-credit">Dwaipayan Sinha</div>
             </div>
             
+            <div class="book-chapter-tab-deck" id="bookSubChapterTabContainer"></div>
+
             <div class="narration-deck">
                 <button class="audio-trigger-btn" id="ttsPlaybackMasterTrigger" onclick="toggleNarrationEngine()">🎙️ Read Aloud</button>
                 <div class="speed-panel-label">Speed:</div>
@@ -834,6 +870,7 @@
         let globalChapters = {};
         let globalLevers = [];
         let globalCategories = {}; 
+        let activeBookSubChapterId = null; // Tracks the current active tab index code
 
         let currentSpeechUtterance = null;
         let isAudioPlaying = false;
@@ -845,6 +882,7 @@
         function parseMarkdownToHtml(textString) {
             if (!textString) return '';
             let html = textString.toString();
+            html = html.replace(/\*\frac{(.*?)}{(.*?)}/g, '<strong>$1</strong>');
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
             html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
@@ -863,22 +901,28 @@
                 const d2 = JSON.parse(res2.substr(47).slice(0, -2)).table.rows;
                 const d3 = JSON.parse(res3.substr(47).slice(0, -2)).table.rows;
 
+                // 🎯 RE-STYLED STREAM MAP: Parses all columns including dynamic India context arrays from Sheet 3
                 d3.forEach((row) => {
                     if (row && row.c && row.c[0] && row.c[1]) {
                         const catId = row.c[0].v ? row.c[0].v.toString().trim() : '';
-                        const catTitle = row.c[1].v ? row.c[1].v.toString().trim() : '';
                         if (catId && catId.toLowerCase() !== 'category_id') {
-                            globalCategories[catId] = catTitle;
+                            globalCategories[catId] = {
+                                id: catId,
+                                title: row.c[1] ? row.c[1].v.toString().trim() : '',
+                                parentChapterId: row.c[2] ? row.c[2].v.toString().trim() : 'portuguese_ch1',
+                                indiaBtnText: row.c[3] ? row.c[3].v.toString().trim() : '',
+                                indiaPopTitle: row.c[4] ? row.c[4].v.toString().trim() : '',
+                                indiaPopBody: row.c[5] ? row.c[5].v.toString().trim() : '',
+                                indiaPopImg: row.c[6] ? row.c[6].v.toString().trim() : ''
+                            };
                         }
                     }
                 });
 
-                let firstId = null;
                 d1.forEach((row) => {
                     if(!row || !row.c || !row.c[0]) return;
                     const id = row.c[0].v;
                     if (!id || id.toString().toLowerCase().trim() === 'id') return;
-                    if (!firstId) firstId = id;
 
                     globalChapters[id] = {
                         id: id,
@@ -906,21 +950,26 @@
                     });
                 });
 
-                renderMenu(firstId);
+                renderDashboardMenu();
             } catch (err) {
                 document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet configurations.</div>`;
                 console.error(err);
             }
         }
 
-        function renderMenu(activeId) {
+        function renderDashboardMenu() {
             let menuHtml = '';
-            Object.values(globalChapters).forEach((ch) => {
-                const cls = ch.id === activeId ? 'active' : '';
+            
+            // Filters out sub-chapters so only primary macro books show up on the initial menu dashboard
+            const primaryMacroChapters = Object.values(globalChapters).filter(ch => !ch.id.includes('_ch'));
+            const finalRenderList = primaryMacroChapters.length > 0 ? primaryMacroChapters : Object.values(globalChapters);
+            
+            finalRenderList.forEach((ch, idx) => {
+                const cls = idx === 0 ? 'active' : '';
                 menuHtml += `<li><button class="chapter-btn ${cls}" id="nav-${ch.id}" onclick="setPreviewTarget('${ch.id}')">${ch.title}</button></li>`;
             });
             document.getElementById('menuContainer').innerHTML = menuHtml;
-            if(activeId) setPreviewTarget(activeId);
+            if(finalRenderList[0]) setPreviewTarget(finalRenderList[0].id);
         }
 
         function setPreviewTarget(id) {
@@ -938,16 +987,49 @@
                 <h2 style="margin:5px 0 15px 0; font-size:1.8rem;">${data.title}</h2>
                 ${imageSection}
                 <div>
-                    <button class="explore-trigger-btn" onclick="launchReaderView('${id}')">Open Interactive Chapter</button>
+                    <button class="explore-trigger-btn" onclick="launchReaderView('portuguese_ch1')">Open Interactive Chapter</button>
                 </div>
             `;
         }
 
-        function launchReaderView(id) {
+        function launchReaderView(targetChapterId) {
+            activeBookSubChapterId = targetChapterId;
+            
+            // Build sub-chapter selector tab bars automatically
+            let tabsHtml = '';
+            Object.values(globalChapters).forEach((ch) => {
+                if(ch.id.includes('portuguese_ch')) {
+                    const activeClass = ch.id === activeBookSubChapterId ? 'active-tab' : '';
+                    tabsHtml += `<button class="book-tab-link ${activeClass}" onclick="switchBookChapterContext('${ch.id}')">${ch.title}</button>`;
+                }
+            });
+            document.getElementById('bookSubChapterTabContainer').innerHTML = tabsHtml;
+
+            renderCurrentChapterContent();
+            
+            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('dashboardScreen').style.display = 'none';
+            document.getElementById('readerScreen').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function switchBookChapterContext(chapterId) {
             stopNarrationEngine();
             stopPopupNarrationEngine();
+            activeBookSubChapterId = chapterId;
+            
+            document.querySelectorAll('.book-tab-link').forEach(btn => {
+                btn.classList.remove('active-tab');
+                if(btn.innerText.includes(globalChapters[chapterId].title)) btn.classList.add('active-tab');
+            });
 
-            const ch = globalChapters[id];
+            renderCurrentChapterContent();
+        }
+
+        function renderCurrentChapterContent() {
+            const ch = globalChapters[activeBookSubChapterId];
+            if (!ch) return;
+
             document.getElementById('readerTitle').innerText = ch.title;
             document.getElementById('readerDate').innerText = ch.date;
             document.getElementById('readerBody').innerHTML = parseMarkdownToHtml(ch.body);
@@ -961,35 +1043,62 @@
                 mapFrame.style.display = 'none';
             }
 
-            const matchedLevers = globalLevers.filter(l => l.chapterId === id);
-            let structuredMap = {};
-            matchedLevers.forEach((lev) => {
-                if(!structuredMap[lev.categoryId]) structuredMap[lev.categoryId] = [];
-                structuredMap[lev.categoryId].push(lev);
-            });
-
-            let flatOrderedSequence = [];
-            Object.keys(structuredMap).forEach((catId) => {
-                structuredMap[catId].forEach(item => flatOrderedSequence.push(item));
-            });
-
+            // Filter out sections that are tagged to this specific chapter
+            let currentChapterSections = Object.values(globalCategories).filter(cat => cat.parentChapterId === activeBookSubChapterId);
+            
             let masterCategoriesHtml = '';
-            let modalHtml = '';
+            let modalMasterHtml = '';
 
-            Object.keys(structuredMap).forEach((catId) => {
-                const categoryTitle = globalCategories[catId] || `SECTION ${catId}`;
-                const categoryItems = structuredMap[catId];
+            currentChapterSections.forEach((cat) => {
+                const matchedLevers = globalLevers.filter(l => l.categoryId === cat.id);
+                
+                let optionalIndiaRibbonHtml = '';
+                if (cat.indiaBtnText) {
+                    const indiaModalId = `india-modal-${cat.id}`;
+                    optionalIndiaRibbonHtml = `<button class="india-timeline-ribbon-trigger" onclick="event.preventDefault(); event.stopPropagation(); openPopupWithVoiceMute('${indiaModalId}')">${cat.indiaBtnText}</button>`;
+                    
+                    let indiaImgHtml = cat.indiaPopImg ? `<img src="${cat.indiaPopImg}" class="popup-img" onclick="launchImmersiveLightbox('${cat.indiaPopImg}')" alt="India Art Context">` : '';
+                    
+                    // Append parallel India layout data structures to the document string stream
+                    modalMasterHtml += `
+                        <dialog id="${indiaModalId}" class="india-modal-container">
+                            <div class="window-control-rack">
+                                <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', false)">[-]</button>
+                                <button class="window-control-btn expand-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', true)">[▢]</button>
+                                <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${indiaModalId}')">&times;</button>
+                            </div>
+                            ${indiaImgHtml}
+                            <div class="popup-scroll-body-container">
+                                <div class="popup-audio-module-wrap">
+                                    <div class="popup-audio-upper-controls">
+                                        <button class="audio-trigger-btn" style="color:var(--india-accent);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">🎙 Play Comment</button>
+                                        <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${indiaModalId}" onclick="pausePopupAudioDeck('${indiaModalId}')">⏸ Pause</button>
+                                        <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${indiaModalId}" onclick="stopPopupAudioTrack('${indiaModalId}')"> Stop</button>
+                                    </div>
+                                    <div class="popup-timeline-scrub-row">
+                                        <div class="popup-audio-timeline-bar"><div class="popup-audio-progress-fill" id="fill-progress-${indiaModalId}"></div></div>
+                                        <div class="popup-audio-clock-readout" id="clock-readout-${indiaModalId}">00:00 / 00:00</div>
+                                    </div>
+                                </div>
+                                <h3 class="popup-title" style="color:var(--india-accent);">${cat.indiaPopTitle}</h3>
+                                <div class="popup-body-content" id="raw-text-${indiaModalId}">${parseMarkdownToHtml(cat.indiaPopBody)}</div>
+                            </div>
+                        </dialog>
+                    `;
+                }
 
                 masterCategoriesHtml += `
                     <details class="category-block" name="catalyst-accordion">
-                        <summary class="category-header-summary">${categoryTitle}</summary>
+                        <summary class="category-header-summary">
+                            <div class="summary-left-segment-wrap"><span>${cat.title}</span></div>
+                            ${optionalIndiaRibbonHtml}
+                        </summary>
                         <div class="ledger-rows-list">
                 `;
 
-                categoryItems.forEach((lev) => {
-                    const currentSequenceIndex = flatOrderedSequence.findIndex(item => item.linkText === lev.linkText);
-                    const uniqueId = `modal-${id}-${currentSequenceIndex}`;
-                    const fileCode = `FILE: ${catId}-${String(categoryItems.indexOf(lev) + 1).padStart(2, '0')}`;
+                matchedLevers.forEach((lev, idx) => {
+                    const uniqueId = `modal-${cat.id}-${idx}`;
+                    const fileCode = `FILE: ${cat.id}-${String(idx + 1).padStart(2, '0')}`;
                     const hookContent = lev.popHook ? `"${lev.popHook}"` : '';
 
                     masterCategoriesHtml += `
@@ -1005,46 +1114,39 @@
                         </button>
                     `;
 
-                    let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" onclick="launchImmersiveLightbox('${lev.popImg}')" alt="History Illustration">` : '';
-                    
-                    const hasPrev = currentSequenceIndex > 0;
-                    const hasNext = currentSequenceIndex < flatOrderedSequence.length - 1;
-                    const prevId = `modal-${id}-${currentSequenceIndex - 1}`;
-                    const nextId = `modal-${id}-${currentSequenceIndex + 1}`;
+                    let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" onclick="launchImmersiveLightbox('${lev.popImg}')" alt="History Canvas">` : '';
+                    const hasPrev = idx > 0;
+                    const hasNext = idx < matchedLevers.length - 1;
+                    const prevId = `modal-${cat.id}-${idx - 1}`;
+                    const nextId = `modal-${cat.id}-${idx + 1}`;
 
-                    modalHtml += `
+                    modalMasterHtml += `
                         <dialog id="${uniqueId}">
                             <div class="window-control-rack">
-                                <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', false)" title="Collapse View">[-]</button>
-                                <button class="window-control-btn expand-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', true)" title="Maximize View">[▢]</button>
-                                <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${uniqueId}')" title="Close Link">&times;</button>
+                                <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', false)">[-]</button>
+                                <button class="window-control-btn expand-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', true)">[▢]</button>
+                                <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${uniqueId}')">&times;</button>
                             </div>
-
                             ${modalImgHtml}
-                            
                             <div class="popup-scroll-body-container">
                                 <div class="popup-audio-module-wrap">
                                     <div class="popup-audio-upper-controls">
-                                        <button class="audio-trigger-btn" style="font-size:0.95rem;" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙 Play</button>
-                                        <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-pause-${uniqueId}" onclick="pausePopupAudioDeck('${uniqueId}')">⏸ Pause</button>
-                                        <button class="audio-trigger-btn" style="font-size:0.95rem; display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')"> Stop</button>
+                                        <button class="audio-trigger-btn" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙 Play</button>
+                                        <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${uniqueId}" onclick="pausePopupAudioDeck('${uniqueId}')">⏸ Pause</button>
+                                        <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')"> Stop</button>
                                         <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
                                         <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', -0.1)">-</button>
                                         <div class="speed-tracker-display" style="font-size:0.8rem; min-width:28px;" id="lbl-speed-${uniqueId}">1.0x</div>
                                         <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', 0.1)">+</button>
                                     </div>
                                     <div class="popup-timeline-scrub-row">
-                                        <div class="popup-audio-timeline-bar">
-                                            <div class="popup-audio-progress-fill" id="fill-progress-${uniqueId}"></div>
-                                        </div>
+                                        <div class="popup-audio-timeline-bar"><div class="popup-audio-progress-fill" id="fill-progress-${uniqueId}"></div></div>
                                         <div class="popup-audio-clock-readout" id="clock-readout-${uniqueId}">00:00 / 00:00</div>
                                     </div>
                                 </div>
-
                                 <h3 class="popup-title">${lev.popTitle}</h3>
                                 <div class="popup-body-content" id="raw-text-${uniqueId}">${parseMarkdownToHtml(lev.popBody)}</div>
                             </div>
-
                             <div class="modal-nav-footer">
                                 <button class="modal-nav-link" ${hasPrev ? `onclick="switchActivePopup('${uniqueId}', '${prevId}')"` : 'disabled'}>« Previous File</button>
                                 <button class="modal-nav-link" ${hasNext ? `onclick="switchActivePopup('${uniqueId}', '${nextId}')"` : 'disabled'}>Next File »</button>
@@ -1056,13 +1158,10 @@
                 masterCategoriesHtml += `</div></details>`;
             });
 
-            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;">No record nodes discovered for this timeframe.</p>';
-            document.getElementById('popupMasterStack').innerHTML = modalHtml;
-
-            document.getElementById('mainHeader').style.display = 'none';
-            document.getElementById('dashboardScreen').style.display = 'none';
-            document.getElementById('readerScreen').style.display = 'block';
-            window.scrollTo(0,0);
+            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;padding:20px;text-align:center;">No timeline records mapped for this specific sub-chapter block.</p>';
+            document.getElementById('popupMasterStack').innerHTML = modalMasterHtml;
+            
+            attachGlobalLightboxTriggers();
         }
 
         function toggleWindowSizeState(modalId, makeMaximize) {
@@ -1127,7 +1226,6 @@
                 
                 currentSpeechUtterance = new SpeechSynthesisUtterance(cleanText);
                 currentSpeechUtterance.rate = currentSpeechRate;
-                
                 currentSpeechUtterance.onend = () => stopNarrationEngine();
 
                 window.speechSynthesis.speak(currentSpeechUtterance);
@@ -1184,7 +1282,8 @@
             activePopupUtterance = new SpeechSynthesisUtterance(text);
             activePopupUtterance.rate = currentSpeechRate; 
             
-            document.getElementById(`lbl-speed-${modalId}`).innerText = `${currentSpeechRate.toFixed(1)}x`;
+            const speedTracker = document.getElementById(`lbl-speed-${modalId}`);
+            if(speedTracker) speedTracker.innerText = `${currentSpeechRate.toFixed(1)}x`;
 
             activePopupUtterance.onboundary = (event) => {
                 if (event.name === 'word') {
@@ -1240,7 +1339,9 @@
 
         function modPopupAudioSpeed(modalId, delta) {
             currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
-            document.getElementById(`lbl-speed-${modalId}`).innerText = `${currentSpeechRate.toFixed(1)}x`;
+            const lbl = document.getElementById(`lbl-speed-${modalId}`);
+            if(lbl) lbl.innerText = `${currentSpeechRate.toFixed(1)}x`;
+            
             const mainLabel = document.getElementById('ttsSpeedLabel');
             if(mainLabel) mainLabel.innerText = `${currentSpeechRate.toFixed(1)}x`;
 
