@@ -842,14 +842,19 @@
         let activePopupTextArray = [];
         let currentPopupSegmentIndex = 0;
 
-        function parseMarkdownToHtml(textString) {
-            if (!textString) return '';
-            let html = textString.toString();
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-            html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
-            return html;
-        }
+       function parseMarkdownToHtml(textString) {
+    if (!textString) return '';
+    let html = textString.toString();
+    
+    // Add this new line to handle headers:
+    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>'); 
+    
+    // Your existing formatting rules:
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
+    return html;
+}
 
         // 🎯 ADVANCED FILTER VOICE MATCHER: Sifts hardware soundboards to extract high-quality expressive speakers
         function captureNaturalSpeechVoiceInstance() {
