@@ -24,7 +24,7 @@
         }
 
         .global-branding-track {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto 20px auto;
             display: flex;
             justify-content: space-between;
@@ -51,7 +51,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             position: relative;
         }
@@ -64,6 +64,9 @@
             box-shadow: 0 4px 25px rgba(0,0,0,0.02);
             text-align: center;
             margin-top: 20px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .portal-site-slogan {
@@ -136,12 +139,80 @@
             opacity: 0.95;
         }
 
+        /* 🎯 RE-ENGINEERED THREE-COLUMN DESKTOP WORKSPACE GRID (OPTION A) */
+        .workspace-master-wrapper {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
         .reader-layout {
             display: none; 
             background: var(--card-bg);
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 25px rgba(0,0,0,0.02);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Sticky perspective side-dock column framework container */
+        .sticky-margin-perspective-dock {
+            position: sticky;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .india-margin-perspective-card {
+            background: #ffffff;
+            border-left: 4px solid var(--india-accent);
+            border-top: 1px solid #e8e6e3;
+            border-right: 1px solid #e8e6e3;
+            border-bottom: 1px solid #e8e6e3;
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: none; /* Injected via script conditional rules */
+        }
+
+        .india-margin-card-header {
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--india-accent);
+            margin: 0 0 6px 0;
+        }
+
+        .india-margin-card-blurb {
+            font-size: 0.88rem;
+            color: #555;
+            margin: 0 0 14px 0;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .india-margin-card-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--india-accent);
+            color: var(--india-accent);
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .india-margin-card-btn:hover {
+            background: var(--india-accent);
+            color: white;
         }
 
         .book-chapter-tab-deck {
@@ -234,13 +305,15 @@
             border-color: var(--accent-color);
         }
 
+        /* 🎯 FIXED COHESIVE BOX HACK: Enforces strict widths to prevent wiggling layout switches */
         .speed-tracker-display {
             font-family: monospace;
             font-weight: bold;
             font-size: 0.9rem;
             color: var(--text-color);
-            min-width: 35px;
+            width: 42px; 
             text-align: center;
+            display: inline-block;
         }
 
         .split-reader-grid {
@@ -381,27 +454,6 @@
 
         .category-header-summary::-webkit-details-marker {
             display: none;
-        }
-
-        .india-timeline-ribbon-trigger {
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--india-accent);
-            padding: 4px 12px;
-            border-radius: 4px;
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            background: transparent;
-            white-space: nowrap;
-        }
-
-        .india-timeline-ribbon-trigger:hover {
-            border-color: var(--india-accent);
-            background: rgba(184, 107, 50, 0.05);
-            transform: translateX(-2px);
         }
 
         .ledger-rows-list {
@@ -633,7 +685,7 @@
             font-family: monospace;
             font-size: 0.8rem;
             color: #666;
-            min-width: 78px;
+            min-width: 90px;
             text-align: right;
         }
 
@@ -722,11 +774,10 @@
             z-index: 310000;
         }
 
-        .loading-msg {
-            text-align: center;
-            font-size: 1.2rem;
-            padding: 50px 0;
-            color: #666;
+        @media (max-width: 1100px) {
+            .workspace-master-wrapper { grid-template-columns: 1fr; gap: 20px; }
+            .sticky-margin-perspective-dock { position: relative; top: 0; flex-direction: row; }
+            .india-margin-perspective-card { border-radius: 8px; border-left: 1px solid #e8e6e3; border-top: 4px solid var(--india-accent); flex: 1; }
         }
 
         @media (max-width: 930px) {
@@ -737,22 +788,19 @@
 
         @media (max-width: 750px) {
             body { padding: 10px; }
-            .site-title { font-size: 1.65rem; }
-            .site-description { font-size: 0.92rem; }
             .reader-header { font-size: 1.5rem; }
             .reader-body { font-size: 0.95rem; }
             .split-reader-grid { flex-direction: column; height: auto; gap: 20px; }
             .map-viewer-frame { width: 100%; height: 260px; }
             .text-content-frame { width: 100%; height: auto; max-height: none; overflow: visible; padding-right: 0; }
-            .reader-branding-meta-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
             dialog { width: 96%; max-height: 92vh; }
             .popup-title { font-size: 1.2rem; padding-right: 0; margin-top: 42px; }
             .popup-body-content { font-size: 0.94rem; }
             .category-header-summary { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .india-timeline-ribbon-trigger { align-self: flex-end; font-size: 0.85rem; }
             .portal-landing-hero { padding: 30px 20px; }
             .portal-saga-title { font-size: 1.5rem; }
             .portal-saga-intro-body { font-size: 1rem; }
+            .sticky-margin-perspective-dock { flex-direction: column; }
         }
     </style>
 </head>
@@ -778,36 +826,49 @@
             </button>
         </div>
 
-        <div class="reader-layout" id="readerScreen">
-            <div class="reader-branding-meta-bar">
-                <button class="back-btn" style="margin-bottom:0;" onclick="showDashboardView()">← Back to Entrance</button>
-            </div>
+        <!-- 🎯 THREE-COLUMN COMPASS WORKSPACE BLOCK LINK -->
+        <div class="workspace-master-wrapper">
             
-            <div class="book-chapter-tab-deck" id="bookSubChapterTabContainer"></div>
-
-            <div class="narration-deck">
-                <button class="audio-trigger-btn" id="ttsPlaybackMasterTrigger" onclick="toggleNarrationEngine()">🎙️ Read Aloud</button>
-                <div class="speed-panel-label">Speed:</div>
-                <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(-0.1)">-</button>
-                <div class="speed-tracker-display" id="ttsSpeedLabel">1.0x</div>
-                <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(0.1)">+</button>
-            </div>
-
-            <div class="date" id="readerDate" style="font-size: 0.9rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;"></div>
-            <h2 class="reader-header" id="readerTitle" style="margin-top: 0;"></h2>
-            
-            <div class="split-reader-grid">
-                <div class="map-viewer-frame" id="mapFrameContainer"></div>
-                <div class="text-content-frame">
-                    <p class="reader-body" id="readerBody"></p>
+            <aside class="sticky-margin-perspective-dock">
+                <div class="india-margin-perspective-card" id="stickyLeftIndiaPerspectiveCard">
+                    <h4 class="india-margin-card-header" id="leftIndiaHeaderLabel">Parallel Context</h4>
+                    <p class="india-margin-card-blurb" id="leftIndiaBlurbSummary">Explore what was happening concurrently across subcontinental empires.</p>
+                    <button class="india-margin-card-btn" id="leftIndiaTriggerAction" onclick="launchLeftDockIndiaModal()">View India Track</button>
                 </div>
+            </aside>
+
+            <div class="reader-layout" id="readerScreen">
+                <div class="reader-branding-meta-bar" style="margin-bottom: 20px;">
+                    <button class="back-btn" style="background:none; border:1px solid var(--accent-color); color:var(--accent-color); padding:8px 16px; border-radius:20px; cursor:pointer; font-weight:bold;" onclick="showDashboardView()">← Back to Entrance</button>
+                </div>
+                
+                <div class="book-chapter-tab-deck" id="bookSubChapterTabContainer"></div>
+
+                <div class="narration-deck">
+                    <button class="audio-trigger-btn" id="ttsPlaybackMasterTrigger" onclick="toggleNarrationEngine()">🎙️ Read Aloud</button>
+                    <div class="speed-panel-label">Speed:</div>
+                    <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(-0.1)">-</button>
+                    <div class="speed-tracker-display" id="ttsSpeedLabel">1.0x</div>
+                    <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(0.1)">+</button>
+                </div>
+
+                <div class="date" id="readerDate" style="font-size: 0.9rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;"></div>
+                <h2 class="reader-header" id="readerTitle" style="margin-top: 0;"></h2>
+                
+                <div class="split-reader-grid">
+                    <div class="map-viewer-frame" id="mapFrameContainer"></div>
+                    <div class="text-content-frame">
+                        <p class="reader-body" id="readerBody"></p>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <span>THE CATALYSTS: PIECES OF THE PUZZLE</span>
+                </div>
+
+                <div id="categoriesMasterContainer"></div>
             </div>
 
-            <div class="section-divider">
-                <span>THE CATALYSTS: PIECES OF THE PUZZLE</span>
-            </div>
-
-            <div id="categoriesMasterContainer"></div>
         </div>
     </div>
 
@@ -815,7 +876,7 @@
 
     <dialog id="systemLightboxContainer" class="native-lightbox-topframe">
         <button class="lightbox-close-x" onclick="closeImmersiveLightbox()">&times;</button>
-        <img src="" class="lightbox-canvas-img" id="lightboxTargetImage" alt="Expanded Document Focus Canvas" onclick="closeImmersiveLightbox()">
+        <img src="" class="lightbox-canvas-img" id="lightboxTargetImage" alt="Expanded Focus Canvas" onclick="closeImmersiveLightbox()">
     </dialog>
 
     <script>
@@ -832,7 +893,6 @@
         let globalCategories = {}; 
         let activeBookSubChapterId = null; 
 
-        // 🎯 TRACKER MATRIX VARIABLES: Stores real-time audio playback position states
         let isAudioPlaying = false;
         let currentSpeechRate = 1.0;
         let activeParagraphTextArray = [];
@@ -842,30 +902,28 @@
         let activePopupTextArray = [];
         let currentPopupSegmentIndex = 0;
 
-       function parseMarkdownToHtml(textString) {
-    if (!textString) return '';
-    let html = textString.toString();
-    
-    // Add this new line to handle headers:
-    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>'); 
-    
-    // Your existing formatting rules:
-    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
-    return html;
-}
+        function parseMarkdownToHtml(textString) {
+            if (!textString) return '';
+            let html = textString.toString();
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>'); 
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
+            return html;
+        }
 
-        // 🎯 ADVANCED FILTER VOICE MATCHER: Sifts hardware soundboards to extract high-quality expressive speakers
+        // 🎯 DESIGN REQUIREMENT FIXED: Scans platform soundboards specifically prioritizing expressive MALE speakers
         function captureNaturalSpeechVoiceInstance() {
             const voices = window.speechSynthesis.getVoices();
-            // Premium priority selection tags
-            const premiumVoices = ["google us english", "microsoft ryan", "samantha", "daniel", "en-us", "en-gb"];
-            for (let target of premiumVoices) {
-                let matched = voices.find(v => v.name.toLowerCase().includes(target));
+            const premiumMaleVoices = [
+                "google uk english male", "google us english male", "microsoft david", 
+                "microsoft ryan", "daniel", "oliver", "en-au-male", "en-gb-male"
+            ];
+            for (let filter of premiumMaleVoices) {
+                let matched = voices.find(v => v.name.toLowerCase().includes(filter));
                 if (matched) return matched;
             }
-            return voices.find(v => v.lang.startsWith("en")) || voices[0];
+            return voices.find(v => v.name.toLowerCase().includes("male")) || voices.find(v => v.lang.startsWith("en")) || voices[0];
         }
 
         async function initSystem() {
@@ -887,11 +945,7 @@
                             globalCategories[catId] = {
                                 id: catId,
                                 title: row.c[1] ? row.c[1].v.toString().trim() : '',
-                                parentChapterId: row.c[2] ? row.c[2].v.toString().trim() : 'portuguese_ch1',
-                                indiaBtnText: row.c[3] ? row.c[3].v.toString().trim() : '',
-                                indiaPopTitle: row.c[4] ? row.c[4].v.toString().trim() : '',
-                                indiaPopBody: row.c[5] ? row.c[5].v.toString().trim() : '',
-                                indiaPopImg: row.c[6] ? row.c[6].v.toString().trim() : ''
+                                parentChapterId: row.c[2] ? row.c[2].v.toString().trim() : 'portuguese_ch1'
                             };
                         }
                     }
@@ -908,7 +962,12 @@
                         date: row.c[2] ? row.c[2].v : '',
                         img: row.c[3] ? row.c[3].v : '',  
                         body: row.c[4] ? row.c[4].v : '',
-                        readerImg: row.c[5] ? row.c[5].v : '' 
+                        readerImg: row.c[5] ? row.c[5].v : '',
+                        // Dynamic consolidated India hooks map directly down into macro row allocations
+                        indiaBtnText: row.c[6] ? row.c[6].v : '',
+                        indiaPopTitle: row.c[7] ? row.c[7].v : '',
+                        indiaPopBody: row.c[8] ? row.c[8].v : '',
+                        indiaPopImg: row.c[9] ? row.c[9].v : ''
                     };
                 });
 
@@ -928,14 +987,13 @@
                     });
                 });
 
-                // Crucial trigger ensures voice buffers populate completely across safari/chrome runtimes
                 if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
                     speechSynthesis.onvoiceschanged = renderCinematicEntrancePortal;
                 }
 
                 renderCinematicEntrancePortal();
             } catch (err) {
-                document.getElementById('dashboardScreen').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet configuration setups.</div>`;
+                document.getElementById('dashboardScreen').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet setup hooks.</div>`;
                 console.error(err);
             }
         }
@@ -1013,53 +1071,61 @@
                 mapFrame.style.display = 'none';
             }
 
+            // 🎯 OPTION A ENGINE: Configures and anchors the custom sticky margin orb card seamlessly
+            const sidePerspCard = document.getElementById('stickyLeftIndiaPerspectiveCard');
+            if (ch.indiaBtnText) {
+                document.getElementById('leftIndiaHeaderLabel').innerText = ch.indiaPopTitle;
+                document.getElementById('leftIndiaBlurbSummary').innerText = "Click to bridge the parallel Indian Subcontinent overview for this timeline phase.";
+                document.getElementById('leftIndiaTriggerAction').innerText = ch.indiaBtnText;
+                sidePerspCard.style.display = "block";
+            } else {
+                sidePerspCard.style.display = "none";
+            }
+
             let currentChapterSections = Object.values(globalCategories).filter(cat => cat.parentChapterId === activeBookSubChapterId);
             
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
 
+            // Inject the isolated parallel overlay setup context deck
+            if (ch.indiaBtnText) {
+                const indiaModalId = `india-modal-${ch.id}`;
+                let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
+                
+                modalMasterHtml += `
+                    <dialog id="${indiaModalId}" class="india-modal-container">
+                        <div class="window-control-rack">
+                            <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', false)">[-]</button>
+                            <button class="window-control-btn expand-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', true)">[▢]</button>
+                            <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${indiaModalId}')">&times;</button>
+                        </div>
+                        ${indiaImgHtml}
+                        <div class="popup-scroll-body-container">
+                            <div class="popup-audio-module-wrap">
+                                <div class="popup-audio-upper-controls">
+                                    <button class="audio-trigger-btn" style="color:var(--india-accent);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">🎙 Play Comment</button>
+                                    <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${indiaModalId}" onclick="pausePopupAudioDeck('${indiaModalId}')">⏸ Pause</button>
+                                    <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${indiaModalId}" onclick="stopPopupAudioTrack('${indiaModalId}')"> Stop</button>
+                                </div>
+                                <div class="popup-timeline-scrub-row">
+                                    <div class="popup-audio-timeline-bar"><div class="popup-audio-progress-fill" id="fill-progress-${indiaModalId}"></div></div>
+                                    <div class="popup-audio-clock-readout" id="clock-readout-${indiaModalId}">Segment 0 / 0</div>
+                                </div>
+                            </div>
+                            <h3 class="popup-title" style="color:var(--india-accent);">${ch.indiaPopTitle}</h3>
+                            <div class="popup-body-content" id="raw-text-${indiaModalId}">${parseMarkdownToHtml(ch.indiaPopBody)}</div>
+                        </div>
+                    </dialog>
+                `;
+            }
+
             currentChapterSections.forEach((cat) => {
                 const matchedLevers = globalLevers.filter(l => l.categoryId === cat.id);
                 
-                let optionalIndiaRibbonHtml = '';
-                if (cat.indiaBtnText) {
-                    const indiaModalId = `india-modal-${cat.id}`;
-                    optionalIndiaRibbonHtml = `<button class="india-timeline-ribbon-trigger" onclick="event.preventDefault(); event.stopPropagation(); openPopupWithVoiceMute('${indiaModalId}')">${cat.indiaBtnText}</button>`;
-                    
-                    let indiaImgHtml = cat.indiaPopImg ? `<img src="${cat.indiaPopImg}" class="popup-img" alt="India Art Context">` : '';
-                    
-                    modalMasterHtml += `
-                        <dialog id="${indiaModalId}" class="india-modal-container">
-                            <div class="window-control-rack">
-                                <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', false)">[-]</button>
-                                <button class="window-control-btn expand-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', true)">[▢]</button>
-                                <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${indiaModalId}')">&times;</button>
-                            </div>
-                            ${indiaImgHtml}
-                            <div class="popup-scroll-body-container">
-                                <div class="popup-audio-module-wrap">
-                                    <div class="popup-audio-upper-controls">
-                                        <button class="audio-trigger-btn" style="color:var(--india-accent);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">🎙 Play Comment</button>
-                                        <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${indiaModalId}" onclick="pausePopupAudioDeck('${indiaModalId}')">⏸ Pause</button>
-                                        <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${indiaModalId}" onclick="stopPopupAudioTrack('${indiaModalId}')"> Stop</button>
-                                    </div>
-                                    <div class="popup-timeline-scrub-row">
-                                        <div class="popup-audio-timeline-bar"><div class="popup-audio-progress-fill" id="fill-progress-${indiaModalId}"></div></div>
-                                        <div class="popup-audio-clock-readout" id="clock-readout-${indiaModalId}">00:00 / 00:00</div>
-                                    </div>
-                                </div>
-                                <h3 class="popup-title" style="color:var(--india-accent);">${cat.indiaPopTitle}</h3>
-                                <div class="popup-body-content" id="raw-text-${indiaModalId}">${parseMarkdownToHtml(cat.indiaPopBody)}</div>
-                            </div>
-                        </dialog>
-                    `;
-                }
-
                 masterCategoriesHtml += `
                     <details class="category-block" name="catalyst-accordion">
                         <summary class="category-header-summary">
                             <div class="summary-left-segment-wrap"><span>${cat.title}</span></div>
-                            ${optionalIndiaRibbonHtml}
                         </summary>
                         <div class="ledger-rows-list">
                 `;
@@ -1104,12 +1170,12 @@
                                         <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')"> Stop</button>
                                         <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
                                         <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', -0.1)">-</button>
-                                        <div class="speed-tracker-display" style="font-size:0.8rem; min-width:28px;" id="lbl-speed-${uniqueId}">1.0x</div>
+                                        <div class="speed-tracker-display" style="font-size:0.8rem; width:28px;" id="lbl-speed-${uniqueId}">1.0x</div>
                                         <button class="audio-speed-btn" style="padding:1px 6px; font-size:0.75rem;" onclick="modPopupAudioSpeed('${uniqueId}', 0.1)">+</button>
                                     </div>
                                     <div class="popup-timeline-scrub-row">
                                         <div class="popup-audio-timeline-bar"><div class="popup-audio-progress-fill" id="fill-progress-${uniqueId}"></div></div>
-                                        <div class="popup-audio-clock-readout" id="clock-readout-${uniqueId}">00:00 / 00:00</div>
+                                        <div class="popup-audio-clock-readout" id="clock-readout-${uniqueId}">Segment 0 / 0</div>
                                     </div>
                                 </div>
                                 <h3 class="popup-title">${lev.popTitle}</h3>
@@ -1126,13 +1192,18 @@
                 masterCategoriesHtml += `</div></details>`;
             });
 
-            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;padding:20px;text-align:center;">No timeline records mapped for this specific sub-chapter block.</p>';
+            document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;padding:20px;text-align:center;">No timeline records mapped.</p>';
             document.getElementById('popupMasterStack').innerHTML = modalMasterHtml;
             
             attachGlobalLightboxTriggers();
         }
 
-        // 🎯 RE-ENGINEERED FLUID AUDIO MATRIX SYSTEM
+        function launchLeftDockIndiaModal() {
+            if (activeBookSubChapterId) {
+                openPopupWithVoiceMute(`india-modal-${activeBookSubChapterId}`);
+            }
+        }
+
         function toggleNarrationEngine() {
             const triggerBtn = document.getElementById('ttsPlaybackMasterTrigger');
             
@@ -1148,7 +1219,6 @@
                 stopPopupNarrationEngine();
                 const rawText = document.getElementById('readerBody').innerText;
                 
-                // Splits text by punctuation anchors to secure sentence arrays cleanly
                 activeParagraphTextArray = rawText.split(/[.!?]+\s+/).filter(s => s.trim().length > 0);
                 currentSpeechParagraphIndex = 0;
                 isAudioPlaying = true;
@@ -1172,7 +1242,7 @@
             
             utterance.voice = captureNaturalSpeechVoiceInstance();
             utterance.rate = currentSpeechRate;
-            utterance.pitch = 1.05; // Slightly enhanced pitch for warmth
+            utterance.pitch = 0.95; // Custom depth modifier for masculine narration tones
 
             utterance.onend = () => {
                 currentSpeechParagraphIndex++;
@@ -1189,7 +1259,6 @@
             currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
             document.getElementById('ttsSpeedLabel').innerText = `${currentSpeechRate.toFixed(1)}x`;
             
-            // 🎯 RESUME TRACKER SLOTS: Recalculates speed and fires utterance starting at the saved active index
             if (isAudioPlaying && !window.speechSynthesis.paused) {
                 streamMainTextParagraphSegments();
             }
@@ -1203,7 +1272,6 @@
             if(trigger) trigger.innerText = "🎙️ Read Aloud";
         }
 
-        // 🎯 RE-ENGINEERED POPUP TIMELINE VOICE PORTALS
         function togglePopupAudioDeck(modalId) {
             const btnPlay = document.getElementById(`btn-audio-${modalId}`);
             const btnPause = document.getElementById(`btn-pause-${modalId}`);
@@ -1241,9 +1309,8 @@
             
             utterance.voice = captureNaturalSpeechVoiceInstance();
             utterance.rate = currentSpeechRate;
-            utterance.pitch = 1.05;
+            utterance.pitch = 0.95;
 
-            // Calculates bar widths on progress fill metrics smoothly
             const progress = (currentPopupSegmentIndex / activePopupTextArray.length) * 100;
             const fillBar = document.getElementById(`fill-progress-${modalId}`);
             if (fillBar) fillBar.style.width = `${progress}%`;
@@ -1310,7 +1377,7 @@
             const barFillNode = document.getElementById(`fill-progress-${modalId}`);
             const clockNode = document.getElementById(`clock-readout-${modalId}`);
             if(barFillNode) barFillNode.style.width = "0%";
-            if(clockNode) clockNode.innerText = "00:00 / 00:00";
+            if(clockNode) clockNode.innerText = "Segment 0 / 0";
         }
 
         function stopPopupNarrationEngine() {
@@ -1397,6 +1464,7 @@
             stopPopupNarrationEngine();
             document.getElementById('dashboardScreen').style.display = 'block';
             document.getElementById('readerScreen').style.display = 'none';
+            document.getElementById('stickyLeftIndiaPerspectiveCard').style.display = 'none';
             window.scrollTo(0,0);
         }
 
