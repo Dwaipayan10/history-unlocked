@@ -139,7 +139,6 @@
             opacity: 0.95;
         }
 
-        /* 🎯 RE-ENGINEERED THREE-COLUMN DESKTOP WORKSPACE GRID (OPTION A) */
         .workspace-master-wrapper {
             display: grid;
             grid-template-columns: 200px 1fr;
@@ -157,7 +156,6 @@
             box-sizing: border-box;
         }
 
-        /* Sticky perspective side-dock column framework container */
         .sticky-margin-perspective-dock {
             position: sticky;
             top: 20px;
@@ -176,7 +174,7 @@
             padding: 16px;
             border-radius: 0 8px 8px 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            display: none; /* Injected via script conditional rules */
+            display: none; 
         }
 
         .india-margin-card-header {
@@ -265,8 +263,10 @@
             margin-bottom: 25px;
             max-width: fit-content;
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            flex-wrap: nowrap;
         }
 
+        /* 🎯 FIXED SIZE ANCHOR: Lock narration action width to prevent deck layout shift */
         .audio-trigger-btn {
             background: none;
             border: none;
@@ -277,6 +277,10 @@
             gap: 6px;
             font-weight: 600;
             color: var(--accent-color);
+            min-width: 195px; 
+            text-align: left;
+            justify-content: flex-start;
+            flex-shrink: 0;
         }
 
         .speed-panel-label {
@@ -285,18 +289,26 @@
             text-transform: uppercase;
             color: #777;
             margin-left: 8px;
+            flex-shrink: 0;
+            white-space: nowrap;
         }
 
+        /* 🎯 FIXED BUTTON SPACING HACK: Enforces square proportions so buttons do not deform */
         .audio-speed-btn {
             background: #f4f3ef;
             border: 1px solid #d1cfcb;
             font-family: monospace;
             font-weight: bold;
             font-size: 0.85rem;
-            padding: 2px 8px;
+            width: 24px;
+            height: 24px;
             border-radius: 12px;
             cursor: pointer;
             color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         .audio-speed-btn:hover {
@@ -305,15 +317,16 @@
             border-color: var(--accent-color);
         }
 
-        /* 🎯 FIXED COHESIVE BOX HACK: Enforces strict widths to prevent wiggling layout switches */
+        /* 🎯 LOCKED WIDTH CONTAINER: Ensures numeric values (1.0x, 1.5x) are aligned inside a static block */
         .speed-tracker-display {
             font-family: monospace;
             font-weight: bold;
             font-size: 0.9rem;
             color: var(--text-color);
-            width: 42px; 
+            width: 45px; 
             text-align: center;
             display: inline-block;
+            flex-shrink: 0;
         }
 
         .split-reader-grid {
@@ -685,8 +698,9 @@
             font-family: monospace;
             font-size: 0.8rem;
             color: #666;
-            min-width: 90px;
+            min-width: 100px;
             text-align: right;
+            white-space: nowrap;
         }
 
         .modal-nav-footer {
@@ -826,7 +840,6 @@
             </button>
         </div>
 
-        <!-- 🎯 THREE-COLUMN COMPASS WORKSPACE BLOCK LINK -->
         <div class="workspace-master-wrapper">
             
             <aside class="sticky-margin-perspective-dock">
@@ -893,12 +906,15 @@
         let globalCategories = {}; 
         let activeBookSubChapterId = null; 
 
+        // 🎯 STABLE STATE ENGINE: Custom variables to ensure non-buggy pause and resumes
         let isAudioPlaying = false;
+        let isAudioPaused = false; 
         let currentSpeechRate = 1.0;
         let activeParagraphTextArray = [];
         let currentSpeechParagraphIndex = 0;
 
         let isPopupAudioPlaying = false;
+        let isPopupAudioPaused = false; 
         let activePopupTextArray = [];
         let currentPopupSegmentIndex = 0;
 
@@ -912,7 +928,7 @@
             return html;
         }
 
-        // 🎯 DESIGN REQUIREMENT FIXED: Scans platform soundboards specifically prioritizing expressive MALE speakers
+        // 🎯 EXPRESSIVE VOICE TRACK: Prioritizes deep, natural-sounding MALE voices across browsers
         function captureNaturalSpeechVoiceInstance() {
             const voices = window.speechSynthesis.getVoices();
             const premiumMaleVoices = [
@@ -963,7 +979,6 @@
                         img: row.c[3] ? row.c[3].v : '',  
                         body: row.c[4] ? row.c[4].v : '',
                         readerImg: row.c[5] ? row.c[5].v : '',
-                        // Dynamic consolidated India hooks map directly down into macro row allocations
                         indiaBtnText: row.c[6] ? row.c[6].v : '',
                         indiaPopTitle: row.c[7] ? row.c[7].v : '',
                         indiaPopBody: row.c[8] ? row.c[8].v : '',
@@ -1071,7 +1086,6 @@
                 mapFrame.style.display = 'none';
             }
 
-            // 🎯 OPTION A ENGINE: Configures and anchors the custom sticky margin orb card seamlessly
             const sidePerspCard = document.getElementById('stickyLeftIndiaPerspectiveCard');
             if (ch.indiaBtnText) {
                 document.getElementById('leftIndiaHeaderLabel').innerText = ch.indiaPopTitle;
@@ -1087,7 +1101,6 @@
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
 
-            // Inject the isolated parallel overlay setup context deck
             if (ch.indiaBtnText) {
                 const indiaModalId = `india-modal-${ch.id}`;
                 let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
@@ -1204,16 +1217,21 @@
             }
         }
 
+        // 🎯 STABLE SIMULATED PAUSE & RESUME CONTROLLER (Bypasses buggy native speechSynthesis pause calls)
         function toggleNarrationEngine() {
             const triggerBtn = document.getElementById('ttsPlaybackMasterTrigger');
             
             if (isAudioPlaying) {
-                if (window.speechSynthesis.paused) {
-                    window.speechSynthesis.resume();
+                if (isAudioPaused) {
+                    // Resume narration perfectly from the sentence index where they clicked pause
+                    isAudioPaused = false;
                     triggerBtn.innerText = "⏸️ Pause Narration";
+                    streamMainTextParagraphSegments();
                 } else {
-                    window.speechSynthesis.pause();
+                    // Trigger Virtual Pause: cancel native voice queue, preserve paragraph index tracker
+                    isAudioPaused = true;
                     triggerBtn.innerText = "▶️ Resume Narration";
+                    window.speechSynthesis.cancel(); 
                 }
             } else {
                 stopPopupNarrationEngine();
@@ -1222,13 +1240,14 @@
                 activeParagraphTextArray = rawText.split(/[.!?]+\s+/).filter(s => s.trim().length > 0);
                 currentSpeechParagraphIndex = 0;
                 isAudioPlaying = true;
+                isAudioPaused = false;
                 
                 streamMainTextParagraphSegments();
             }
         }
 
         function streamMainTextParagraphSegments() {
-            if (!isAudioPlaying) return;
+            if (!isAudioPlaying || isAudioPaused) return;
             
             if (currentSpeechParagraphIndex >= activeParagraphTextArray.length) {
                 stopNarrationEngine();
@@ -1242,14 +1261,18 @@
             
             utterance.voice = captureNaturalSpeechVoiceInstance();
             utterance.rate = currentSpeechRate;
-            utterance.pitch = 0.95; // Custom depth modifier for masculine narration tones
+            utterance.pitch = 0.95; 
 
             utterance.onend = () => {
+                if (isAudioPaused) return; // Halt automated chronological advance if paused
                 currentSpeechParagraphIndex++;
                 streamMainTextParagraphSegments();
             };
 
-            utterance.onerror = () => stopNarrationEngine();
+            utterance.onerror = () => {
+                if (isAudioPaused) return;
+                stopNarrationEngine();
+            };
 
             document.getElementById('ttsPlaybackMasterTrigger').innerText = "⏸️ Pause Narration";
             window.speechSynthesis.speak(utterance);
@@ -1259,7 +1282,8 @@
             currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
             document.getElementById('ttsSpeedLabel').innerText = `${currentSpeechRate.toFixed(1)}x`;
             
-            if (isAudioPlaying && !window.speechSynthesis.paused) {
+            // Re-fires matching paragraph utterance at updated speech rate smoothly
+            if (isAudioPlaying && !isAudioPaused) {
                 streamMainTextParagraphSegments();
             }
         }
@@ -1267,35 +1291,39 @@
         function stopNarrationEngine() {
             window.speechSynthesis.cancel();
             isAudioPlaying = false;
+            isAudioPaused = false;
             currentSpeechParagraphIndex = 0;
             const trigger = document.getElementById('ttsPlaybackMasterTrigger');
             if(trigger) trigger.innerText = "🎙️ Read Aloud";
         }
 
+        // 🎯 STABLE SIMULATED POPUP COMMENTARY TRACK CONTROLLER
         function togglePopupAudioDeck(modalId) {
             const btnPlay = document.getElementById(`btn-audio-${modalId}`);
             const btnPause = document.getElementById(`btn-pause-${modalId}`);
             
             if (isPopupAudioPlaying) {
-                if (window.speechSynthesis.paused) {
-                    window.speechSynthesis.resume();
-                    btnPlay.innerText = "🎙️ Reading...";
-                    btnPause.style.display = "inline-block";
-                    return;
+                if (isPopupAudioPaused) {
+                    isPopupAudioPaused = false;
+                    if (btnPlay) btnPlay.innerText = "🎙️ Reading...";
+                    if (btnPause) btnPause.style.display = "inline-block";
+                    streamPopupVoiceSegments(modalId);
                 }
-            }
-            stopNarrationEngine();
-            
-            const rawText = document.getElementById(`raw-text-${modalId}`).innerText;
-            activePopupTextArray = rawText.split(/[.!?]+\s+/).filter(s => s.trim().length > 0);
-            currentPopupSegmentIndex = 0;
-            isPopupAudioPlaying = true;
+            } else {
+                stopNarrationEngine();
+                
+                const rawText = document.getElementById(`raw-text-${modalId}`).innerText;
+                activePopupTextArray = rawText.split(/[.!?]+\s+/).filter(s => s.trim().length > 0);
+                currentPopupSegmentIndex = 0;
+                isPopupAudioPlaying = true;
+                isPopupAudioPaused = false;
 
-            streamPopupVoiceSegments(modalId);
+                streamPopupVoiceSegments(modalId);
+            }
         }
 
         function streamPopupVoiceSegments(modalId) {
-            if (!isPopupAudioPlaying) return;
+            if (!isPopupAudioPlaying || isPopupAudioPaused) return;
 
             if (currentPopupSegmentIndex >= activePopupTextArray.length) {
                 stopPopupAudioTrack(modalId);
@@ -1318,24 +1346,35 @@
             updateDynamicAudioClockVisuals(modalId, currentPopupSegmentIndex, activePopupTextArray.length);
 
             utterance.onend = () => {
+                if (isPopupAudioPaused) return;
                 currentPopupSegmentIndex++;
                 streamPopupVoiceSegments(modalId);
             };
 
-            utterance.onerror = () => stopPopupAudioTrack(modalId);
+            utterance.onerror = () => {
+                if (isPopupAudioPaused) return;
+                stopPopupAudioTrack(modalId);
+            };
 
-            document.getElementById(`btn-audio-${modalId}`).innerText = "🎙️ Reading...";
-            document.getElementById(`btn-pause-${modalId}`).style.display = "inline-block";
-            document.getElementById(`btn-stop-${modalId}`).style.display = "inline-block";
+            const btnPlay = document.getElementById(`btn-audio-${modalId}`);
+            const btnPause = document.getElementById(`btn-pause-${modalId}`);
+            const btnStop = document.getElementById(`btn-stop-${modalId}`);
+            
+            if (btnPlay) btnPlay.innerText = "🎙️ Reading...";
+            if (btnPause) btnPause.style.display = "inline-block";
+            if (btnStop) btnStop.style.display = "inline-block";
             
             window.speechSynthesis.speak(utterance);
         }
 
         function pausePopupAudioDeck(modalId) {
-            if (isPopupAudioPlaying && !window.speechSynthesis.paused) {
-                window.speechSynthesis.pause();
-                document.getElementById(`btn-audio-${modalId}`).innerText = "▶️ Resume";
-                document.getElementById(`btn-pause-${modalId}`).style.display = "none";
+            if (isPopupAudioPlaying && !isPopupAudioPaused) {
+                isPopupAudioPaused = true;
+                const btnPlay = document.getElementById(`btn-audio-${modalId}`);
+                const btnPause = document.getElementById(`btn-pause-${modalId}`);
+                if (btnPlay) btnPlay.innerText = "▶️ Resume";
+                if (btnPause) btnPause.style.display = "none";
+                window.speechSynthesis.cancel();
             }
         }
 
@@ -1347,7 +1386,7 @@
             const mainLabel = document.getElementById('ttsSpeedLabel');
             if(mainLabel) mainLabel.innerText = `${currentSpeechRate.toFixed(1)}x`;
 
-            if (isPopupAudioPlaying && !window.speechSynthesis.paused) {
+            if (isPopupAudioPlaying && !isPopupAudioPaused) {
                 streamPopupVoiceSegments(modalId);
             }
         }
@@ -1355,6 +1394,7 @@
         function stopPopupAudioTrack(modalId) {
             window.speechSynthesis.cancel();
             isPopupAudioPlaying = false;
+            isPopupAudioPaused = false;
             currentPopupSegmentIndex = 0;
             
             const p = document.getElementById(`btn-audio-${modalId}`);
@@ -1383,6 +1423,7 @@
         function stopPopupNarrationEngine() {
             window.speechSynthesis.cancel();
             isPopupAudioPlaying = false;
+            isPopupAudioPaused = false;
             currentPopupSegmentIndex = 0;
         }
 
@@ -1398,9 +1439,11 @@
         }
 
         function openPopupWithVoiceMute(dialogId) {
-            if(isAudioPlaying) {
-                window.speechSynthesis.pause();
-                document.getElementById('ttsPlaybackMasterTrigger').innerText = "▶️ Resume Main Text";
+            if(isAudioPlaying && !isAudioPaused) {
+                // Pause main track natively inside our custom virtual state logic loop
+                isAudioPaused = true;
+                document.getElementById('ttsPlaybackMasterTrigger').innerText = "▶️ Resume Narration";
+                window.speechSynthesis.cancel();
             }
             const modal = document.getElementById(dialogId);
             if(modal) {
