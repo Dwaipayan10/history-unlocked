@@ -23,59 +23,32 @@
             padding: 20px;
         }
 
-        .top-bar {
+        /* 🎯 GLOBAL BRANDING HEADER TRACK: Anchors your signature permanently to the upper right edge */
+        .global-branding-track {
             max-width: 900px;
-            margin: 0 auto 30px auto;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 20px;
-        }
-
-        .header-row {
+            margin: 0 auto 20px auto;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
+            align-items: center;
+            border-bottom: 1px solid #e0dddb;
+            padding-bottom: 12px;
         }
 
-        .site-title {
-            font-size: 2.2rem;
+        .global-site-logo-label {
+            font-size: 1.6rem;
+            font-weight: 800;
             margin: 0;
-            font-weight: bold;
+            letter-spacing: -0.5px;
             color: var(--text-color);
-        }
-
-        .author-name {
-            font-size: 0.85rem;
-            color: #777;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            margin-top: 12px;
-        }
-
-        .site-description {
-            font-size: 1.05rem;
-            color: #555;
-            margin: 0;
-            max-width: 700px;
-            line-height: 1.5;
-        }
-
-        .back-btn {
-            background: none;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 20px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
-            margin-bottom: 20px;
-            display: inline-block;
         }
 
-        .back-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
+        .global-author-signature {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #555;
         }
 
         .container {
@@ -84,80 +57,87 @@
             position: relative;
         }
 
-        .dashboard-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 30px;
-        }
-
-        .chapter-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .chapter-btn {
-            display: block;
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            padding: 14px 18px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.05rem;
-            color: var(--text-color);
-            transition: all 0.2s;
-            font-weight: 600;
-            border-left: 4px solid transparent;
-        }
-
-        .chapter-btn:hover, .chapter-btn.active {
-            background-color: var(--card-hover);
-            color: var(--accent-color);
-            border-left-color: var(--accent-color);
-        }
-
-        .preview-pane {
+        /* 🎯 CINEMATIC LANDING PORTAL: The clean entrance view */
+        .portal-landing-hero {
+            display: block; /* Controlled via JS */
             background: var(--card-bg);
-            padding: 30px;
+            padding: 50px 40px;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.02);
             text-align: center;
+            margin-top: 20px;
         }
 
-        .preview-image {
+        .portal-site-slogan {
+            font-size: 1.15rem;
+            font-style: italic;
+            color: #555;
+            max-width: 650px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+
+        .portal-divider-line {
+            width: 80px;
+            height: 2px;
+            background: var(--accent-color);
+            margin: 30px auto;
+        }
+
+        .portal-saga-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 0 15px 0;
+            color: var(--text-color);
+        }
+
+        .portal-saga-meta-date {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #777;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .portal-saga-cover-img {
             width: 100%;
-            max-height: 380px;
+            max-height: 360px;
             object-fit: cover;
             border-radius: 8px;
-            margin-top: 15px;
-            cursor: zoom-in;
-            transition: transform 0.2s ease;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        .preview-image:hover {
-            transform: scale(1.01);
+        .portal-saga-intro-body {
+            font-size: 1.15rem;
+            color: #3e4743;
+            max-width: 760px;
+            margin: 0 auto 35px auto;
+            text-align: justify;
+            line-height: 1.7;
         }
 
-        .explore-trigger-btn {
-            margin-top: 25px;
+        .portal-gate-trigger-btn {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 12px 28px;
-            font-size: 1rem;
+            padding: 16px 40px;
+            font-size: 1.1rem;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: opacity 0.2s;
+            box-shadow: 0 4px 15px rgba(90, 120, 107, 0.3);
+            transition: all 0.2s ease;
         }
 
-        .explore-trigger-btn:hover {
-            opacity: 0.9;
+        .portal-gate-trigger-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(90, 120, 107, 0.4);
+            opacity: 0.95;
         }
 
+        /* 🎯 INTERACTIVE BOOK WORKSPACE INTERFACE */
         .reader-layout {
             display: none; 
             background: var(--card-bg);
@@ -166,23 +146,6 @@
             box-shadow: 0 4px 25px rgba(0,0,0,0.02);
         }
 
-        .reader-branding-meta-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #e0dddb;
-        }
-
-        .reader-signature-credit {
-            font-size: 0.85rem;
-            color: #777;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        /* 🎯 RE-ENGINEERED: BOOK CHAPTER NAVIGATOR BUTTON LAYER PANEL */
         .book-chapter-tab-deck {
             display: flex;
             gap: 10px;
@@ -372,7 +335,6 @@
             padding-bottom: 20px;
         }
 
-        /* 🎯 RE-STYLED TIMELINE CONTAINER HEADER GRID WITH OPTION 1 DOCK FLEX SPACING */
         .category-header-summary {
             font-size: 1.05rem;
             font-weight: 700;
@@ -385,7 +347,7 @@
             list-style: none; 
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Pushes Ribbon elements right against container tracking borders */
+            justify-content: space-between; 
             gap: 15px;
             border-bottom: 1px solid transparent;
             transition: background 0.2s, border-color 0.2s;
@@ -423,7 +385,7 @@
             display: none;
         }
 
-        /* 🇮🇳 DESIGN OPTION 1: THE INTEGRATED TIMELINE RIBBON ELEMENT STYLE */
+        /* DESIGN OPTION 1: THE INTEGRATED TIMELINE RIBBON ELEMENT STYLE */
         .india-timeline-ribbon-trigger {
             font-size: 0.92rem;
             font-weight: 700;
@@ -666,7 +628,6 @@
             transition: width 0.1s linear;
         }
 
-        /* Distinct color treatment for India Audio Tracks */
         .india-modal-container .popup-audio-progress-fill {
             background: var(--india-accent);
         }
@@ -783,44 +744,49 @@
             .site-description { font-size: 0.92rem; }
             .reader-header { font-size: 1.5rem; }
             .reader-body { font-size: 0.95rem; }
-            .dashboard-layout { grid-template-columns: 1fr; gap: 20px; }
             .split-reader-grid { flex-direction: column; height: auto; gap: 20px; }
             .map-viewer-frame { width: 100%; height: 260px; }
             .text-content-frame { width: 100%; height: auto; max-height: none; overflow: visible; padding-right: 0; }
-            .header-row { flex-direction: column; }
             .reader-branding-meta-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
             dialog { width: 96%; max-height: 92vh; }
             .popup-title { font-size: 1.2rem; padding-right: 0; margin-top: 42px; }
             .popup-body-content { font-size: 0.94rem; }
             .category-header-summary { flex-direction: column; align-items: flex-start; gap: 10px; }
             .india-timeline-ribbon-trigger { align-self: flex-end; font-size: 0.85rem; }
+            .portal-landing-hero { padding: 30px 20px; }
+            .portal-saga-title { font-size: 1.5rem; }
+            .portal-saga-intro-body { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar" id="mainHeader">
-        <div class="header-row">
-            <h1 class="site-title">Backstory</h1>
-            <div class="author-name">Dwaipayan Sinha</div>
-        </div>
-        <p class="site-description">Every major event has a hidden beginning. Discover the secret motives, accidental choices, and forgotten human drama that shaped our world.</p>
+    <!-- 🎯 MASTER GLOBAL TRACK CONTAINER: Hardwired signature locks right completely across screens -->
+    <div class="global-branding-track">
+        <h1 class="global-site-logo-label" id="globalDynamicLogoLabel" onclick="showDashboardView()">Backstory</h1>
+        <div class="global-author-signature" id="globalDynamicAuthorSignature">Dwaipayan Sinha</div>
     </div>
 
     <div class="container">
-        <div class="dashboard-layout" id="dashboardScreen">
-            <nav>
-                <ul class="chapter-list" id="menuContainer"></ul>
-            </nav>
-            <div class="preview-pane" id="previewContainer">
-                <div class="loading-msg">Loading history engine...</div>
-            </div>
+        <!-- 🎯 NEW CINEMATIC PORTAL ENTRANCE ELEMENT VIEW -->
+        <div class="portal-landing-hero" id="dashboardScreen">
+            <p class="portal-site-slogan" id="siteGlobalSloganText">Loading storytelling matrix...</p>
+            <div class="portal-divider-line"></div>
+            
+            <h2 class="portal-saga-title" id="siteEntrancePortalTitle">...</h2>
+            <div class="portal-saga-meta-date" id="siteEntrancePortalDate">...</div>
+            <div id="siteEntranceCoverImgWrap"></div>
+            <p class="portal-saga-intro-body" id="siteEntrancePortalBody"></p>
+            
+            <button class="portal-gate-trigger-btn" onclick="launchReaderView('portuguese_ch1')">
+                ⛵ Begin the Interactive Journey
+            </button>
         </div>
 
+        <!-- INTERACTIVE TAB LAYOUT WORKSPACE -->
         <div class="reader-layout" id="readerScreen">
             <div class="reader-branding-meta-bar">
-                <button class="back-btn" style="margin-bottom:0;" onclick="showDashboardView()">← Back to Menu</button>
-                <div class="reader-signature-credit">Dwaipayan Sinha</div>
+                <button class="back-btn" style="margin-bottom:0;" onclick="showDashboardView()">← Back to Entrance</button>
             </div>
             
             <div class="book-chapter-tab-deck" id="bookSubChapterTabContainer"></div>
@@ -870,7 +836,7 @@
         let globalChapters = {};
         let globalLevers = [];
         let globalCategories = {}; 
-        let activeBookSubChapterId = null; // Tracks the current active tab index code
+        let activeBookSubChapterId = null; 
 
         let currentSpeechUtterance = null;
         let isAudioPlaying = false;
@@ -882,7 +848,6 @@
         function parseMarkdownToHtml(textString) {
             if (!textString) return '';
             let html = textString.toString();
-            html = html.replace(/\*\frac{(.*?)}{(.*?)}/g, '<strong>$1</strong>');
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
             html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
@@ -901,7 +866,6 @@
                 const d2 = JSON.parse(res2.substr(47).slice(0, -2)).table.rows;
                 const d3 = JSON.parse(res3.substr(47).slice(0, -2)).table.rows;
 
-                // 🎯 RE-STYLED STREAM MAP: Parses all columns including dynamic India context arrays from Sheet 3
                 d3.forEach((row) => {
                     if (row && row.c && row.c[0] && row.c[1]) {
                         const catId = row.c[0].v ? row.c[0].v.toString().trim() : '';
@@ -950,52 +914,41 @@
                     });
                 });
 
-                renderDashboardMenu();
+                renderCinematicEntrancePortal();
             } catch (err) {
-                document.getElementById('previewContainer').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet configurations.</div>`;
+                document.getElementById('dashboardScreen').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet row config alignments.</div>`;
                 console.error(err);
             }
         }
 
-        function renderDashboardMenu() {
-            let menuHtml = '';
-            
-            // Filters out sub-chapters so only primary macro books show up on the initial menu dashboard
-            const primaryMacroChapters = Object.values(globalChapters).filter(ch => !ch.id.includes('_ch'));
-            const finalRenderList = primaryMacroChapters.length > 0 ? primaryMacroChapters : Object.values(globalChapters);
-            
-            finalRenderList.forEach((ch, idx) => {
-                const cls = idx === 0 ? 'active' : '';
-                menuHtml += `<li><button class="chapter-btn ${cls}" id="nav-${ch.id}" onclick="setPreviewTarget('${ch.id}')">${ch.title}</button></li>`;
-            });
-            document.getElementById('menuContainer').innerHTML = menuHtml;
-            if(finalRenderList[0]) setPreviewTarget(finalRenderList[0].id);
-        }
+        // 🎯 DYNAMIC MAP LOADER: Pulls parameters straight out of config sheet rows dynamically
+        function renderCinematicEntrancePortal() {
+            const globalConfig = globalChapters['site_global_config'];
+            const mainSagaPortal = globalChapters['portuguese_saga_main'];
 
-        function setPreviewTarget(id) {
-            document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.getElementById(`nav-${id}`);
-            if (activeBtn) activeBtn.classList.add('active');
+            if (globalConfig) {
+                document.getElementById('globalDynamicLogoLabel').innerText = globalConfig.title;
+                document.getElementById('globalDynamicAuthorSignature').innerText = globalConfig.date;
+                document.getElementById('siteGlobalSloganText').innerText = globalConfig.body;
+            }
 
-            const data = globalChapters[id];
-            if (!data) return;
-            
-            let imageSection = data.img ? `<img src="${data.img}" class="preview-image" onclick="launchImmersiveLightbox('${data.img}')" alt="${data.title}">` : '';
-            
-            document.getElementById('previewContainer').innerHTML = `
-                <div class="date" style="font-size:0.9rem; color:#777; text-transform:uppercase;">${data.date}</div>
-                <h2 style="margin:5px 0 15px 0; font-size:1.8rem;">${data.title}</h2>
-                ${imageSection}
-                <div>
-                    <button class="explore-trigger-btn" onclick="launchReaderView('portuguese_ch1')">Open Interactive Chapter</button>
-                </div>
-            `;
+            if (mainSagaPortal) {
+                document.getElementById('siteEntrancePortalTitle').innerText = mainSagaPortal.title;
+                document.getElementById('siteEntrancePortalDate').innerText = mainSagaPortal.date;
+                document.getElementById('siteEntrancePortalBody').innerText = mainSagaPortal.body;
+                
+                if (mainSagaPortal.img) {
+                    document.getElementById('siteEntranceCoverImgWrap').innerHTML = `
+                        <img src="${mainSagaPortal.img}" class="portal-saga-cover-img" alt="Exploration Saga Cover Focus">
+                    `;
+                }
+            }
+            attachGlobalLightboxTriggers();
         }
 
         function launchReaderView(targetChapterId) {
             activeBookSubChapterId = targetChapterId;
             
-            // Build sub-chapter selector tab bars automatically
             let tabsHtml = '';
             Object.values(globalChapters).forEach((ch) => {
                 if(ch.id.includes('portuguese_ch')) {
@@ -1007,7 +960,6 @@
 
             renderCurrentChapterContent();
             
-            document.getElementById('mainHeader').style.display = 'none';
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('readerScreen').style.display = 'block';
             window.scrollTo(0,0);
@@ -1036,14 +988,13 @@
 
             const mapFrame = document.getElementById('mapFrameContainer');
             if (ch.readerImg) {
-                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" onclick="launchImmersiveLightbox('${ch.readerImg}')" alt="Historical Map Context">`;
+                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" alt="Historical Map Context">`;
                 mapFrame.style.display = 'block';
             } else {
                 mapFrame.innerHTML = '';
                 mapFrame.style.display = 'none';
             }
 
-            // Filter out sections that are tagged to this specific chapter
             let currentChapterSections = Object.values(globalCategories).filter(cat => cat.parentChapterId === activeBookSubChapterId);
             
             let masterCategoriesHtml = '';
@@ -1057,9 +1008,8 @@
                     const indiaModalId = `india-modal-${cat.id}`;
                     optionalIndiaRibbonHtml = `<button class="india-timeline-ribbon-trigger" onclick="event.preventDefault(); event.stopPropagation(); openPopupWithVoiceMute('${indiaModalId}')">${cat.indiaBtnText}</button>`;
                     
-                    let indiaImgHtml = cat.indiaPopImg ? `<img src="${cat.indiaPopImg}" class="popup-img" onclick="launchImmersiveLightbox('${cat.indiaPopImg}')" alt="India Art Context">` : '';
+                    let indiaImgHtml = cat.indiaPopImg ? `<img src="${cat.indiaPopImg}" class="popup-img" alt="India Art Context">` : '';
                     
-                    // Append parallel India layout data structures to the document string stream
                     modalMasterHtml += `
                         <dialog id="${indiaModalId}" class="india-modal-container">
                             <div class="window-control-rack">
@@ -1114,7 +1064,7 @@
                         </button>
                     `;
 
-                    let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" onclick="launchImmersiveLightbox('${lev.popImg}')" alt="History Canvas">` : '';
+                    let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Canvas">` : '';
                     const hasPrev = idx > 0;
                     const hasNext = idx < matchedLevers.length - 1;
                     const prevId = `modal-${cat.id}-${idx - 1}`;
@@ -1371,7 +1321,7 @@
         }
 
         function attachGlobalLightboxTriggers() {
-            document.querySelectorAll('.preview-image, .map-image, .popup-img').forEach(img => {
+            document.querySelectorAll('.portal-saga-cover-img, .map-image, .popup-img').forEach(img => {
                 img.removeAttribute('onclick'); 
                 img.style.cursor = 'zoom-in';
                 img.onclick = (e) => {
@@ -1402,9 +1352,9 @@
         function showDashboardView() {
             stopNarrationEngine();
             stopPopupNarrationEngine();
-            document.getElementById('mainHeader').style.display = 'block';
-            document.getElementById('dashboardScreen').style.display = 'grid';
+            document.getElementById('dashboardScreen').style.display = 'block';
             document.getElementById('readerScreen').style.display = 'none';
+            window.scrollTo(0,0);
         }
 
         window.onload = initSystem;
