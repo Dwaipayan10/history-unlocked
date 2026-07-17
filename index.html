@@ -391,6 +391,17 @@
             text-align: justify;
         }
 
+        /* Format any standalone image in post bodies to look consistent and allow lightbox */
+        .reader-body img, .popup-body-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            cursor: zoom-in;
+            display: block;
+        }
+
         .section-divider {
             text-align: center;
             border-bottom: 1px solid #e0dddb;
@@ -578,12 +589,14 @@
             backdrop-filter: blur(4px);
         }
 
+        /* 🎯 NO CROP FIT: Forces the graphic inside the pop-ups to scale fully without side crops */
         .popup-img {
             width: 100%;
             max-height: 240px;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
             cursor: zoom-in;
+            background: #1e1e1a;
             transition: max-height 0.3s ease;
         }
 
@@ -660,7 +673,6 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.01);
         }
 
-        /* 🎯 REPAIR FLEX STRAIN: Prevents layout explosion within custom popups */
         .popup-audio-upper-controls {
             display: flex;
             align-items: center;
@@ -669,7 +681,6 @@
             flex-wrap: wrap; 
         }
 
-        /* 🎯 SAFE POPUP OVERRIDE: Prevent the fixed 195px main layout width rule inside modals */
         .popup-audio-upper-controls .audio-trigger-btn {
             min-width: auto;
             flex: 1;
@@ -1485,8 +1496,10 @@
             }, 100);
         }
 
+        // 🎯 GLOBAL LIGHTBOX ATTACHMENT: Targets all images anywhere on the workspace
         function attachGlobalLightboxTriggers() {
-            document.querySelectorAll('.portal-saga-cover-img, .map-image, .popup-img').forEach(img => {
+            // Scans any images within reader layouts, popups, and the landing hero
+            document.querySelectorAll('#readerScreen img, #popupMasterStack img, .portal-saga-cover-img').forEach(img => {
                 img.removeAttribute('onclick'); 
                 img.style.cursor = 'zoom-in';
                 img.onclick = (e) => {
