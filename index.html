@@ -147,7 +147,6 @@
             opacity: 0.95;
         }
 
-        /* Unified Workspace Layout */
         .workspace-master-wrapper {
             display: grid;
             grid-template-columns: 180px 1fr;
@@ -174,7 +173,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            z-index: 100;
+            z-index: 10; /* Lowered z-index so backdrops cleanly cover it */
         }
 
         .india-margin-perspective-card {
@@ -565,7 +564,7 @@
             text-decoration-style: solid;
         }
 
-        /* 🎯 ENLARGED BASE DIALOG STYLING (Standard View) */
+        /* DIALOG BASE STYLING */
         dialog {
             border: none;
             border-radius: 12px;
@@ -614,6 +613,7 @@
             flex: 1;
         }
 
+        /* 🎯 HIGH Z-INDEX CONTROL RACK (Always stays clickable on top layer) */
         .window-control-rack {
             position: absolute;
             top: 12px; 
@@ -621,12 +621,13 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            z-index: 1000;
+            z-index: 9999 !important;
+            pointer-events: auto !important;
         }
 
         .window-control-btn {
-            background: rgba(255, 255, 255, 0.92);
-            border: 1px solid #e0dddb;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #d0cdcb;
             font-size: 0.85rem;
             font-weight: bold;
             color: #333;
@@ -637,13 +638,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: background 0.2s, color 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: background 0.2s, color 0.2s, transform 0.1s;
         }
 
         .window-control-btn:hover {
             background-color: #f2ede9;
             color: #000;
+            transform: scale(1.05);
         }
 
         .window-control-btn.close-x-btn:hover {
@@ -766,7 +768,7 @@
             background: none;
         }
 
-        /* 🎯 COLLAPSED / SHRUNK MODE */
+        /* COLLAPSED MODE */
         dialog.collapsed-mode {
             width: 380px !important;
             max-width: 85vw !important;
@@ -779,7 +781,7 @@
             max-height: 28%;
         }
 
-        /* 🎯 WIDESCREEN MAXIMIZED MODE: Side-by-Side 2-Column Grid Layout */
+        /* WIDESCREEN MAXIMIZED MODE */
         @media (min-width: 751px) {
             dialog.maximized-mode:has(.popup-img) {
                 display: grid;
@@ -814,7 +816,6 @@
                 grid-row: 2;
             }
 
-            /* Fallback maximized mode for dialogs without an image */
             dialog.maximized-mode:not(:has(.popup-img)) {
                 width: 95vw !important;
                 max-width: 95vw !important;
@@ -823,7 +824,6 @@
             }
         }
 
-        /* Lightbox Container */
         .native-lightbox-topframe {
             border: none;
             background: transparent;
@@ -878,7 +878,6 @@
             z-index: 310000;
         }
 
-        /* Responsive Breakpoints */
         @media (max-width: 960px) {
             .workspace-master-wrapper { 
                 grid-template-columns: 1fr; 
@@ -900,7 +899,6 @@
             }
         }
 
-        /* Mobile Screens (Stacking & Typography) */
         @media (max-width: 750px) {
             body { 
                 padding: 8px; 
