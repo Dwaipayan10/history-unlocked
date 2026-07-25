@@ -147,7 +147,7 @@
             opacity: 0.95;
         }
 
-        /* Unified Workspace Wrapper Grid */
+        /* Unified Workspace Layout */
         .workspace-master-wrapper {
             display: grid;
             grid-template-columns: 180px 1fr;
@@ -341,13 +341,13 @@
             flex-shrink: 0;
         }
 
+        /* 🎯 LOCKED DESKTOP SPLIT GRID: Image & text frame stay equal at 450px */
         .split-reader-grid {
             display: flex;
             flex-direction: row;
             gap: 25px;
             margin-bottom: 35px;
-            min-height: 380px; 
-            max-height: 480px;
+            height: 450px; 
             align-items: stretch;
             width: 100%;
         }
@@ -566,7 +566,7 @@
             text-decoration-style: solid;
         }
 
-        /* 🎯 MODAL BASE STYLING */
+        /* Dialog Styling */
         dialog {
             border: none;
             border-radius: 12px;
@@ -845,7 +845,7 @@
             z-index: 310000;
         }
 
-        /* 🎯 RESPONSIVE MEDIA QUERIES FOR SCREEN CONSISTENCY */
+        /* 🎯 RESPONSIVE MEDIA QUERIES FOR ALL MOBILE PHONES */
         @media (max-width: 960px) {
             .workspace-master-wrapper { 
                 grid-template-columns: 1fr; 
@@ -863,36 +863,35 @@
                 flex: 1; 
             }
             .reader-layout { 
-                padding: 25px 20px; 
-            }
-            .split-reader-grid { 
-                height: 400px; 
-                gap: 20px; 
+                padding: 22px 18px; 
             }
         }
 
+        /* 🎯 SMARTPHONE TYPOGRAPHY AND CLUTTER REDUCTION (Applies to all phone widths <= 750px) */
         @media (max-width: 750px) {
             body { 
-                padding: 10px; 
+                padding: 8px; 
             }
             .reader-layout {
-                padding: 18px 15px;
+                padding: 16px 12px;
             }
             .reader-header { 
-                font-size: 1.45rem; 
+                font-size: 1.35rem; 
+                margin-bottom: 12px;
             }
             .reader-body { 
-                font-size: 0.98rem; 
+                font-size: 0.9rem; 
+                line-height: 1.5;
             }
             .split-reader-grid { 
                 flex-direction: column; 
                 height: auto; 
                 max-height: none;
-                gap: 15px; 
+                gap: 12px; 
             }
             .map-viewer-frame { 
                 width: 100%; 
-                height: 240px; 
+                height: 220px; 
             }
             .text-content-frame { 
                 width: 100%; 
@@ -901,27 +900,34 @@
                 overflow: visible; 
                 padding-right: 0; 
             }
+            .popup-scroll-body-container {
+                padding: 15px 16px;
+            }
             .popup-title { 
-                font-size: 1.12rem; 
+                font-size: 1.05rem; 
                 padding-right: 0; 
-                margin-top: 36px; 
+                margin-top: 32px; 
             }
             .popup-body-content { 
-                font-size: 0.94rem; 
+                font-size: 0.9rem; 
+                line-height: 1.5;
             }
             .category-header-summary { 
                 flex-direction: column; 
                 align-items: flex-start; 
-                gap: 8px; 
+                gap: 6px; 
+                padding: 12px 14px;
+                font-size: 0.92rem;
             }
             .portal-landing-hero { 
-                padding: 30px 18px; 
+                padding: 24px 15px; 
             }
             .portal-saga-title { 
-                font-size: 1.45rem; 
+                font-size: 1.35rem; 
             }
             .portal-saga-intro-body { 
-                font-size: 0.98rem; 
+                font-size: 0.92rem; 
+                line-height: 1.5;
             }
             .sticky-margin-perspective-dock { 
                 flex-direction: column; 
@@ -1039,12 +1045,12 @@
             return html;
         }
 
-        // 🎯 NATURAL NARRATIVE VOICE SELECTOR
+        // 🎯 NATURAL NARRATIVE VOICE SELECTOR (Excludes IN regional accents, enforces standard US/UK male)
         function captureNaturalSpeechVoiceInstance() {
             const voices = window.speechSynthesis.getVoices();
             if (!voices || voices.length === 0) return null;
 
-            const priorityVoiceFilters = [
+            const preferredMaleFilters = [
                 "google uk english male", 
                 "google us english male", 
                 "microsoft christopher online", 
@@ -1055,21 +1061,30 @@
                 "apple oliver", 
                 "en-us-x-sfg", 
                 "en-us-x-iom", 
-                "en-gb-x-rdb",
-                "male", 
-                "guy"
+                "en-gb-x-rdb"
             ];
 
-            for (let filter of priorityVoiceFilters) {
+            // 1. Try finding explicit non-Indian male voices first
+            for (let filter of preferredMaleFilters) {
                 let matched = voices.find(v => {
                     const name = v.name.toLowerCase();
                     const uri = v.voiceURI ? v.voiceURI.toLowerCase() : "";
-                    return name.includes(filter) || uri.includes(filter);
+                    const lang = v.lang ? v.lang.toLowerCase() : "";
+                    return (name.includes(filter) || uri.includes(filter)) && !lang.includes("in") && !name.includes("india");
                 });
                 if (matched) return matched;
             }
 
-            return voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en")) || voices[0];
+            // 2. Generic fallback: any male voice not containing IN/India
+            let genericMale = voices.find(v => {
+                const name = v.name.toLowerCase();
+                const lang = v.lang ? v.lang.toLowerCase() : "";
+                return (name.includes("male") || name.includes("guy")) && !lang.includes("in") && !name.includes("india");
+            });
+            if (genericMale) return genericMale;
+
+            // 3. Last fallback: any standard US/UK voice
+            return voices.find(v => v.lang && (v.lang.toLowerCase() === "en-us" || v.lang.toLowerCase() === "en-gb")) || voices[0];
         }
 
         async function initSystem() {
@@ -1390,6 +1405,7 @@
             const segmentText = activeParagraphTextArray[currentSpeechParagraphIndex];
             const utterance = new SpeechSynthesisUtterance(segmentText);
             
+            utterance.lang = 'en-US';
             utterance.voice = captureNaturalSpeechVoiceInstance();
             utterance.rate = currentSpeechRate;
             utterance.pitch = 0.95; 
@@ -1490,6 +1506,7 @@
             const textSegment = activePopupTextArray[currentPopupSegmentIndex];
             const utterance = new SpeechSynthesisUtterance(textSegment);
             
+            utterance.lang = 'en-US';
             utterance.voice = captureNaturalSpeechVoiceInstance();
             utterance.rate = currentSpeechRate;
             utterance.pitch = 0.95;
@@ -1582,7 +1599,6 @@
             currentPopupSegmentIndex = 0;
         }
 
-        /* 🎯 STABLE MODAL RESIZE ENGINE */
         function toggleWindowSizeState(modalId, mode) {
             const targetModal = document.getElementById(modalId);
             if (!targetModal) return;
