@@ -361,17 +361,15 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-            background: #f4f3ef;
-            border: 1px solid #e3dec9;
+            background: #fbfbfa;
             flex-shrink: 0;
         }
 
-        /* 🎯 FIXED: Shows the entire map image in full without cropping */
         .map-image {
             width: 100%;
             height: 100%;
             display: block;
-            object-fit: contain;
+            object-fit: cover;
             cursor: zoom-in;
             transition: transform 0.2s ease;
         }
@@ -603,6 +601,7 @@
             position: relative;
         }
 
+        /* 🎯 UNPINNED & UNFRAMED POPUP IMAGE */
         .popup-img {
             width: 100%;
             height: auto;
@@ -784,7 +783,7 @@
             max-height: 140px;
         }
 
-        /* MAXIMIZED MODE */
+        /* MAXIMIZED MODE (Expanded view with smooth scroll body) */
         @media (min-width: 751px) {
             dialog.maximized-mode {
                 width: 92vw !important;
@@ -1255,6 +1254,7 @@
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
 
+            /* 🎯 IMAGE MOVED INSIDE POPUP-SCROLL-BODY-CONTAINER FOR NATURAL SCROLLING & NO BLACK BAR */
             if (ch.indiaBtnText) {
                 const indiaModalId = `india-modal-${ch.id}`;
                 let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
