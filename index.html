@@ -567,8 +567,8 @@
             border: none;
             border-radius: 12px;
             padding: 0;
-            width: 820px;
-            max-width: 90vw;
+            width: 780px;
+            max-width: 92vw;
             box-shadow: 0 18px 45px rgba(0,0,0,0.2);
             background: #ffffff;
             overflow: hidden;
@@ -601,21 +601,22 @@
             position: relative;
         }
 
+        /* 🎯 UNPINNED & UNFRAMED POPUP IMAGE */
         .popup-img {
             width: 100%;
             height: auto;
-            max-height: 260px;
+            max-height: 380px;
             object-fit: contain;
             display: block;
             cursor: zoom-in;
-            margin: 0;
-            background: #1e1e1a;
-            transition: height 0.25s ease;
-            flex-shrink: 0;
+            margin: 0 auto 20px auto;
+            background: transparent;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .popup-scroll-body-container {
-            padding: 22px 28px;
+            padding: 24px 30px;
             overflow-y: auto;
             flex: 1;
         }
@@ -782,44 +783,21 @@
             max-height: 140px;
         }
 
-        /* 🎯 WIDESCREEN MAXIMIZED MODE (Direct Child Grid Alignment) */
+        /* MAXIMIZED MODE (Expanded view with smooth scroll body) */
         @media (min-width: 751px) {
             dialog.maximized-mode {
-                width: 95vw !important;
-                max-width: 95vw !important;
+                width: 92vw !important;
+                max-width: 92vw !important;
                 height: 92vh !important;
                 max-height: 92vh !important;
             }
 
-            /* Only split into 2-columns if an image actually exists */
-            dialog.maximized-mode .dialog-layout-wrapper:has(> .popup-img) {
-                display: grid;
-                grid-template-columns: 40% 1fr;
-                grid-template-rows: 1fr auto;
+            dialog.maximized-mode .popup-scroll-body-container {
+                padding: 30px 45px;
             }
 
-            dialog.maximized-mode .dialog-layout-wrapper:has(> .popup-img) > .popup-img {
-                grid-column: 1;
-                grid-row: 1 / span 2;
-                width: 100%;
-                height: 100%;
-                max-height: 100%;
-                object-fit: contain;
-                background: #1e1e1a;
-                border-right: 1px solid #e8e6e3;
-                border-radius: 0;
-            }
-
-            dialog.maximized-mode .dialog-layout-wrapper:has(> .popup-img) .popup-scroll-body-container {
-                grid-column: 2;
-                grid-row: 1;
-                overflow-y: auto;
-                padding: 30px 35px;
-            }
-
-            dialog.maximized-mode .dialog-layout-wrapper:has(> .popup-img) .modal-nav-footer {
-                grid-column: 2;
-                grid-row: 2;
+            dialog.maximized-mode .popup-img {
+                max-height: 460px;
             }
         }
 
@@ -1276,7 +1254,7 @@
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
 
-            /* 🎯 DIRECT CHILD DOM PLACEMENT FOR CLEAN 2-COLUMN GRID IN MAXIMIZED MODE */
+            /* 🎯 IMAGE MOVED INSIDE POPUP-SCROLL-BODY-CONTAINER FOR NATURAL SCROLLING & NO BLACK BAR */
             if (ch.indiaBtnText) {
                 const indiaModalId = `india-modal-${ch.id}`;
                 let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
@@ -1289,8 +1267,8 @@
                             <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${indiaModalId}')">&times;</button>
                         </div>
                         <div class="dialog-layout-wrapper">
-                            ${indiaImgHtml}
                             <div class="popup-scroll-body-container">
+                                ${indiaImgHtml}
                                 <div class="popup-audio-module-wrap">
                                     <div class="popup-audio-upper-controls">
                                         <button class="audio-trigger-btn" style="color:var(--accent-color);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">🎙 Play</button>
@@ -1357,8 +1335,8 @@
                                 <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${uniqueId}')">&times;</button>
                             </div>
                             <div class="dialog-layout-wrapper">
-                                ${modalImgHtml}
                                 <div class="popup-scroll-body-container">
+                                    ${modalImgHtml}
                                     <div class="popup-audio-module-wrap">
                                         <div class="popup-audio-upper-controls">
                                             <button class="audio-trigger-btn" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙 Play</button>
