@@ -176,7 +176,7 @@
             z-index: 10;
         }
 
-        /* 🧭 OPTION B: CARTOGRAPHER'S MARGIN NOTE STYLE */
+        /* 🧭 CARTOGRAPHER'S MARGIN NOTE STYLE */
         .india-margin-perspective-card {
             background: #f4f5f0;
             border: 1px dashed #a3b0a0;
@@ -608,8 +608,8 @@
             object-fit: contain;
             display: block;
             cursor: zoom-in;
-            margin-bottom: 15px;
-            border-radius: 6px;
+            margin: 0;
+            background: #1e1e1a;
             transition: height 0.25s ease;
             flex-shrink: 0;
         }
@@ -782,7 +782,7 @@
             max-height: 140px;
         }
 
-        /* 🎯 WIDESCREEN MAXIMIZED MODE */
+        /* 🎯 WIDESCREEN MAXIMIZED MODE (Direct Child Grid Alignment) */
         @media (min-width: 751px) {
             dialog.maximized-mode {
                 width: 95vw !important;
@@ -791,13 +791,14 @@
                 max-height: 92vh !important;
             }
 
-            dialog.maximized-mode .dialog-layout-wrapper:has(.popup-img) {
+            /* Only split into 2-columns if an image actually exists */
+            dialog.maximized-mode .dialog-layout-wrapper:has(> .popup-img) {
                 display: grid;
                 grid-template-columns: 40% 1fr;
                 grid-template-rows: 1fr auto;
             }
 
-            dialog.maximized-mode .dialog-layout-wrapper:has(.popup-img) .popup-img {
+            dialog.maximized-mode .dialog-layout-wrapper:has(> .popup-img) > .popup-img {
                 grid-column: 1;
                 grid-row: 1 / span 2;
                 width: 100%;
@@ -806,18 +807,17 @@
                 object-fit: contain;
                 background: #1e1e1a;
                 border-right: 1px solid #e8e6e3;
-                margin-bottom: 0;
                 border-radius: 0;
             }
 
-            dialog.maximized-mode .dialog-layout-wrapper:has(.popup-img) .popup-scroll-body-container {
+            dialog.maximized-mode .dialog-layout-wrapper:has(> .popup-img) .popup-scroll-body-container {
                 grid-column: 2;
                 grid-row: 1;
                 overflow-y: auto;
                 padding: 30px 35px;
             }
 
-            dialog.maximized-mode .dialog-layout-wrapper:has(.popup-img) .modal-nav-footer {
+            dialog.maximized-mode .dialog-layout-wrapper:has(> .popup-img) .modal-nav-footer {
                 grid-column: 2;
                 grid-row: 2;
             }
@@ -1276,6 +1276,7 @@
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
 
+            /* 🎯 DIRECT CHILD DOM PLACEMENT FOR CLEAN 2-COLUMN GRID IN MAXIMIZED MODE */
             if (ch.indiaBtnText) {
                 const indiaModalId = `india-modal-${ch.id}`;
                 let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
@@ -1288,8 +1289,8 @@
                             <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${indiaModalId}')">&times;</button>
                         </div>
                         <div class="dialog-layout-wrapper">
+                            ${indiaImgHtml}
                             <div class="popup-scroll-body-container">
-                                ${indiaImgHtml}
                                 <div class="popup-audio-module-wrap">
                                     <div class="popup-audio-upper-controls">
                                         <button class="audio-trigger-btn" style="color:var(--accent-color);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">🎙 Play</button>
@@ -1356,8 +1357,8 @@
                                 <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${uniqueId}')">&times;</button>
                             </div>
                             <div class="dialog-layout-wrapper">
+                                ${modalImgHtml}
                                 <div class="popup-scroll-body-container">
-                                    ${modalImgHtml}
                                     <div class="popup-audio-module-wrap">
                                         <div class="popup-audio-upper-controls">
                                             <button class="audio-trigger-btn" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙 Play</button>
