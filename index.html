@@ -9,7 +9,7 @@
             --bg-color: #f7f6f2;
             --text-color: #2c3531;
             --accent-color: #5a786b; 
-            --india-accent: #b86b32;
+            --india-accent: #5a786b;
             --card-bg: #ffffff;
             --card-hover: rgba(90, 120, 107, 0.08);
         }
@@ -149,7 +149,7 @@
 
         .workspace-master-wrapper {
             display: grid;
-            grid-template-columns: 180px 1fr;
+            grid-template-columns: 200px 1fr;
             gap: 25px;
             align-items: start;
             width: 100%;
@@ -176,15 +176,14 @@
             z-index: 10;
         }
 
+        /* 🧭 OPTION B: CARTOGRAPHER'S MARGIN NOTE STYLE */
         .india-margin-perspective-card {
-            background: #ffffff;
-            border-left: 4px solid var(--india-accent);
-            border-top: 1px solid #e8e6e3;
-            border-right: 1px solid #e8e6e3;
-            border-bottom: 1px solid #e8e6e3;
-            padding: 14px;
-            border-radius: 0 8px 8px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            background: #f4f5f0;
+            border: 1px dashed #a3b0a0;
+            border-left: 4px solid var(--accent-color);
+            padding: 16px;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
             display: none; 
         }
 
@@ -192,25 +191,26 @@
             font-size: 0.8rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--india-accent);
-            margin: 0 0 6px 0;
+            letter-spacing: 1.2px;
+            color: var(--accent-color);
+            margin: 0 0 8px 0;
+            font-family: Georgia, serif;
         }
 
         .india-margin-card-blurb {
             font-size: 0.85rem;
-            color: #555;
-            margin: 0 0 12px 0;
-            line-height: 1.4;
+            color: #4a544e;
+            margin: 0 0 14px 0;
+            line-height: 1.45;
             font-style: italic;
         }
 
         .india-margin-card-btn {
             width: 100%;
             background: transparent;
-            border: 1px solid var(--india-accent);
-            color: var(--india-accent);
-            padding: 8px 10px;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 12px;
             font-size: 0.82rem;
             font-weight: 700;
             border-radius: 20px;
@@ -220,11 +220,11 @@
         }
 
         .india-margin-card-btn:hover {
-            background: var(--india-accent);
-            color: white;
+            background: var(--accent-color);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(90, 120, 107, 0.25);
         }
 
-        /* 🎯 RESPONSIVE PILL BUTTONS & MOBILE CHAPTER TABS */
         .book-chapter-tab-deck {
             display: flex;
             gap: 10px;
@@ -545,13 +545,6 @@
             text-underline-offset: 3px;
         }
 
-        .ledger-file-stamp {
-            font-family: monospace;
-            font-size: 0.78rem;
-            color: #888;
-            font-weight: bold;
-        }
-
         .ledger-hook-text {
             font-size: 0.9rem;
             font-style: italic;
@@ -608,7 +601,6 @@
             position: relative;
         }
 
-        /* 🎯 REMOVED HEAVY BLACK PADDING / CLEAN BANNER STYLE */
         .popup-img {
             width: 100%;
             height: auto;
@@ -737,10 +729,6 @@
             pointer-events: none;
         }
 
-        .india-modal-container .popup-audio-progress-fill {
-            background: var(--india-accent);
-        }
-
         .popup-audio-clock-readout {
             font-family: monospace;
             font-size: 0.8rem;
@@ -807,6 +795,19 @@
                 display: grid;
                 grid-template-columns: 40% 1fr;
                 grid-template-rows: 1fr auto;
+            }
+
+            dialog.maximized-mode .dialog-layout-wrapper:has(.popup-img) .popup-img {
+                grid-column: 1;
+                grid-row: 1 / span 2;
+                width: 100%;
+                height: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                background: #1e1e1a;
+                border-right: 1px solid #e8e6e3;
+                margin-bottom: 0;
+                border-radius: 0;
             }
 
             dialog.maximized-mode .dialog-layout-wrapper:has(.popup-img) .popup-scroll-body-container {
@@ -887,9 +888,8 @@
                 flex-direction: row; 
             }
             .india-margin-perspective-card { 
-                border-radius: 8px; 
-                border-left: 1px solid #e8e6e3; 
-                border-top: 4px solid var(--india-accent); 
+                border-radius: 6px; 
+                border-left: 4px solid var(--accent-color); 
                 flex: 1; 
             }
             .reader-layout { 
@@ -1058,7 +1058,6 @@
         let globalCategories = {}; 
         let activeBookSubChapterId = null; 
 
-        // State variables for audio playback
         let isAudioPlaying = false;
         let isAudioPaused = false; 
         let currentSpeechRate = 1.0;
@@ -1262,7 +1261,6 @@
                 mapFrame.style.display = 'none';
             }
 
-            /* 🎯 BUTTON VS TITLE SEPARATION */
             const sidePerspCard = document.getElementById('stickyLeftIndiaPerspectiveCard');
             if (ch.indiaBtnText) {
                 document.getElementById('leftIndiaHeaderLabel').innerText = "Parallel Context";
@@ -1278,7 +1276,6 @@
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
 
-            /* 🎯 UNFROZEN BANNER IMAGE INSIDE SCROLL BODY */
             if (ch.indiaBtnText) {
                 const indiaModalId = `india-modal-${ch.id}`;
                 let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
@@ -1295,9 +1292,13 @@
                                 ${indiaImgHtml}
                                 <div class="popup-audio-module-wrap">
                                     <div class="popup-audio-upper-controls">
-                                        <button class="audio-trigger-btn" style="color:var(--india-accent);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">🎙 Play Comment</button>
+                                        <button class="audio-trigger-btn" style="color:var(--accent-color);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">🎙 Play</button>
                                         <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${indiaModalId}" onclick="pausePopupAudioDeck('${indiaModalId}')">⏸ Pause</button>
                                         <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${indiaModalId}" onclick="stopPopupAudioTrack('${indiaModalId}')"> Stop</button>
+                                        <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
+                                        <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${indiaModalId}', -0.1)">-</button>
+                                        <div class="speed-tracker-display" style="font-size:0.8rem; width:28px;" id="lbl-speed-${indiaModalId}">1.0x</div>
+                                        <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${indiaModalId}', 0.1)">+</button>
                                     </div>
                                     <div class="popup-timeline-scrub-row">
                                         <div class="popup-audio-timeline-bar" onclick="seekPopupAudioTimeline('${indiaModalId}', event)">
@@ -1306,7 +1307,7 @@
                                         <div class="popup-audio-clock-readout" id="clock-readout-${indiaModalId}">Segment 0 / 0</div>
                                     </div>
                                 </div>
-                                <h3 class="popup-title" style="color:var(--india-accent);">${ch.indiaPopTitle}</h3>
+                                <h3 class="popup-title" style="color:var(--accent-color);">${ch.indiaPopTitle}</h3>
                                 <div class="popup-body-content" id="raw-text-${indiaModalId}">${parseMarkdownToHtml(ch.indiaPopBody)}</div>
                             </div>
                         </div>
@@ -1327,7 +1328,6 @@
 
                 matchedLevers.forEach((lev, idx) => {
                     const uniqueId = `modal-${cat.id}-${idx}`;
-                    const fileCode = `FILE: ${cat.id}-${String(idx + 1).padStart(2, '0')}`;
                     const hookContent = lev.popHook ? `"${lev.popHook}"` : '';
 
                     masterCategoriesHtml += `
@@ -1336,7 +1336,6 @@
                             <div class="ledger-content-wrap">
                                 <div class="ledger-title-line">
                                     <span class="ledger-link-text">${lev.linkText}</span>
-                                    <span class="ledger-file-stamp">[ ${fileCode} ]</span>
                                 </div>
                                 <p class="ledger-hook-text">${hookContent}</p>
                             </div>
