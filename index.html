@@ -213,7 +213,7 @@
             padding: 8px 10px;
             font-size: 0.82rem;
             font-weight: 700;
-            border-radius: 4px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
@@ -224,38 +224,43 @@
             color: white;
         }
 
+        /* 🎯 RESPONSIVE PILL BUTTONS & MOBILE CHAPTER TABS */
         .book-chapter-tab-deck {
             display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #e8e6e3;
-            padding-bottom: 2px;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e8e6e3;
+            padding-bottom: 10px;
             overflow-x: auto;
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch;
             width: 100%;
         }
 
         .book-tab-link {
-            background: none;
-            border: none;
-            padding: 8px 14px;
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: #666;
+            background: #f0eee9;
+            border: 1px solid #dcd9d4;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
+            border-radius: 20px;
             transition: all 0.2s ease;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .book-tab-link:hover {
             color: var(--accent-color);
-            background: rgba(90, 120, 107, 0.04);
+            background: #e6e3dd;
         }
 
         .book-tab-link.active-tab {
-            color: var(--accent-color);
-            border-bottom-color: var(--accent-color);
-            background: rgba(90, 120, 107, 0.06);
+            color: #ffffff;
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 2px 8px rgba(90, 120, 107, 0.25);
         }
 
         .reader-header {
@@ -564,7 +569,7 @@
             text-decoration-style: solid;
         }
 
-        /* 🎯 DIALOG STYLING: Preserves clean native modal state */
+        /* DIALOG BASE STYLING */
         dialog {
             border: none;
             border-radius: 12px;
@@ -603,14 +608,16 @@
             position: relative;
         }
 
+        /* 🎯 REMOVED HEAVY BLACK PADDING / CLEAN BANNER STYLE */
         .popup-img {
             width: 100%;
-            height: 250px;
-            max-height: 38%;
+            height: auto;
+            max-height: 260px;
             object-fit: contain;
             display: block;
             cursor: zoom-in;
-            background: #1e1e1a;
+            margin-bottom: 15px;
+            border-radius: 6px;
             transition: height 0.25s ease;
             flex-shrink: 0;
         }
@@ -621,7 +628,6 @@
             flex: 1;
         }
 
-        /* 🎯 HIGH Z-INDEX CONTROL RACK */
         .window-control-rack {
             position: absolute;
             top: 12px; 
@@ -785,11 +791,10 @@
         }
 
         dialog.collapsed-mode .popup-img {
-            height: 120px;
-            max-height: 28%;
+            max-height: 140px;
         }
 
-        /* 🎯 WIDESCREEN MAXIMIZED MODE (Grid layout applies safely to inner wrapper) */
+        /* 🎯 WIDESCREEN MAXIMIZED MODE */
         @media (min-width: 751px) {
             dialog.maximized-mode {
                 width: 95vw !important;
@@ -802,17 +807,6 @@
                 display: grid;
                 grid-template-columns: 40% 1fr;
                 grid-template-rows: 1fr auto;
-            }
-
-            dialog.maximized-mode .dialog-layout-wrapper:has(.popup-img) .popup-img {
-                grid-column: 1;
-                grid-row: 1 / span 2;
-                width: 100%;
-                height: 100%;
-                max-height: 100%;
-                object-fit: contain;
-                background: #1e1e1a;
-                border-right: 1px solid #e8e6e3;
             }
 
             dialog.maximized-mode .dialog-layout-wrapper:has(.popup-img) .popup-scroll-body-container {
@@ -1268,10 +1262,11 @@
                 mapFrame.style.display = 'none';
             }
 
+            /* 🎯 BUTTON VS TITLE SEPARATION */
             const sidePerspCard = document.getElementById('stickyLeftIndiaPerspectiveCard');
             if (ch.indiaBtnText) {
-                document.getElementById('leftIndiaHeaderLabel').innerText = ch.indiaPopTitle;
-                document.getElementById('leftIndiaBlurbSummary').innerText = "Click to bridge the parallel Indian Subcontinent overview for this timeline phase.";
+                document.getElementById('leftIndiaHeaderLabel').innerText = "Parallel Context";
+                document.getElementById('leftIndiaBlurbSummary').innerText = "Explore what was happening concurrently across subcontinental empires.";
                 document.getElementById('leftIndiaTriggerAction').innerText = ch.indiaBtnText;
                 sidePerspCard.style.display = "block";
             } else {
@@ -1283,6 +1278,7 @@
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
 
+            /* 🎯 UNFROZEN BANNER IMAGE INSIDE SCROLL BODY */
             if (ch.indiaBtnText) {
                 const indiaModalId = `india-modal-${ch.id}`;
                 let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
@@ -1295,8 +1291,8 @@
                             <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${indiaModalId}')">&times;</button>
                         </div>
                         <div class="dialog-layout-wrapper">
-                            ${indiaImgHtml}
                             <div class="popup-scroll-body-container">
+                                ${indiaImgHtml}
                                 <div class="popup-audio-module-wrap">
                                     <div class="popup-audio-upper-controls">
                                         <button class="audio-trigger-btn" style="color:var(--india-accent);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">🎙 Play Comment</button>
@@ -1361,8 +1357,8 @@
                                 <button class="window-control-btn close-x-btn" onclick="closePopupAndMute('${uniqueId}')">&times;</button>
                             </div>
                             <div class="dialog-layout-wrapper">
-                                ${modalImgHtml}
                                 <div class="popup-scroll-body-container">
+                                    ${modalImgHtml}
                                     <div class="popup-audio-module-wrap">
                                         <div class="popup-audio-upper-controls">
                                             <button class="audio-trigger-btn" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">🎙 Play</button>
@@ -1668,7 +1664,6 @@
             attachGlobalLightboxTriggers(); 
         }
 
-        /* 🎯 SAFE CLEAN CLOSE ENGINE */
         function closePopupAndMute(dialogId) {
             stopPopupAudioTrack(dialogId);
             const modal = document.getElementById(dialogId);
