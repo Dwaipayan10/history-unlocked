@@ -1405,7 +1405,8 @@
         .popup-body-content { color: #38342c; }
 
         .window-control-rack { top: 14px; right: 15px; }
-        .collapse-mode-btn, .expand-mode-btn { display: none; }
+        .collapse-mode-btn { display: none; }
+        .expand-mode-btn { display: flex; }
         .window-control-btn {
             width: 29px; height: 29px;
             border-radius: 1px;
@@ -1416,6 +1417,19 @@
         }
         .window-control-btn:hover { background: #d6c39a; transform: none; }
         .window-control-btn.close-x-btn:hover { background: var(--wax); color: #fff3d5; }
+
+        dialog.maximized-mode:not(.native-lightbox-topframe) {
+            width: 96vw !important;
+            max-width: 1500px !important;
+            height: 94vh !important;
+            height: 94dvh !important;
+            max-height: 94vh !important;
+            max-height: 94dvh !important;
+        }
+
+        dialog.maximized-mode .popup-scroll-body-container {
+            padding: 42px clamp(28px, 5vw, 76px) 34px;
+        }
 
         .modal-nav-footer {
             background: #ded0aa;
@@ -1429,10 +1443,58 @@
         .lightbox-close-x { border-radius: 1px; font-family: Georgia, serif; }
 
         @media (max-width: 960px) {
-            .workspace-master-wrapper { grid-template-columns: 1fr; }
+            .workspace-master-wrapper {
+                grid-template-columns: minmax(0, 1fr);
+                min-width: 0;
+                max-width: 100%;
+            }
             .sticky-margin-perspective-dock { order: 2; }
-            .reader-layout { order: 1; }
+            .reader-layout {
+                order: 1;
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
             .india-margin-perspective-card { max-width: 100%; transform: none; }
+            .book-chapter-tab-deck {
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+            }
+            .split-reader-grid {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+                height: auto;
+                min-height: 0;
+                gap: 18px;
+            }
+            .map-viewer-frame {
+                width: 100%;
+                height: clamp(230px, 48vw, 390px);
+                flex: none;
+            }
+            .text-content-frame {
+                width: 100%;
+                min-width: 0;
+                height: auto;
+                max-height: none;
+                overflow: visible;
+                padding: 8px 4px 4px;
+            }
+            .reader-body {
+                max-width: 100%;
+                text-align: left;
+                overflow-wrap: anywhere;
+            }
+            .section-divider,
+            #categoriesMasterContainer {
+                position: relative;
+                clear: both;
+            }
         }
 
         @media (max-width: 750px) {
@@ -1444,13 +1506,23 @@
             .portal-saga-intro-body { text-align: left; }
             .reader-layout { padding: 34px 20px 38px; }
             .book-tab-link { padding: 8px 12px 10px; }
-            .split-reader-grid { padding: 9px; }
+            .split-reader-grid { padding: 9px; height: auto; }
             .map-viewer-frame { height: 250px; }
             .reader-body { font-size: .98rem; line-height: 1.68; }
             .category-header-summary { flex-direction: row; align-items: center; }
             .ledger-rows-list { padding-left: 15px; }
             .popup-scroll-body-container { padding: 32px 20px 22px; }
             dialog.collapsed-mode { width: 92vw !important; height: 70vh !important; }
+            dialog.maximized-mode:not(.native-lightbox-topframe) {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100vh !important;
+                height: 100dvh !important;
+                max-height: 100vh !important;
+                max-height: 100dvh !important;
+                border: 0;
+            }
+            dialog.maximized-mode .popup-scroll-body-container { padding: 54px 20px 26px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1774,7 +1846,7 @@
                     <dialog id="${indiaModalId}" class="india-modal-container">
                         <div class="window-control-rack">
                             <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', 'shrink')">[-]</button>
-                            <button class="window-control-btn expand-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', 'expand')">[▢]</button>
+                            <button class="window-control-btn expand-mode-btn" type="button" aria-label="Maximise dispatch" aria-pressed="false" title="Maximise dispatch" onclick="toggleWindowSizeState('${indiaModalId}', 'expand')">⛶</button>
                             <button class="window-control-btn close-x-btn" aria-label="Close dispatch" onclick="closePopupAndMute('${indiaModalId}')">&times;</button>
                         </div>
                         <div class="dialog-layout-wrapper">
@@ -1842,7 +1914,7 @@
                         <dialog id="${uniqueId}">
                             <div class="window-control-rack">
                                 <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', 'shrink')">[-]</button>
-                                <button class="window-control-btn expand-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', 'expand')">[▢]</button>
+                                <button class="window-control-btn expand-mode-btn" type="button" aria-label="Maximise entry" aria-pressed="false" title="Maximise entry" onclick="toggleWindowSizeState('${uniqueId}', 'expand')">⛶</button>
                                 <button class="window-control-btn close-x-btn" aria-label="Close entry" onclick="closePopupAndMute('${uniqueId}')">&times;</button>
                             </div>
                             <div class="dialog-layout-wrapper">
@@ -2125,6 +2197,19 @@
             currentPopupSegmentIndex = 0;
         }
 
+        function updateMaximiseControl(targetModal, isMaximised) {
+            if (!targetModal) return;
+            const control = targetModal.querySelector('.expand-mode-btn');
+            if (!control) return;
+
+            const isDispatch = targetModal.classList.contains('india-modal-container');
+            const documentType = isDispatch ? 'dispatch' : 'entry';
+            control.innerText = isMaximised ? '⛗' : '⛶';
+            control.setAttribute('aria-pressed', isMaximised ? 'true' : 'false');
+            control.setAttribute('aria-label', `${isMaximised ? 'Restore' : 'Maximise'} ${documentType}`);
+            control.setAttribute('title', `${isMaximised ? 'Restore' : 'Maximise'} ${documentType}`);
+        }
+
         function toggleWindowSizeState(modalId, mode) {
             const targetModal = document.getElementById(modalId);
             if (!targetModal) return;
@@ -2132,9 +2217,11 @@
             if (mode === 'expand') {
                 targetModal.classList.remove('collapsed-mode');
                 targetModal.classList.toggle('maximized-mode');
+                updateMaximiseControl(targetModal, targetModal.classList.contains('maximized-mode'));
             } else if (mode === 'shrink') {
                 targetModal.classList.remove('maximized-mode');
                 targetModal.classList.toggle('collapsed-mode');
+                updateMaximiseControl(targetModal, false);
             }
         }
 
@@ -2147,6 +2234,7 @@
             const modal = document.getElementById(dialogId);
             if(modal) {
                 modal.classList.remove('maximized-mode', 'collapsed-mode'); 
+                updateMaximiseControl(modal, false);
                 modal.showModal();
                 resetPopupClockReadout(dialogId);
             }
@@ -2158,6 +2246,7 @@
             const modal = document.getElementById(dialogId);
             if(modal) {
                 modal.classList.remove('maximized-mode', 'collapsed-mode');
+                updateMaximiseControl(modal, false);
                 modal.close();
             }
         }
@@ -2168,6 +2257,7 @@
                 const nextModal = document.getElementById(targetId);
                 if(nextModal) {
                     nextModal.classList.remove('maximized-mode', 'collapsed-mode');
+                    updateMaximiseControl(nextModal, false);
                     nextModal.showModal();
                     resetPopupClockReadout(targetId);
                 }
