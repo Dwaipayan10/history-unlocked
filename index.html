@@ -16,11 +16,9 @@
             --card-bg: #ffffff;
             --card-hover: rgba(90, 120, 107, 0.08);
         }
-
         * {
             box-sizing: border-box;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif;
             background-color: var(--bg-color);
@@ -30,7 +28,6 @@
             padding: 20px;
             overflow-x: hidden;
         }
-
         .global-branding-track {
             max-width: 1000px;
             margin: 0 auto 20px auto;
@@ -41,7 +38,6 @@
             padding-bottom: 12px;
             width: 100%;
         }
-
         .global-site-logo-label {
             font-size: 1.6rem;
             font-weight: 800;
@@ -50,7 +46,6 @@
             color: var(--text-color);
             cursor: pointer;
         }
-
         .global-author-signature {
             font-size: 0.85rem;
             font-weight: 700;
@@ -58,14 +53,12 @@
             letter-spacing: 1px;
             color: #555;
         }
-
         .container {
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
             width: 100%;
         }
-
         .portal-landing-hero {
             display: block; 
             background: var(--card-bg);
@@ -79,7 +72,6 @@
             margin-right: auto;
             width: 100%;
         }
-
         .portal-site-slogan {
             font-size: 1.15rem;
             font-style: italic;
@@ -88,21 +80,18 @@
             margin: 0 auto 30px auto;
             line-height: 1.6;
         }
-
         .portal-divider-line {
             width: 80px;
             height: 2px;
             background: var(--accent-color);
             margin: 25px auto;
         }
-
         .portal-saga-title {
             font-size: 2rem;
             font-weight: 800;
             margin: 0 0 15px 0;
             color: var(--text-color);
         }
-
         .portal-saga-meta-date {
             font-family: monospace;
             font-size: 0.9rem;
@@ -111,7 +100,6 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-
         .portal-saga-cover-img {
             width: 100%;
             max-height: 360px;
@@ -121,7 +109,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             cursor: zoom-in;
         }
-
         .portal-saga-intro-body {
             font-size: 1.15rem;
             color: #3e4743;
@@ -130,7 +117,6 @@
             text-align: justify;
             line-height: 1.7;
         }
-
         .portal-gate-trigger-btn {
             background-color: var(--accent-color);
             color: white;
@@ -143,13 +129,11 @@
             box-shadow: 0 4px 15px rgba(90, 120, 107, 0.3);
             transition: all 0.2s ease;
         }
-
         .portal-gate-trigger-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(90, 120, 107, 0.4);
             opacity: 0.95;
         }
-
         .workspace-master-wrapper {
             display: grid;
             grid-template-columns: 200px 1fr;
@@ -157,7 +141,6 @@
             align-items: start;
             width: 100%;
         }
-
         .reader-layout {
             display: none; 
             background: var(--card-bg);
@@ -169,7 +152,6 @@
             box-sizing: border-box;
             overflow-x: hidden;
         }
-
         .sticky-margin-perspective-dock {
             position: sticky;
             top: 20px;
@@ -178,8 +160,6 @@
             gap: 15px;
             z-index: 10;
         }
-
-        /* 🧭 CARTOGRAPHER'S MARGIN NOTE STYLE */
         .india-margin-perspective-card {
             background: #f4f5f0;
             border: 1px dashed #a3b0a0;
@@ -189,7 +169,6 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
             display: none; 
         }
-
         .india-margin-card-header {
             font-size: 0.8rem;
             font-weight: 800;
@@ -199,7 +178,6 @@
             margin: 0 0 8px 0;
             font-family: Georgia, serif;
         }
-
         .india-margin-card-blurb {
             font-size: 0.85rem;
             color: #4a544e;
@@ -207,7 +185,6 @@
             line-height: 1.45;
             font-style: italic;
         }
-
         .india-margin-card-btn {
             width: 100%;
             background: transparent;
@@ -221,58 +198,52 @@
             transition: all 0.2s ease;
             text-align: center;
         }
-
         .india-margin-card-btn:hover {
             background: var(--accent-color);
             color: #ffffff;
             box-shadow: 0 2px 8px rgba(90, 120, 107, 0.25);
         }
-
+        /* UPDATED TAB DECK - COMPACT NUMBERED FORMAT */
         .book-chapter-tab-deck {
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 8px;
+            margin-bottom: 20px;
             border-bottom: 1px solid #e8e6e3;
             padding-bottom: 10px;
-            overflow-x: auto;
-            flex-wrap: nowrap;
-            -webkit-overflow-scrolling: touch;
+            flex-wrap: wrap;
             width: 100%;
         }
-
         .book-tab-link {
             background: #f0eee9;
             border: 1px solid #dcd9d4;
-            padding: 8px 18px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            padding: 6px 14px;
+            font-size: 0.95rem;
+            font-weight: 700;
             color: #555;
             cursor: pointer;
-            border-radius: 20px;
+            border-radius: 4px;
             transition: all 0.2s ease;
             white-space: nowrap;
             flex-shrink: 0;
+            min-width: 40px;
+            text-align: center;
         }
-
         .book-tab-link:hover {
             color: var(--accent-color);
             background: #e6e3dd;
         }
-
         .book-tab-link.active-tab {
             color: #ffffff;
             background: var(--accent-color);
             border-color: var(--accent-color);
             box-shadow: 0 2px 8px rgba(90, 120, 107, 0.25);
         }
-
         .reader-header {
             font-size: 1.85rem;
             margin: 5px 0 18px 0;
             text-align: left;
             line-height: 1.3;
         }
-
         .narration-deck {
             display: flex;
             align-items: center;
@@ -286,7 +257,6 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
             flex-wrap: wrap;
         }
-
         .audio-trigger-btn {
             background: none;
             border: none;
@@ -302,7 +272,6 @@
             justify-content: flex-start;
             flex-shrink: 0;
         }
-
         .speed-panel-label {
             font-size: 0.8rem;
             font-weight: bold;
@@ -312,7 +281,6 @@
             flex-shrink: 0;
             white-space: nowrap;
         }
-
         .audio-speed-btn {
             background: #f4f3ef;
             border: 1px solid #d1cfcb;
@@ -330,13 +298,11 @@
             flex-shrink: 0;
             padding: 0;
         }
-
         .audio-speed-btn:hover {
             background: var(--accent-color);
             color: white;
             border-color: var(--accent-color);
         }
-
         .speed-tracker-display {
             font-family: monospace;
             font-weight: bold;
@@ -347,7 +313,6 @@
             display: inline-block;
             flex-shrink: 0;
         }
-
         .split-reader-grid {
             display: flex;
             flex-direction: row;
@@ -357,7 +322,6 @@
             align-items: stretch;
             width: 100%;
         }
-
         .map-viewer-frame {
             width: 50%;
             height: 100%;
@@ -367,7 +331,6 @@
             background: #fbfbfa;
             flex-shrink: 0;
         }
-
         .map-image {
             width: 100%;
             height: 100%;
@@ -376,18 +339,15 @@
             cursor: zoom-in;
             transition: transform 0.2s ease;
         }
-
         .map-image:hover {
             transform: scale(1.02);
         }
-
         .text-content-frame {
             width: 50%;
             height: 100%;
             overflow-y: auto; 
             padding-right: 12px;
         }
-
         .text-content-frame::-webkit-scrollbar {
             width: 5px;
         }
@@ -399,7 +359,6 @@
             background: rgba(90, 120, 107, 0.3);
             border-radius: 10px;
         }
-
         .reader-body {
             font-size: 1.08rem;
             color: #3e4743;
@@ -408,7 +367,6 @@
             text-align: justify;
             line-height: 1.65;
         }
-
         .reader-body img, .popup-body-content img {
             max-width: 100%;
             height: auto;
@@ -418,7 +376,6 @@
             cursor: zoom-in;
             display: block;
         }
-
         .section-divider {
             text-align: center;
             border-bottom: 1px solid #e0dddb;
@@ -426,7 +383,6 @@
             margin: 35px 0;
             clear: both;
         }
-
         .section-divider span {
             background: var(--card-bg);
             padding: 0 15px;
@@ -435,7 +391,6 @@
             letter-spacing: 1.2px;
             font-size: 0.82rem;
         }
-
         .category-block {
             margin-bottom: 18px;
             clear: both;
@@ -445,11 +400,9 @@
             overflow: hidden;
             width: 100%;
         }
-
         .category-block[open] {
             padding-bottom: 18px;
         }
-
         .category-header-summary {
             font-size: 1rem;
             font-weight: 700;
@@ -467,23 +420,19 @@
             border-bottom: 1px solid transparent;
             transition: background 0.2s, border-color 0.2s;
         }
-
         .category-block[open] .category-header-summary {
             background: #ffffff;
             border-bottom-color: #e8e6e3;
             margin-bottom: 12px;
         }
-
         .category-header-summary:hover {
             background: #f5f3f0;
         }
-
         .summary-left-segment-wrap {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .summary-left-segment-wrap::before {
             content: "▶";
             font-size: 0.72rem;
@@ -491,22 +440,18 @@
             transition: transform 0.25s ease;
             display: inline-block;
         }
-
         .category-block[open] .summary-left-segment-wrap::before {
             transform: rotate(90deg);
         }
-
         .category-header-summary::-webkit-details-marker {
             display: none;
         }
-
         .ledger-rows-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
             padding: 0 18px; 
         }
-
         .ledger-row-item {
             background: none;
             border: none;
@@ -519,19 +464,16 @@
             align-items: start;
             gap: 6px;
         }
-
         .ship-bullet {
             font-size: 1rem;
             line-height: 1.2;
             color: var(--accent-color);
             transition: transform 0.2s ease;
         }
-
         .ledger-content-wrap {
             display: flex;
             flex-direction: column;
         }
-
         .ledger-title-line {
             display: flex;
             justify-content: space-between;
@@ -539,7 +481,6 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-
         .ledger-link-text {
             font-size: 1rem;
             font-weight: 600;
@@ -547,7 +488,6 @@
             text-decoration: underline dashed rgba(90, 120, 107, 0.4);
             text-underline-offset: 3px;
         }
-
         .ledger-hook-text {
             font-size: 0.9rem;
             font-style: italic;
@@ -555,17 +495,13 @@
             line-height: 1.4;
             color: #666;
         }
-
         .ledger-row-item:hover .ship-bullet {
             transform: translate(2px, -1px);
         }
-
         .ledger-row-item:hover .ledger-link-text {
             color: var(--accent-color);
             text-decoration-style: solid;
         }
-
-        /* DIALOG BASE STYLING */
         dialog {
             border: none;
             border-radius: 12px;
@@ -584,17 +520,14 @@
             margin: 0 !important;
             transition: width 0.25s ease, height 0.25s ease, max-width 0.25s ease, max-height 0.25s ease;
         }
-
         dialog[open] {
             display: flex;
             flex-direction: column;
         }
-
         dialog::backdrop {
             background: rgba(44, 53, 49, 0.4);
             backdrop-filter: blur(4px);
         }
-
         .dialog-layout-wrapper {
             display: flex;
             flex-direction: column;
@@ -603,8 +536,6 @@
             overflow: hidden;
             position: relative;
         }
-
-        /* 🎯 UNPINNED & UNFRAMED POPUP IMAGE */
         .popup-img {
             width: 100%;
             height: auto;
@@ -617,13 +548,11 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
-
         .popup-scroll-body-container {
             padding: 24px 30px;
             overflow-y: auto;
             flex: 1;
         }
-
         .window-control-rack {
             position: absolute;
             top: 12px; 
@@ -634,7 +563,6 @@
             z-index: 9999 !important;
             pointer-events: auto !important;
         }
-
         .window-control-btn {
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid #d0cdcb;
@@ -651,26 +579,22 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             transition: background 0.2s, color 0.2s, transform 0.1s;
         }
-
         .window-control-btn:hover {
             background-color: #f2ede9;
             color: #000;
             transform: scale(1.05);
         }
-
         .window-control-btn.close-x-btn:hover {
             background-color: #e6c2be;
             color: #a62b2b;
             border-color: #d9a39e;
         }
-
         .popup-title {
             font-size: 1.35rem;
             margin: 0 0 10px 0;
             color: var(--text-color);
             padding-right: 110px; 
         }
-
         .popup-body-content {
             margin: 15px 0;
             font-size: 1.02rem;
@@ -679,7 +603,6 @@
             white-space: pre-wrap; 
             text-align: justify;
         }
-
         .popup-audio-module-wrap {
             background: #fdfdfd;
             border: 1px solid #e8e6e3;
@@ -688,7 +611,6 @@
             margin-bottom: 16px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.01);
         }
-
         .popup-audio-upper-controls {
             display: flex;
             align-items: center;
@@ -696,19 +618,16 @@
             margin-bottom: 8px;
             flex-wrap: wrap; 
         }
-
         .popup-audio-upper-controls .audio-trigger-btn {
             min-width: auto;
             flex: 1;
             white-space: nowrap;
         }
-
         .popup-timeline-scrub-row {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
         .popup-audio-timeline-bar {
             flex: 1;
             height: 10px;
@@ -718,11 +637,9 @@
             overflow: hidden;
             cursor: pointer;
         }
-
         .popup-audio-timeline-bar:hover {
             background: #dcd9d4;
         }
-
         .popup-audio-progress-fill {
             position: absolute;
             top: 0; left: 0; height: 100%;
@@ -732,7 +649,6 @@
             transition: width 0.1s linear;
             pointer-events: none;
         }
-
         .popup-audio-clock-readout {
             font-family: monospace;
             font-size: 0.8rem;
@@ -741,7 +657,6 @@
             text-align: right;
             white-space: nowrap;
         }
-
         .modal-nav-footer {
             display: flex;
             justify-content: space-between;
@@ -751,7 +666,6 @@
             background: #fafafa;
             flex-shrink: 0;
         }
-
         .modal-nav-link {
             background: none;
             border: none;
@@ -763,30 +677,23 @@
             border-radius: 4px;
             transition: background 0.2s;
         }
-
         .modal-nav-link:hover {
             background: rgba(90, 120, 107, 0.1);
         }
-
         .modal-nav-link:disabled {
             color: #ccc;
             cursor: not-allowed;
             background: none;
         }
-
-        /* COLLAPSED MODE */
         dialog.collapsed-mode {
             width: 380px !important;
             max-width: 85vw !important;
             height: 400px !important;
             max-height: 60vh !important;
         }
-
         dialog.collapsed-mode .popup-img {
             max-height: 140px;
         }
-
-        /* MAXIMIZED MODE (Expanded view with smooth scroll body) */
         @media (min-width: 751px) {
             dialog.maximized-mode {
                 width: 92vw !important;
@@ -794,16 +701,13 @@
                 height: 92vh !important;
                 max-height: 92vh !important;
             }
-
             dialog.maximized-mode .popup-scroll-body-container {
                 padding: 30px 45px;
             }
-
             dialog.maximized-mode .popup-img {
                 max-height: 460px;
             }
         }
-
         .native-lightbox-topframe {
             border: none;
             background: transparent;
@@ -821,16 +725,13 @@
             transform: none !important;
             z-index: 3000000 !important;
         }
-
         .native-lightbox-topframe[open] {
             display: flex;
         }
-
         .native-lightbox-topframe::backdrop {
             background: rgba(10, 12, 11, 0.95);
             backdrop-filter: blur(5px);
         }
-
         .lightbox-canvas-img {
             max-width: 90%;
             max-height: 85vh;
@@ -838,7 +739,6 @@
             border-radius: 6px;
             box-shadow: 0 12px 45px rgba(0,0,0,0.6);
         }
-
         .lightbox-close-x {
             position: absolute;
             top: 25px;
@@ -857,7 +757,6 @@
             transition: background 0.2s;
             z-index: 310000;
         }
-
         @media (max-width: 960px) {
             .workspace-master-wrapper { 
                 grid-template-columns: 1fr; 
@@ -877,7 +776,6 @@
                 padding: 22px 18px; 
             }
         }
-
         @media (max-width: 750px) {
             body { 
                 padding: 8px; 
@@ -949,11 +847,7 @@
                 flex-direction: column; 
             }
         }
-
-        /* ================================================================
-           NAVIGATOR'S FOLIO THEME
-           Visual layer only: the existing content and data logic remain.
-           ================================================================ */
+        /* NAVIGATOR'S FOLIO THEME */
         :root {
             --desk-deep: #18221f;
             --desk-mid: #26352f;
@@ -973,9 +867,7 @@
             --card-bg: var(--parchment-light);
             --card-hover: rgba(129, 55, 44, 0.08);
         }
-
         html { scroll-behavior: smooth; }
-
         body {
             font-family: "Source Serif 4", Georgia, serif;
             color: var(--ink);
@@ -988,13 +880,11 @@
                 linear-gradient(135deg, var(--desk-mid), var(--desk-deep) 70%);
             background-size: 67px 67px, 91px 91px, auto, auto;
         }
-
         button, summary { font: inherit; }
         button:focus-visible, summary:focus-visible, .global-site-logo-label:focus-visible {
             outline: 3px solid rgba(154,116,60,.62);
             outline-offset: 4px;
         }
-
         .global-branding-track {
             max-width: 1120px;
             color: #eadfbe;
@@ -1002,7 +892,6 @@
             padding: 0 4px 15px;
             margin-bottom: 28px;
         }
-
         .global-site-logo-label {
             font-family: "Cormorant Garamond", Georgia, serif;
             color: #f2e7c7;
@@ -1012,7 +901,6 @@
             line-height: 1;
             text-shadow: 0 2px 12px rgba(0,0,0,.35);
         }
-
         .global-site-logo-label::before {
             content: "✦";
             color: #b58c4b;
@@ -1020,7 +908,6 @@
             margin-right: .55rem;
             vertical-align: .18em;
         }
-
         .global-author-signature {
             color: #d0c6a8;
             font-family: "Cormorant Garamond", Georgia, serif;
@@ -1028,9 +915,7 @@
             font-weight: 600;
             letter-spacing: .18em;
         }
-
         .container { max-width: 1120px; }
-
         .portal-landing-hero,
         .reader-layout {
             position: relative;
@@ -1043,7 +928,6 @@
             border-radius: 2px;
             box-shadow: 0 25px 60px rgba(0,0,0,.34), inset 0 0 42px rgba(111,84,40,.09);
         }
-
         .portal-landing-hero::before,
         .reader-layout::before {
             content: "";
@@ -1052,13 +936,11 @@
             border: 1px solid rgba(112,88,49,.29);
             pointer-events: none;
         }
-
         .portal-landing-hero {
             max-width: 960px;
             padding: 58px 64px 62px;
             overflow: hidden;
         }
-
         .portal-landing-hero::after {
             content: "N  ·  E  ·  S  ·  W";
             position: absolute;
@@ -1068,7 +950,6 @@
             font-size: .68rem;
             letter-spacing: .3em;
         }
-
         .portal-site-slogan {
             font-family: "Cormorant Garamond", Georgia, serif;
             font-size: clamp(1.25rem, 2vw, 1.55rem);
@@ -1076,14 +957,12 @@
             max-width: 700px;
             line-height: 1.55;
         }
-
         .portal-divider-line {
             position: relative;
             width: 110px;
             height: 1px;
             background: var(--wax);
         }
-
         .portal-divider-line::after {
             content: "◆";
             position: absolute;
@@ -1094,7 +973,6 @@
             padding: 0 8px;
             font-size: .58rem;
         }
-
         .portal-saga-title,
         .reader-header,
         .popup-title {
@@ -1102,7 +980,6 @@
             color: var(--ink);
             font-weight: 700;
         }
-
         .portal-saga-title {
             max-width: 780px;
             margin: 0 auto 12px;
@@ -1110,7 +987,6 @@
             line-height: 1.02;
             letter-spacing: -.018em;
         }
-
         .portal-saga-meta-date,
         .date,
         .popup-audio-clock-readout,
@@ -1119,7 +995,6 @@
             color: var(--wax) !important;
             letter-spacing: .12em;
         }
-
         .portal-saga-cover-img {
             max-height: 430px;
             padding: 8px;
@@ -1129,7 +1004,6 @@
             filter: sepia(.13) saturate(.83) contrast(1.03);
             box-shadow: 0 10px 25px rgba(52,39,22,.18);
         }
-
         .portal-saga-intro-body {
             color: #413c32;
             max-width: 750px;
@@ -1137,7 +1011,6 @@
             line-height: 1.82;
             text-align: left;
         }
-
         .portal-saga-intro-body::first-letter,
         .reader-body::first-letter {
             float: left;
@@ -1148,7 +1021,6 @@
             line-height: .78;
             padding: .13em .1em 0 0;
         }
-
         .portal-gate-trigger-btn,
         .india-margin-card-btn,
         .back-btn {
@@ -1163,7 +1035,6 @@
             font-weight: 600 !important;
             transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
         }
-
         .portal-gate-trigger-btn { padding: 15px 28px; }
         .portal-gate-trigger-btn:hover,
         .india-margin-card-btn:hover,
@@ -1172,16 +1043,12 @@
             transform: translateY(-1px);
             box-shadow: inset 0 0 0 2px rgba(255,238,198,.18), 0 5px 0 #49221c !important;
         }
-
         .workspace-master-wrapper {
             grid-template-columns: 232px minmax(0, 1fr);
             gap: 24px;
         }
-
         .reader-layout { padding: 44px 48px 52px; }
-
         .sticky-margin-perspective-dock { top: 28px; }
-
         .india-margin-perspective-card {
             position: relative;
             background-color: #d9d8bd;
@@ -1195,7 +1062,6 @@
             box-shadow: 0 13px 28px rgba(0,0,0,.26), inset 0 0 25px rgba(46,69,68,.08);
             transform: rotate(-.45deg);
         }
-
         .india-margin-perspective-card::before {
             content: "DISPATCH";
             position: absolute;
@@ -1208,7 +1074,6 @@
             font-size: .61rem;
             letter-spacing: .18em;
         }
-
         .india-margin-perspective-card::after {
             content: "";
             position: absolute;
@@ -1218,7 +1083,6 @@
             border-radius: 50%;
             opacity: .65;
         }
-
         .india-margin-card-header {
             font-family: "Cormorant Garamond", Georgia, serif;
             color: #30494a;
@@ -1226,13 +1090,11 @@
             line-height: 1.05;
             letter-spacing: .05em;
         }
-
         .india-margin-card-blurb {
             color: #394b49;
             font-size: .9rem;
             line-height: 1.55;
         }
-
         .india-margin-card-btn {
             width: auto;
             background: transparent !important;
@@ -1242,56 +1104,50 @@
             padding: 9px 11px;
             text-align: left;
         }
-
         .india-margin-card-btn:hover {
             background: #445f62 !important;
             color: #f6efd8 !important;
             box-shadow: none !important;
         }
-
         .reader-branding-meta-bar { margin-bottom: 28px !important; }
         .back-btn { padding: 9px 13px !important; background: transparent !important; color: var(--wax) !important; box-shadow: none !important; }
         .back-btn:hover { color: #f9edcf !important; box-shadow: none !important; }
-
+        
+        /* UPDATED NAVIGATOR FOLIO COMPACT DECK STYLING */
         .book-chapter-tab-deck {
-            gap: 0;
+            gap: 6px;
             border: 0;
             border-bottom: 1px solid var(--rule);
-            padding: 0 0 8px;
+            padding: 0 0 10px;
             margin-bottom: 24px;
+            flex-wrap: wrap;
+            overflow-x: visible;
         }
-
         .book-tab-link {
             position: relative;
             background: transparent;
             color: #625846;
-            border: 0;
-            border-right: 1px solid var(--rule);
-            border-radius: 0;
-            padding: 8px 16px 10px;
+            border: 1px solid var(--rule);
+            border-radius: 2px;
+            padding: 6px 14px;
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: 1rem;
-            letter-spacing: .015em;
+            font-size: 1.1rem;
+            letter-spacing: .02em;
             box-shadow: none;
+            min-width: 42px;
+            text-align: center;
         }
-
-        .book-tab-link:first-child { border-left: 1px solid var(--rule); }
         .book-tab-link:hover { background: rgba(129,55,44,.055); color: var(--wax); }
         .book-tab-link.active-tab {
-            background: transparent;
-            color: var(--wax);
-            border-color: var(--rule);
+            background: var(--wax);
+            color: #f9edcf;
+            border-color: #5b3028;
             box-shadow: none;
         }
-
         .book-tab-link.active-tab::after {
-            content: "";
-            position: absolute;
-            left: 14px; right: 14px; bottom: -9px;
-            height: 3px;
-            background: var(--wax);
+            display: none;
         }
-
+        
         .narration-deck,
         .popup-audio-module-wrap {
             width: fit-content;
@@ -1300,7 +1156,6 @@
             border-radius: 1px;
             box-shadow: none;
         }
-
         .narration-deck { padding: 7px 11px; }
         .audio-trigger-btn { color: var(--wax); font-size: .88rem; }
         .speed-panel-label { color: #6e634f; letter-spacing: .1em; font-size: .65rem; }
@@ -1312,9 +1167,7 @@
             border-color: rgba(88,66,43,.45);
         }
         .audio-speed-btn:hover { background: var(--wax); border-color: var(--wax); }
-
         .reader-header { font-size: clamp(2rem, 4.1vw, 3rem); line-height: 1.05; margin-bottom: 24px; }
-
         .split-reader-grid {
             gap: 30px;
             height: 480px;
@@ -1322,23 +1175,19 @@
             border: 1px solid var(--rule);
             background: rgba(229,215,178,.34);
         }
-
         .map-viewer-frame {
             border-radius: 0;
             border: 1px solid rgba(74,60,39,.4);
             background: #d9cba6;
             box-shadow: 0 5px 14px rgba(64,47,24,.16);
         }
-
         .map-image { filter: sepia(.2) saturate(.76) contrast(1.04); }
         .text-content-frame { padding: 6px 13px 6px 0; scrollbar-color: rgba(129,55,44,.45) transparent; }
         .reader-body { color: #38342c; font-size: 1.03rem; line-height: 1.72; }
-
         .section-divider {
             border-bottom: 1px solid var(--rule);
             margin: 44px 0 31px;
         }
-
         .section-divider span {
             background: var(--parchment-light);
             color: var(--wax);
@@ -1346,7 +1195,6 @@
             font-size: 1.02rem;
             letter-spacing: .12em;
         }
-
         .category-block {
             margin-bottom: 0;
             border: 0;
@@ -1354,10 +1202,8 @@
             border-radius: 0;
             background: transparent;
         }
-
         .category-block:first-child { border-top: 1px solid var(--rule); }
         .category-block[open] { padding-bottom: 18px; }
-
         .category-header-summary,
         .category-block[open] .category-header-summary {
             background: transparent;
@@ -1369,12 +1215,10 @@
             font-size: 1.25rem;
             letter-spacing: .015em;
         }
-
         .category-header-summary:hover { background: rgba(129,55,44,.045); color: var(--wax); }
         .summary-left-segment-wrap::before { content: "◇"; color: var(--wax); font-size: .92rem; }
         .category-block[open] .summary-left-segment-wrap::before { content: "◆"; transform: none; }
         .ledger-rows-list { gap: 0; padding: 0 18px 2px 39px; }
-
         .ledger-row-item {
             position: relative;
             grid-template-columns: 28px 1fr;
@@ -1382,13 +1226,11 @@
             padding: 12px 0;
             border-bottom: 1px dotted rgba(83,70,47,.34);
         }
-
         .ledger-row-item:last-child { border-bottom: 0; }
         .ship-bullet { font-size: 0; }
         .ship-bullet::after { content: "✦"; font-size: .76rem; color: var(--wax); }
         .ledger-link-text { color: #342f28; text-decoration: none; font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.12rem; }
         .ledger-hook-text { color: #6a604e; font-size: .88rem; }
-
         dialog:not(.native-lightbox-topframe) {
             background-color: var(--parchment-light);
             background-image: repeating-linear-gradient(0deg, rgba(95,78,49,.018) 0 1px, transparent 1px 4px);
@@ -1397,13 +1239,11 @@
             border-radius: 1px;
             box-shadow: 0 25px 70px rgba(0,0,0,.5), inset 0 0 35px rgba(108,79,32,.08);
         }
-
         dialog::backdrop { background: rgba(14,21,19,.79); backdrop-filter: blur(2px); }
         .popup-scroll-body-container { padding: 38px 42px 28px; }
         .popup-img { border-radius: 0; border: 1px solid var(--rule); padding: 6px; background: #ddcfab; filter: sepia(.12) saturate(.83); box-shadow: 0 8px 18px rgba(60,44,23,.17); }
         .popup-title { font-size: 1.75rem; color: var(--ink) !important; }
         .popup-body-content { color: #38342c; }
-
         .window-control-rack { top: 14px; right: 15px; }
         .collapse-mode-btn { display: none; }
         .expand-mode-btn { display: flex; }
@@ -1417,7 +1257,6 @@
         }
         .window-control-btn:hover { background: #d6c39a; transform: none; }
         .window-control-btn.close-x-btn:hover { background: var(--wax); color: #fff3d5; }
-
         dialog.maximized-mode:not(.native-lightbox-topframe) {
             width: 96vw !important;
             max-width: 1500px !important;
@@ -1426,11 +1265,9 @@
             max-height: 94vh !important;
             max-height: 94dvh !important;
         }
-
         dialog.maximized-mode .popup-scroll-body-container {
             padding: 42px clamp(28px, 5vw, 76px) 34px;
         }
-
         .modal-nav-footer {
             background: #ded0aa;
             border-color: var(--rule);
@@ -1438,10 +1275,8 @@
         }
         .modal-nav-link { color: var(--wax); border-radius: 0; letter-spacing: .04em; }
         .modal-nav-link:hover { background: rgba(129,55,44,.08); }
-
         .lightbox-canvas-img { border-radius: 0; border: 1px solid rgba(241,225,184,.5); }
         .lightbox-close-x { border-radius: 1px; font-family: Georgia, serif; }
-
         @media (max-width: 960px) {
             .workspace-master-wrapper {
                 grid-template-columns: minmax(0, 1fr);
@@ -1496,7 +1331,6 @@
                 clear: both;
             }
         }
-
         @media (max-width: 750px) {
             body { padding: 12px 8px 35px; }
             .global-branding-track { padding: 6px 6px 12px; }
@@ -1505,7 +1339,7 @@
             .portal-landing-hero::after { display: none; }
             .portal-saga-intro-body { text-align: left; }
             .reader-layout { padding: 34px 20px 38px; }
-            .book-tab-link { padding: 8px 12px 10px; }
+            .book-tab-link { padding: 6px 10px; font-size: 0.95rem; }
             .split-reader-grid { padding: 9px; height: auto; }
             .map-viewer-frame { height: 250px; }
             .reader-body { font-size: .98rem; line-height: 1.68; }
@@ -1524,19 +1358,16 @@
             }
             dialog.maximized-mode .popup-scroll-body-container { padding: 54px 20px 26px; }
         }
-
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
     </style>
 </head>
 <body>
-
     <div class="global-branding-track">
         <h1 class="global-site-logo-label" id="globalDynamicLogoLabel" role="button" tabindex="0" onclick="showDashboardView()" onkeydown="if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); showDashboardView(); }">Backstory</h1>
         <div class="global-author-signature" id="globalDynamicAuthorSignature">Dwaipayan Sinha</div>
     </div>
-
     <div class="container">
         <div class="portal-landing-hero" id="dashboardScreen">
             <p class="portal-site-slogan" id="siteGlobalSloganText">Loading storytelling matrix...</p>
@@ -1551,7 +1382,6 @@
                 Enter the Navigator's Folio
             </button>
         </div>
-
         <div class="workspace-master-wrapper">
             
             <aside class="sticky-margin-perspective-dock">
@@ -1561,14 +1391,12 @@
                     <button class="india-margin-card-btn" id="leftIndiaTriggerAction" onclick="launchLeftDockIndiaModal()">Open the Eastern Dispatch</button>
                 </div>
             </aside>
-
             <div class="reader-layout" id="readerScreen">
                 <div class="reader-branding-meta-bar" style="margin-bottom: 20px;">
                     <button class="back-btn" style="background:none; border:1px solid var(--accent-color); color:var(--accent-color); padding:8px 16px; border-radius:20px; cursor:pointer; font-weight:bold;" onclick="showDashboardView()">← Return to the Frontispiece</button>
                 </div>
                 
                 <div class="book-chapter-tab-deck" id="bookSubChapterTabContainer"></div>
-
                 <div class="narration-deck">
                     <button class="audio-trigger-btn" id="ttsPlaybackMasterTrigger" onclick="toggleNarrationEngine()">Hear this account</button>
                     <div class="speed-panel-label">Pace</div>
@@ -1576,7 +1404,6 @@
                     <div class="speed-tracker-display" id="ttsSpeedLabel">1.0x</div>
                     <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(0.1)">+</button>
                 </div>
-
                 <div class="date" id="readerDate" style="font-size: 0.9rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;"></div>
                 <h2 class="reader-header" id="readerTitle" style="margin-top: 0;"></h2>
                 
@@ -1586,48 +1413,55 @@
                         <p class="reader-body" id="readerBody"></p>
                     </div>
                 </div>
-
                 <div class="section-divider">
                     <span>CATALOGUE OF CAUSES &amp; CONSEQUENCES</span>
                 </div>
-
                 <div id="categoriesMasterContainer"></div>
             </div>
-
         </div>
     </div>
-
     <div id="popupMasterStack"></div>
-
     <dialog id="systemLightboxContainer" class="native-lightbox-topframe">
         <button class="lightbox-close-x" aria-label="Close enlarged image" onclick="closeImmersiveLightbox()">&times;</button>
         <img src="" class="lightbox-canvas-img" id="lightboxTargetImage" alt="Expanded Focus Canvas" onclick="closeImmersiveLightbox()">
     </dialog>
-
     <script>
         const SHEET_ID = '1hycYKM5LljBCjWEU2qt3wpEFEUDFFuPQMPEDhKdLHg8';
         const SHEET2_GID = '714083378'; 
         const SHEET3_GID = '448625302'; 
-
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
         const CATEGORIES_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET3_GID}`;
-
         let globalChapters = {};
         let globalLevers = [];
         let globalCategories = {}; 
         let activeBookSubChapterId = null; 
-
         let isAudioPlaying = false;
         let isAudioPaused = false; 
         let currentSpeechRate = 1.0;
         let activeParagraphTextArray = [];
         let currentSpeechParagraphIndex = 0;
-
         let isPopupAudioPlaying = false;
         let isPopupAudioPaused = false; 
         let activePopupTextArray = [];
         let currentPopupSegmentIndex = 0;
+
+        // HELPER TO CONVERT NUMBERS TO ROMAN NUMERALS
+        function convertToRomanNumeral(num) {
+            const romanMatrix = [
+                [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+                [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
+                [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']
+            ];
+            let result = '';
+            for (let [value, symbol] of romanMatrix) {
+                while (num >= value) {
+                    result += symbol;
+                    num -= value;
+                }
+            }
+            return result || 'I';
+        }
 
         function parseMarkdownToHtml(textString) {
             if (!textString) return '';
@@ -1638,11 +1472,9 @@
             html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
             return html;
         }
-
         function captureNaturalSpeechVoiceInstance() {
             const voices = window.speechSynthesis.getVoices();
             if (!voices || voices.length === 0) return null;
-
             const preferredMaleFilters = [
                 "google uk english male", 
                 "google us english male", 
@@ -1656,7 +1488,6 @@
                 "en-us-x-iom", 
                 "en-gb-x-rdb"
             ];
-
             for (let filter of preferredMaleFilters) {
                 let matched = voices.find(v => {
                     const name = v.name.toLowerCase();
@@ -1666,17 +1497,14 @@
                 });
                 if (matched) return matched;
             }
-
             let genericMale = voices.find(v => {
                 const name = v.name.toLowerCase();
                 const lang = v.lang ? v.lang.toLowerCase() : "";
                 return (name.includes("male") || name.includes("guy")) && !lang.includes("in") && !name.includes("india");
             });
             if (genericMale) return genericMale;
-
             return voices.find(v => v.lang && (v.lang.toLowerCase() === "en-us" || v.lang.toLowerCase() === "en-gb")) || voices[0];
         }
-
         async function initSystem() {
             try {
                 const [res1, res2, res3] = await Promise.all([
@@ -1684,11 +1512,9 @@
                     fetch(LEVERS_URL).then(r => r.text()),
                     fetch(CATEGORIES_URL).then(r => r.text())
                 ]);
-
                 const d1 = JSON.parse(res1.substr(47).slice(0, -2)).table.rows;
                 const d2 = JSON.parse(res2.substr(47).slice(0, -2)).table.rows;
                 const d3 = JSON.parse(res3.substr(47).slice(0, -2)).table.rows;
-
                 d3.forEach((row) => {
                     if (row && row.c && row.c[0] && row.c[1]) {
                         const catId = row.c[0].v ? row.c[0].v.toString().trim() : '';
@@ -1701,12 +1527,10 @@
                         }
                     }
                 });
-
                 d1.forEach((row) => {
                     if(!row || !row.c || !row.c[0]) return;
                     const id = row.c[0].v;
                     if (!id || id.toString().toLowerCase().trim() === 'id') return;
-
                     globalChapters[id] = {
                         id: id,
                         title: row.c[1] ? row.c[1].v : '',
@@ -1720,12 +1544,10 @@
                         indiaPopImg: row.c[9] ? row.c[9].v : ''
                     };
                 });
-
                 d2.forEach((row) => {
                     if(!row || !row.c || !row.c[0]) return;
                     const cId = row.c[0].v;
                     if (!cId || cId.toString().toLowerCase().trim() === 'chapter_id') return;
-
                     globalLevers.push({
                         chapterId: cId,
                         linkText: (row.c[1] && row.c[1].v) ? row.c[1].v : '',
@@ -1736,28 +1558,23 @@
                         categoryId: (row.c[6] && row.c[6].v) ? row.c[6].v.toString().trim() : '1' 
                     });
                 });
-
                 if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
                     speechSynthesis.onvoiceschanged = renderCinematicEntrancePortal;
                 }
-
                 renderCinematicEntrancePortal();
             } catch (err) {
                 document.getElementById('dashboardScreen').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet setup hooks.</div>`;
                 console.error(err);
             }
         }
-
         function renderCinematicEntrancePortal() {
             const globalConfig = globalChapters['site_global_config'];
             const mainSagaPortal = globalChapters['portuguese_saga_main'];
-
             if (globalConfig) {
                 document.getElementById('globalDynamicLogoLabel').innerText = globalConfig.title;
                 document.getElementById('globalDynamicAuthorSignature').innerText = globalConfig.date;
                 document.getElementById('siteGlobalSloganText').innerText = globalConfig.body;
             }
-
             if (mainSagaPortal) {
                 document.getElementById('siteEntrancePortalTitle').innerText = mainSagaPortal.title;
                 document.getElementById('siteEntrancePortalDate').innerText = mainSagaPortal.date;
@@ -1771,26 +1588,26 @@
             }
             attachGlobalLightboxTriggers();
         }
-
         function launchReaderView(targetChapterId) {
             activeBookSubChapterId = targetChapterId;
             
             let tabsHtml = '';
+            let countIndex = 1;
             Object.values(globalChapters).forEach((ch) => {
                 if(ch.id.includes('portuguese_ch')) {
                     const activeClass = ch.id === activeBookSubChapterId ? 'active-tab' : '';
-                    tabsHtml += `<button class="book-tab-link ${activeClass}" onclick="switchBookChapterContext('${ch.id}')">${ch.title}</button>`;
+                    const romanLabel = convertToRomanNumeral(countIndex);
+                    tabsHtml += `<button class="book-tab-link ${activeClass}" id="tab-btn-${ch.id}" onclick="switchBookChapterContext('${ch.id}')" title="${ch.title}">${romanLabel}</button>`;
+                    countIndex++;
                 }
             });
             document.getElementById('bookSubChapterTabContainer').innerHTML = tabsHtml;
-
             renderCurrentChapterContent();
             
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('readerScreen').style.display = 'block';
             window.scrollTo(0,0);
         }
-
         function switchBookChapterContext(chapterId) {
             stopNarrationEngine();
             stopPopupNarrationEngine();
@@ -1798,20 +1615,18 @@
             
             document.querySelectorAll('.book-tab-link').forEach(btn => {
                 btn.classList.remove('active-tab');
-                if(btn.innerText.includes(globalChapters[chapterId].title)) btn.classList.add('active-tab');
             });
+            const activeTabBtn = document.getElementById(`tab-btn-${chapterId}`);
+            if(activeTabBtn) activeTabBtn.classList.add('active-tab');
 
             renderCurrentChapterContent();
         }
-
         function renderCurrentChapterContent() {
             const ch = globalChapters[activeBookSubChapterId];
             if (!ch) return;
-
             document.getElementById('readerTitle').innerText = ch.title;
             document.getElementById('readerDate').innerText = ch.date;
             document.getElementById('readerBody').innerHTML = parseMarkdownToHtml(ch.body);
-
             const mapFrame = document.getElementById('mapFrameContainer');
             if (ch.readerImg) {
                 mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" alt="Historical Map Context">`;
@@ -1820,7 +1635,6 @@
                 mapFrame.innerHTML = '';
                 mapFrame.style.display = 'none';
             }
-
             const sidePerspCard = document.getElementById('stickyLeftIndiaPerspectiveCard');
             if (ch.indiaBtnText) {
                 document.getElementById('leftIndiaHeaderLabel').innerText = "Concurrent Chronicle";
@@ -1831,13 +1645,10 @@
             } else {
                 sidePerspCard.style.display = "none";
             }
-
             let currentChapterSections = Object.values(globalCategories).filter(cat => cat.parentChapterId === activeBookSubChapterId);
             
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
-
-            /* 🎯 IMAGE MOVED INSIDE POPUP-SCROLL-BODY-CONTAINER FOR NATURAL SCROLLING & NO BLACK BAR */
             if (ch.indiaBtnText) {
                 const indiaModalId = `india-modal-${ch.id}`;
                 let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
@@ -1876,7 +1687,6 @@
                     </dialog>
                 `;
             }
-
             currentChapterSections.forEach((cat) => {
                 const matchedLevers = globalLevers.filter(l => l.categoryId === cat.id);
                 
@@ -1887,11 +1697,9 @@
                         </summary>
                         <div class="ledger-rows-list">
                 `;
-
                 matchedLevers.forEach((lev, idx) => {
                     const uniqueId = `modal-${cat.id}-${idx}`;
                     const hookContent = lev.popHook ? `"${lev.popHook}"` : '';
-
                     masterCategoriesHtml += `
                         <button class="ledger-row-item" onclick="openPopupWithVoiceMute('${uniqueId}')">
                             <div class="ship-bullet">⛵</div>
@@ -1903,13 +1711,11 @@
                             </div>
                         </button>
                     `;
-
                     let modalImgHtml = lev.popImg ? `<img src="${lev.popImg}" class="popup-img" alt="History Canvas">` : '';
                     const hasPrev = idx > 0;
                     const hasNext = idx < matchedLevers.length - 1;
                     const prevId = `modal-${cat.id}-${idx - 1}`;
                     const nextId = `modal-${cat.id}-${idx + 1}`;
-
                     modalMasterHtml += `
                         <dialog id="${uniqueId}">
                             <div class="window-control-rack">
@@ -1948,22 +1754,18 @@
                         </dialog>
                     `;
                 });
-
                 masterCategoriesHtml += `</div></details>`;
             });
-
             document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;padding:20px;text-align:center;">No timeline records mapped.</p>';
             document.getElementById('popupMasterStack').innerHTML = modalMasterHtml;
             
             attachGlobalLightboxTriggers();
         }
-
         function launchLeftDockIndiaModal() {
             if (activeBookSubChapterId) {
                 openPopupWithVoiceMute(`india-modal-${activeBookSubChapterId}`);
             }
         }
-
         function toggleNarrationEngine() {
             const triggerBtn = document.getElementById('ttsPlaybackMasterTrigger');
             
@@ -1989,7 +1791,6 @@
                 streamMainTextParagraphSegments();
             }
         }
-
         function streamMainTextParagraphSegments() {
             if (!isAudioPlaying || isAudioPaused) return;
             
@@ -1997,7 +1798,6 @@
                 stopNarrationEngine();
                 return;
             }
-
             window.speechSynthesis.cancel();
             
             const segmentText = activeParagraphTextArray[currentSpeechParagraphIndex];
@@ -2007,22 +1807,18 @@
             utterance.voice = captureNaturalSpeechVoiceInstance();
             utterance.rate = currentSpeechRate;
             utterance.pitch = 0.95; 
-
             utterance.onend = () => {
                 if (isAudioPaused) return;
                 currentSpeechParagraphIndex++;
                 streamMainTextParagraphSegments();
             };
-
             utterance.onerror = () => {
                 if (isAudioPaused) return;
                 stopNarrationEngine();
             };
-
             document.getElementById('ttsPlaybackMasterTrigger').innerText = "Pause the account";
             window.speechSynthesis.speak(utterance);
         }
-
         function adjustPlaybackSpeed(delta) {
             currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
             document.getElementById('ttsSpeedLabel').innerText = `${currentSpeechRate.toFixed(1)}x`;
@@ -2031,7 +1827,6 @@
                 streamMainTextParagraphSegments();
             }
         }
-
         function stopNarrationEngine() {
             window.speechSynthesis.cancel();
             isAudioPlaying = false;
@@ -2040,7 +1835,6 @@
             const trigger = document.getElementById('ttsPlaybackMasterTrigger');
             if(trigger) trigger.innerText = "Hear this account";
         }
-
         function togglePopupAudioDeck(modalId) {
             const btnPlay = document.getElementById(`btn-audio-${modalId}`);
             const btnPause = document.getElementById(`btn-pause-${modalId}`);
@@ -2060,11 +1854,9 @@
                 currentPopupSegmentIndex = 0;
                 isPopupAudioPlaying = true;
                 isPopupAudioPaused = false;
-
                 streamPopupVoiceSegments(modalId);
             }
         }
-
         function seekPopupAudioTimeline(modalId, event) {
             if (!activePopupTextArray || activePopupTextArray.length === 0) {
                 const rawTextNode = document.getElementById(`raw-text-${modalId}`);
@@ -2074,33 +1866,25 @@
                     return;
                 }
             }
-
             const bar = event.currentTarget;
             const rect = bar.getBoundingClientRect();
             const clickX = event.clientX - rect.left;
             const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-
             currentPopupSegmentIndex = Math.floor(ratio * activePopupTextArray.length);
             if (currentPopupSegmentIndex >= activePopupTextArray.length) {
                 currentPopupSegmentIndex = activePopupTextArray.length - 1;
             }
-
             isPopupAudioPlaying = true;
             isPopupAudioPaused = false;
-
             streamPopupVoiceSegments(modalId);
         }
-
         function streamPopupVoiceSegments(modalId) {
             if (!isPopupAudioPlaying || isPopupAudioPaused) return;
-
             if (currentPopupSegmentIndex >= activePopupTextArray.length) {
                 stopPopupAudioTrack(modalId);
                 return;
             }
-
             window.speechSynthesis.cancel();
-
             const textSegment = activePopupTextArray[currentPopupSegmentIndex];
             const utterance = new SpeechSynthesisUtterance(textSegment);
             
@@ -2108,24 +1892,20 @@
             utterance.voice = captureNaturalSpeechVoiceInstance();
             utterance.rate = currentSpeechRate;
             utterance.pitch = 0.95;
-
             const progress = ((currentPopupSegmentIndex + 1) / activePopupTextArray.length) * 100;
             const fillBar = document.getElementById(`fill-progress-${modalId}`);
             if (fillBar) fillBar.style.width = `${progress}%`;
             
             updateDynamicAudioClockVisuals(modalId, currentPopupSegmentIndex, activePopupTextArray.length);
-
             utterance.onend = () => {
                 if (isPopupAudioPaused) return;
                 currentPopupSegmentIndex++;
                 streamPopupVoiceSegments(modalId);
             };
-
             utterance.onerror = () => {
                 if (isPopupAudioPaused) return;
                 stopPopupAudioTrack(modalId);
             };
-
             const btnPlay = document.getElementById(`btn-audio-${modalId}`);
             const btnPause = document.getElementById(`btn-pause-${modalId}`);
             const btnStop = document.getElementById(`btn-stop-${modalId}`);
@@ -2136,7 +1916,6 @@
             
             window.speechSynthesis.speak(utterance);
         }
-
         function pausePopupAudioDeck(modalId) {
             if (isPopupAudioPlaying && !isPopupAudioPaused) {
                 isPopupAudioPaused = true;
@@ -2147,7 +1926,6 @@
                 window.speechSynthesis.cancel();
             }
         }
-
         function modPopupAudioSpeed(modalId, delta) {
             currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
             const lbl = document.getElementById(`lbl-speed-${modalId}`);
@@ -2155,12 +1933,10 @@
             
             const mainLabel = document.getElementById('ttsSpeedLabel');
             if(mainLabel) mainLabel.innerText = `${currentSpeechRate.toFixed(1)}x`;
-
             if (isPopupAudioPlaying && !isPopupAudioPaused) {
                 streamPopupVoiceSegments(modalId);
             }
         }
-
         function stopPopupAudioTrack(modalId) {
             window.speechSynthesis.cancel();
             isPopupAudioPlaying = false;
@@ -2176,32 +1952,27 @@
             if(stopBtn) stopBtn.style.display = "none";
             resetPopupClockReadout(modalId);
         }
-
         function updateDynamicAudioClockVisuals(modalId, current, total) {
             const clockNode = document.getElementById(`clock-readout-${modalId}`);
             if (!clockNode) return;
             clockNode.innerText = `Segment ${current + 1} / ${total}`;
         }
-
         function resetPopupClockReadout(modalId) {
             const barFillNode = document.getElementById(`fill-progress-${modalId}`);
             const clockNode = document.getElementById(`clock-readout-${modalId}`);
             if(barFillNode) barFillNode.style.width = "0%";
             if(clockNode) clockNode.innerText = "Segment 0 / 0";
         }
-
         function stopPopupNarrationEngine() {
             window.speechSynthesis.cancel();
             isPopupAudioPlaying = false;
             isPopupAudioPaused = false;
             currentPopupSegmentIndex = 0;
         }
-
         function updateMaximiseControl(targetModal, isMaximised) {
             if (!targetModal) return;
             const control = targetModal.querySelector('.expand-mode-btn');
             if (!control) return;
-
             const isDispatch = targetModal.classList.contains('india-modal-container');
             const documentType = isDispatch ? 'dispatch' : 'entry';
             control.innerText = isMaximised ? '⛗' : '⛶';
@@ -2209,11 +1980,9 @@
             control.setAttribute('aria-label', `${isMaximised ? 'Restore' : 'Maximise'} ${documentType}`);
             control.setAttribute('title', `${isMaximised ? 'Restore' : 'Maximise'} ${documentType}`);
         }
-
         function toggleWindowSizeState(modalId, mode) {
             const targetModal = document.getElementById(modalId);
             if (!targetModal) return;
-
             if (mode === 'expand') {
                 targetModal.classList.remove('collapsed-mode');
                 targetModal.classList.toggle('maximized-mode');
@@ -2224,7 +1993,6 @@
                 updateMaximiseControl(targetModal, false);
             }
         }
-
         function openPopupWithVoiceMute(dialogId) {
             if(isAudioPlaying && !isAudioPaused) {
                 isAudioPaused = true;
@@ -2240,7 +2008,6 @@
             }
             attachGlobalLightboxTriggers(); 
         }
-
         function closePopupAndMute(dialogId) {
             stopPopupAudioTrack(dialogId);
             const modal = document.getElementById(dialogId);
@@ -2250,7 +2017,6 @@
                 modal.close();
             }
         }
-
         function switchActivePopup(currentId, targetId) {
             closePopupAndMute(currentId);
             setTimeout(() => {
@@ -2264,7 +2030,6 @@
                 attachGlobalLightboxTriggers();
             }, 100);
         }
-
         function attachGlobalLightboxTriggers() {
             document.querySelectorAll('#readerScreen img, #popupMasterStack img, .portal-saga-cover-img').forEach(img => {
                 img.removeAttribute('onclick'); 
@@ -2276,7 +2041,6 @@
                 };
             });
         }
-
         function launchImmersiveLightbox(imageSourceUrl) {
             const frame = document.getElementById('systemLightboxContainer');
             const targetImg = document.getElementById('lightboxTargetImage');
@@ -2284,7 +2048,6 @@
             targetImg.src = imageSourceUrl;
             frame.showModal(); 
         }
-
         function closeImmersiveLightbox(e) {
             if (e) {
                 e.preventDefault();
@@ -2293,7 +2056,6 @@
             const frame = document.getElementById('systemLightboxContainer');
             if(frame) frame.close();
         }
-
         function showDashboardView() {
             stopNarrationEngine();
             stopPopupNarrationEngine();
@@ -2302,7 +2064,6 @@
             document.getElementById('stickyLeftIndiaPerspectiveCard').style.display = 'none';
             window.scrollTo(0,0);
         }
-
         window.onload = initSystem;
     </script>
 </body>
