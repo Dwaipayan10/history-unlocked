@@ -1113,39 +1113,81 @@
         .back-btn { padding: 9px 13px !important; background: transparent !important; color: var(--wax) !important; box-shadow: none !important; }
         .back-btn:hover { color: #f9edcf !important; box-shadow: none !important; }
         
-        /* UPDATED NAVIGATOR FOLIO COMPACT DECK STYLING */
+        /* CHAPTER FOLIO INDEX */
         .book-chapter-tab-deck {
-            gap: 6px;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 8px;
             border: 0;
             border-bottom: 1px solid var(--rule);
-            padding: 0 0 10px;
+            padding: 0 0 14px;
             margin-bottom: 24px;
-            flex-wrap: wrap;
-            overflow-x: visible;
+            overflow: visible;
         }
         .book-tab-link {
             position: relative;
-            background: transparent;
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            align-items: center;
+            gap: 9px;
+            min-height: 50px;
+            background: rgba(229, 215, 178, .22);
             color: #625846;
             border: 1px solid var(--rule);
-            border-radius: 2px;
-            padding: 6px 14px;
+            border-radius: 1px;
+            padding: 7px 10px 7px 8px;
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: 1.1rem;
-            letter-spacing: .02em;
+            font-size: 1rem;
             box-shadow: none;
-            min-width: 42px;
-            text-align: center;
+            text-align: left;
+            overflow: hidden;
+            isolation: isolate;
         }
-        .book-tab-link:hover { background: rgba(129,55,44,.055); color: var(--wax); }
+        .book-tab-link::before {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border: 1px solid transparent;
+            pointer-events: none;
+        }
+        .book-tab-roman {
+            display: grid;
+            place-items: center;
+            width: 29px;
+            height: 32px;
+            color: var(--wax);
+            border-right: 1px solid var(--rule);
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .book-tab-name {
+            display: block;
+            min-width: 0;
+            color: inherit;
+            font-family: "Source Serif 4", Georgia, serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            line-height: 1.18;
+            text-transform: uppercase;
+            white-space: normal;
+        }
+        .book-tab-link:hover {
+            background: rgba(129,55,44,.075);
+            color: var(--wax);
+            transform: translateY(-1px);
+        }
         .book-tab-link.active-tab {
             background: var(--wax);
             color: #f9edcf;
             border-color: #5b3028;
-            box-shadow: none;
+            box-shadow: 0 3px 0 #51261f;
         }
-        .book-tab-link.active-tab::after {
-            display: none;
+        .book-tab-link.active-tab::before { border-color: rgba(249,237,207,.22); }
+        .book-tab-link.active-tab .book-tab-roman {
+            color: #f9edcf;
+            border-right-color: rgba(249,237,207,.35);
         }
         
         .narration-deck,
@@ -1176,14 +1218,109 @@
             background: rgba(229,215,178,.34);
         }
         .map-viewer-frame {
+            position: relative;
             border-radius: 0;
             border: 1px solid rgba(74,60,39,.4);
             background: #d9cba6;
             box-shadow: 0 5px 14px rgba(64,47,24,.16);
         }
+        .map-plate {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
         .map-image { filter: sepia(.2) saturate(.76) contrast(1.04); }
-        .text-content-frame { padding: 6px 13px 6px 0; scrollbar-color: rgba(129,55,44,.45) transparent; }
+        .map-caption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 9px 12px 8px;
+            background: linear-gradient(180deg, transparent, rgba(28,31,27,.88) 38%);
+            color: #f1e5c5;
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: .76rem;
+            letter-spacing: .08em;
+            line-height: 1.25;
+            text-transform: uppercase;
+        }
+        .text-content-frame {
+            position: relative;
+            padding: 6px 13px 46px 0;
+            scrollbar-color: rgba(129,55,44,.72) rgba(113,91,55,.11);
+            scrollbar-width: thin;
+        }
+        .text-content-frame::-webkit-scrollbar { width: 9px; }
+        .text-content-frame::-webkit-scrollbar-track {
+            background: rgba(113,91,55,.1);
+            border-left: 1px solid rgba(83,70,47,.12);
+        }
+        .text-content-frame::-webkit-scrollbar-thumb {
+            background: var(--wax);
+            border: 2px solid #e6d9b7;
+            border-radius: 0;
+        }
+        .reader-scroll-cue {
+            position: sticky;
+            z-index: 4;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            min-height: 48px;
+            margin-top: -30px;
+            padding: 24px 10px 5px;
+            background: linear-gradient(180deg, rgba(247,239,217,0), rgba(247,239,217,.97) 52%);
+            color: var(--wax);
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .11em;
+            text-transform: uppercase;
+            pointer-events: none;
+            transition: opacity .2s ease;
+        }
+        .reader-scroll-cue.is-finished,
+        .reader-scroll-cue.is-unneeded { opacity: 0; }
         .reader-body { color: #38342c; font-size: 1.03rem; line-height: 1.72; }
+        .reader-folio-reference {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 2px 0 5px;
+            color: var(--chart-blue);
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+        .reader-folio-reference::before {
+            content: "✦";
+            color: var(--wax);
+            font-size: .72rem;
+        }
+        .reader-layout::after {
+            content: "";
+            position: absolute;
+            right: 24px;
+            bottom: 28px;
+            width: 126px;
+            height: 126px;
+            border: 2px double var(--chart-blue);
+            border-radius: 50%;
+            background:
+                linear-gradient(0deg, transparent 48.5%, var(--chart-blue) 49%, var(--chart-blue) 51%, transparent 51.5%),
+                linear-gradient(90deg, transparent 48.5%, var(--chart-blue) 49%, var(--chart-blue) 51%, transparent 51.5%),
+                repeating-conic-gradient(from 22.5deg, rgba(68,95,98,.9) 0 2deg, transparent 2deg 45deg);
+            opacity: .045;
+            transform: rotate(11deg);
+            pointer-events: none;
+        }
+        .reader-layout > * { position: relative; z-index: 1; }
         .section-divider {
             border-bottom: 1px solid var(--rule);
             margin: 44px 0 31px;
@@ -1244,6 +1381,42 @@
         .popup-img { border-radius: 0; border: 1px solid var(--rule); padding: 6px; background: #ddcfab; filter: sepia(.12) saturate(.83); box-shadow: 0 8px 18px rgba(60,44,23,.17); }
         .popup-title { font-size: 1.75rem; color: var(--ink) !important; }
         .popup-body-content { color: #38342c; }
+        .popup-document-header {
+            position: relative;
+            margin: 0 0 21px;
+            padding: 0 112px 15px 0;
+            border-bottom: 1px solid var(--rule);
+        }
+        .popup-document-header::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 76px;
+            height: 3px;
+            background: var(--wax);
+        }
+        .popup-document-kicker {
+            margin-bottom: 4px;
+            color: var(--chart-blue);
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+        .popup-document-header .popup-title {
+            margin: 0;
+            padding: 0;
+            font-size: clamp(1.7rem, 3vw, 2.25rem);
+            line-height: 1.08;
+        }
+        .popup-document-hook {
+            margin: 8px 0 0;
+            color: var(--ink-soft);
+            font-size: .9rem;
+            font-style: italic;
+            line-height: 1.45;
+        }
         .window-control-rack { top: 14px; right: 15px; }
         .collapse-mode-btn { display: none; }
         .expand-mode-btn { display: flex; }
@@ -1320,6 +1493,7 @@
                 overflow: visible;
                 padding: 8px 4px 4px;
             }
+            .reader-scroll-cue { display: none; }
             .reader-body {
                 max-width: 100%;
                 text-align: left;
@@ -1339,13 +1513,33 @@
             .portal-landing-hero::after { display: none; }
             .portal-saga-intro-body { text-align: left; }
             .reader-layout { padding: 34px 20px 38px; }
-            .book-tab-link { padding: 6px 10px; font-size: 0.95rem; }
+            .book-chapter-tab-deck {
+                display: flex;
+                flex-wrap: nowrap;
+                gap: 8px;
+                margin-right: -20px;
+                padding: 1px 20px 14px 0;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x proximity;
+                scrollbar-width: thin;
+            }
+            .book-tab-link {
+                flex: 0 0 146px;
+                min-height: 48px;
+                padding: 6px 9px 6px 7px;
+                scroll-snap-align: start;
+            }
+            .book-tab-roman { width: 27px; height: 30px; }
+            .book-tab-name { font-size: .64rem; }
             .split-reader-grid { padding: 9px; height: auto; }
             .map-viewer-frame { height: 250px; }
             .reader-body { font-size: .98rem; line-height: 1.68; }
             .category-header-summary { flex-direction: row; align-items: center; }
             .ledger-rows-list { padding-left: 15px; }
             .popup-scroll-body-container { padding: 32px 20px 22px; }
+            .popup-document-header { padding-right: 72px; }
+            .popup-document-header .popup-title { font-size: 1.65rem; }
             dialog.collapsed-mode { width: 92vw !important; height: 70vh !important; }
             dialog.maximized-mode:not(.native-lightbox-topframe) {
                 width: 100% !important;
@@ -1388,7 +1582,7 @@
                 <div class="india-margin-perspective-card" id="stickyLeftIndiaPerspectiveCard">
                     <h4 class="india-margin-card-header" id="leftIndiaHeaderLabel">Concurrent Chronicle</h4>
                     <p class="india-margin-card-blurb" id="leftIndiaBlurbSummary">Discover what was happening simultaneously on the other side.</p>
-                    <button class="india-margin-card-btn" id="leftIndiaTriggerAction" onclick="launchLeftDockIndiaModal()">Find out more</button>
+                    <button class="india-margin-card-btn" id="leftIndiaTriggerAction" aria-label="Open parallel record" onclick="launchLeftDockIndiaModal()">Open this record</button>
                 </div>
             </aside>
             <div class="reader-layout" id="readerScreen">
@@ -1404,6 +1598,7 @@
                     <div class="speed-tracker-display" id="ttsSpeedLabel">1.0x</div>
                     <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(0.1)">+</button>
                 </div>
+                <div class="reader-folio-reference" id="readerFolioReference">Folio I · Navigator's Log</div>
                 <div class="date" id="readerDate" style="font-size: 0.9rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;"></div>
                 <h2 class="reader-header" id="readerTitle" style="margin-top: 0;"></h2>
                 
@@ -1411,6 +1606,7 @@
                     <div class="map-viewer-frame" id="mapFrameContainer"></div>
                     <div class="text-content-frame">
                         <p class="reader-body" id="readerBody"></p>
+                        <div class="reader-scroll-cue" id="readerScrollCue" aria-hidden="true">Continue down the record ↓</div>
                     </div>
                 </div>
                 <div class="section-divider">
@@ -1461,6 +1657,45 @@
                 }
             }
             return result || 'I';
+        }
+
+        const CHAPTER_FOLIO_LABELS = {
+            portuguese_ch1: 'Genesis',
+            portuguese_ch2: 'The Void',
+            portuguese_ch3: 'Empire',
+            portuguese_ch4: 'Estado da Índia',
+            portuguese_ch5: 'Bengal'
+        };
+
+        function getChapterOrdinal(chapterId) {
+            const explicitNumber = Number((chapterId || '').match(/(\d+)$/)?.[1]);
+            if (Number.isFinite(explicitNumber) && explicitNumber > 0) return explicitNumber;
+
+            const chapterIds = Object.values(globalChapters)
+                .filter(chapter => chapter.id && chapter.id.includes('portuguese_ch'))
+                .map(chapter => chapter.id);
+            const foundIndex = chapterIds.indexOf(chapterId);
+            return foundIndex >= 0 ? foundIndex + 1 : 1;
+        }
+
+        function getShortChapterLabel(chapter) {
+            if (CHAPTER_FOLIO_LABELS[chapter.id]) return CHAPTER_FOLIO_LABELS[chapter.id];
+            const cleanedTitle = (chapter.title || 'Chapter')
+                .replace(/^Chapter\s+\d+\s*:\s*/i, '')
+                .split(/[:,–—]/)[0]
+                .trim();
+            return cleanedTitle.length > 20 ? `${cleanedTitle.slice(0, 18).trim()}…` : cleanedTitle;
+        }
+
+        function updateReaderScrollCue() {
+            const textFrame = document.querySelector('.text-content-frame');
+            const cue = document.getElementById('readerScrollCue');
+            if (!textFrame || !cue) return;
+
+            const hasOverflow = textFrame.scrollHeight > textFrame.clientHeight + 8;
+            const isAtEnd = textFrame.scrollTop + textFrame.clientHeight >= textFrame.scrollHeight - 10;
+            cue.classList.toggle('is-unneeded', !hasOverflow);
+            cue.classList.toggle('is-finished', hasOverflow && isAtEnd);
         }
 
         function parseMarkdownToHtml(textString) {
@@ -1597,7 +1832,17 @@
                 if(ch.id.includes('portuguese_ch')) {
                     const activeClass = ch.id === activeBookSubChapterId ? 'active-tab' : '';
                     const romanLabel = convertToRomanNumeral(countIndex);
-                    tabsHtml += `<button class="book-tab-link ${activeClass}" id="tab-btn-${ch.id}" onclick="switchBookChapterContext('${ch.id}')" title="${ch.title}">${romanLabel}</button>`;
+                    const shortLabel = getShortChapterLabel(ch);
+                    tabsHtml += `
+                        <button class="book-tab-link ${activeClass}"
+                            id="tab-btn-${ch.id}"
+                            onclick="switchBookChapterContext('${ch.id}')"
+                            aria-label="${ch.title}"
+                            title="${ch.title}">
+                            <span class="book-tab-roman" aria-hidden="true">${romanLabel}</span>
+                            <span class="book-tab-name" aria-hidden="true">${shortLabel}</span>
+                        </button>
+                    `;
                     countIndex++;
                 }
             });
@@ -1617,7 +1862,10 @@
                 btn.classList.remove('active-tab');
             });
             const activeTabBtn = document.getElementById(`tab-btn-${chapterId}`);
-            if(activeTabBtn) activeTabBtn.classList.add('active-tab');
+            if(activeTabBtn) {
+                activeTabBtn.classList.add('active-tab');
+                activeTabBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
 
             renderCurrentChapterContent();
         }
@@ -1627,9 +1875,17 @@
             document.getElementById('readerTitle').innerText = ch.title;
             document.getElementById('readerDate').innerText = ch.date;
             document.getElementById('readerBody').innerHTML = parseMarkdownToHtml(ch.body);
+            const chapterOrdinal = getChapterOrdinal(ch.id);
+            const chapterRoman = convertToRomanNumeral(chapterOrdinal);
+            document.getElementById('readerFolioReference').innerText = `Folio ${chapterRoman} · Navigator's Log`;
             const mapFrame = document.getElementById('mapFrameContainer');
             if (ch.readerImg) {
-                mapFrame.innerHTML = `<img src="${ch.readerImg}" class="map-image" alt="Historical Map Context">`;
+                mapFrame.innerHTML = `
+                    <figure class="map-plate">
+                        <img src="${ch.readerImg}" class="map-image" alt="Historical map for ${ch.title}">
+                        <figcaption class="map-caption">Chart plate ${chapterRoman} · Historical navigation context</figcaption>
+                    </figure>
+                `;
                 mapFrame.style.display = 'block';
             } else {
                 mapFrame.innerHTML = '';
@@ -1638,9 +1894,9 @@
             const sidePerspCard = document.getElementById('stickyLeftIndiaPerspectiveCard');
             if (ch.indiaBtnText) {
                 document.getElementById('leftIndiaHeaderLabel').innerText = "Concurrent Chronicle";
-                document.getElementById('leftIndiaBlurbSummary').innerText = "Discover what was happening simultaneously on the other side.";
-                document.getElementById('leftIndiaTriggerAction').innerText = "Find out more";
-                document.getElementById('leftIndiaTriggerAction').setAttribute('aria-label', 'Open the Eastern Dispatch');
+                document.getElementById('leftIndiaBlurbSummary').innerText = "A related record unfolding beyond the principal voyage.";
+                document.getElementById('leftIndiaTriggerAction').innerText = "Open this record";
+                document.getElementById('leftIndiaTriggerAction').setAttribute('aria-label', 'Open parallel record');
                 sidePerspCard.style.display = "block";
             } else {
                 sidePerspCard.style.display = "none";
@@ -1651,10 +1907,10 @@
             let modalMasterHtml = '';
             if (ch.indiaBtnText) {
                 const indiaModalId = `india-modal-${ch.id}`;
-                let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="India Historical Context Map">` : '';
+                let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="Parallel historical record illustration">` : '';
                 
                 modalMasterHtml += `
-                    <dialog id="${indiaModalId}" class="india-modal-container">
+                    <dialog id="${indiaModalId}" class="india-modal-container" aria-labelledby="title-${indiaModalId}">
                         <div class="window-control-rack">
                             <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', 'shrink')">[-]</button>
                             <button class="window-control-btn expand-mode-btn" type="button" aria-label="Maximise dispatch" aria-pressed="false" title="Maximise dispatch" onclick="toggleWindowSizeState('${indiaModalId}', 'expand')">⛶</button>
@@ -1662,6 +1918,10 @@
                         </div>
                         <div class="dialog-layout-wrapper">
                             <div class="popup-scroll-body-container">
+                                <header class="popup-document-header">
+                                    <div class="popup-document-kicker">Parallel Record · Folio ${chapterRoman}</div>
+                                    <h3 class="popup-title" id="title-${indiaModalId}">${ch.indiaPopTitle}</h3>
+                                </header>
                                 ${indiaImgHtml}
                                 <div class="popup-audio-module-wrap">
                                     <div class="popup-audio-upper-controls">
@@ -1680,7 +1940,6 @@
                                         <div class="popup-audio-clock-readout" id="clock-readout-${indiaModalId}">Segment 0 / 0</div>
                                     </div>
                                 </div>
-                                <h3 class="popup-title" style="color:var(--accent-color);">${ch.indiaPopTitle}</h3>
                                 <div class="popup-body-content" id="raw-text-${indiaModalId}">${parseMarkdownToHtml(ch.indiaPopBody)}</div>
                             </div>
                         </div>
@@ -1717,7 +1976,7 @@
                     const prevId = `modal-${cat.id}-${idx - 1}`;
                     const nextId = `modal-${cat.id}-${idx + 1}`;
                     modalMasterHtml += `
-                        <dialog id="${uniqueId}">
+                        <dialog id="${uniqueId}" aria-labelledby="title-${uniqueId}">
                             <div class="window-control-rack">
                                 <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${uniqueId}', 'shrink')">[-]</button>
                                 <button class="window-control-btn expand-mode-btn" type="button" aria-label="Maximise entry" aria-pressed="false" title="Maximise entry" onclick="toggleWindowSizeState('${uniqueId}', 'expand')">⛶</button>
@@ -1725,6 +1984,11 @@
                             </div>
                             <div class="dialog-layout-wrapper">
                                 <div class="popup-scroll-body-container">
+                                    <header class="popup-document-header">
+                                        <div class="popup-document-kicker">Logbook Entry ${String(idx + 1).padStart(2, '0')} · Folio ${chapterRoman}</div>
+                                        <h3 class="popup-title" id="title-${uniqueId}">${lev.popTitle}</h3>
+                                        ${lev.popHook ? `<p class="popup-document-hook">“${lev.popHook}”</p>` : ''}
+                                    </header>
                                     ${modalImgHtml}
                                     <div class="popup-audio-module-wrap">
                                         <div class="popup-audio-upper-controls">
@@ -1743,7 +2007,6 @@
                                             <div class="popup-audio-clock-readout" id="clock-readout-${uniqueId}">Segment 0 / 0</div>
                                         </div>
                                     </div>
-                                    <h3 class="popup-title">${lev.popTitle}</h3>
                                     <div class="popup-body-content" id="raw-text-${uniqueId}">${parseMarkdownToHtml(lev.popBody)}</div>
                                 </div>
                                 <div class="modal-nav-footer">
@@ -1760,6 +2023,13 @@
             document.getElementById('popupMasterStack').innerHTML = modalMasterHtml;
             
             attachGlobalLightboxTriggers();
+            const textFrame = document.querySelector('.text-content-frame');
+            if (textFrame) {
+                textFrame.scrollTop = 0;
+                textFrame.removeEventListener('scroll', updateReaderScrollCue);
+                textFrame.addEventListener('scroll', updateReaderScrollCue, { passive: true });
+            }
+            requestAnimationFrame(updateReaderScrollCue);
         }
         function launchLeftDockIndiaModal() {
             if (activeBookSubChapterId) {
