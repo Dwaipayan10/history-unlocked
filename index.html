@@ -1043,6 +1043,36 @@
             transform: translateY(-1px);
             box-shadow: inset 0 0 0 2px rgba(255,238,198,.18), 0 5px 0 #49221c !important;
         }
+        .frontispiece-colophon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin-top: 23px;
+        }
+        .research-acknowledgements-link {
+            position: relative;
+            padding: 5px 2px 7px;
+            border: 0;
+            border-bottom: 1px solid rgba(129,55,44,.52);
+            background: transparent;
+            color: var(--wax);
+            font-family: "Source Serif 4", Georgia, serif;
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .research-acknowledgements-link::before { content: "◇"; margin-right: 8px; }
+        .research-acknowledgements-link:hover { color: #5d2922; border-bottom-color: #5d2922; }
+        .research-acknowledgements-link:focus-visible { outline: 2px solid var(--chart-blue); outline-offset: 4px; }
+        .frontispiece-colophon-note {
+            color: #786b54;
+            font-size: .68rem;
+            font-style: italic;
+            letter-spacing: .025em;
+        }
         .workspace-master-wrapper {
             grid-template-columns: 232px minmax(0, 1fr);
             gap: 24px;
@@ -1633,6 +1663,89 @@
         }
         dialog.maximized-mode .popup-img { max-height: 340px; }
         dialog.maximized-mode .popup-body-content { max-width: 920px; font-size: 1.08rem; }
+        dialog.acknowledgements-dialog {
+            width: 820px;
+            height: 740px;
+            max-height: 88vh;
+            max-height: 88dvh;
+        }
+        .acknowledgements-scroll { padding: 40px 48px 32px; }
+        .acknowledgements-body {
+            max-width: 720px;
+            margin: 0 auto;
+            color: #3d382f;
+            font-size: 1rem;
+            line-height: 1.72;
+        }
+        .acknowledgements-lead {
+            margin: 0 0 26px;
+            color: #302c26;
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+            line-height: 1.48;
+        }
+        .acknowledgements-lead::first-letter {
+            float: left;
+            padding: .12em .1em 0 0;
+            color: var(--wax);
+            font-size: 3.7em;
+            font-weight: 700;
+            line-height: .72;
+        }
+        .acknowledgements-section {
+            margin: 28px 0 0;
+            padding-top: 20px;
+            border-top: 1px solid var(--rule);
+        }
+        .acknowledgements-section h4 {
+            margin: 0 0 10px;
+            color: var(--wax);
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: 1.35rem;
+            letter-spacing: .02em;
+        }
+        .acknowledgements-section p { margin: 0 0 12px; }
+        .research-source-list {
+            margin: 14px 0 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: source-record;
+        }
+        .research-source-list li {
+            position: relative;
+            margin: 0;
+            padding: 13px 4px 13px 43px;
+            border-bottom: 1px dotted rgba(83,70,47,.34);
+            counter-increment: source-record;
+        }
+        .research-source-list li::before {
+            content: counter(source-record, upper-roman);
+            position: absolute;
+            left: 5px;
+            top: 14px;
+            width: 25px;
+            color: var(--chart-blue);
+            font-size: .72rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .research-source-list cite { color: #2f2b25; font-weight: 700; }
+        .image-credit-notice {
+            margin-top: 14px;
+            padding: 15px 17px;
+            border-left: 3px solid var(--chart-blue);
+            background: rgba(75,101,102,.07);
+            color: #494238;
+            font-size: .9rem;
+        }
+        .acknowledgements-signature {
+            margin-top: 30px;
+            color: #675b49;
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            text-align: right;
+        }
         @media (max-width: 960px) {
             .workspace-master-wrapper {
                 grid-template-columns: minmax(0, 1fr);
@@ -1741,6 +1854,15 @@
             .narration-player-hint { display: none; }
             .popup-img { max-height: 205px; }
             .popup-body-content { font-size: .98rem; line-height: 1.68; }
+            dialog.acknowledgements-dialog {
+                width: 94vw;
+                height: 88vh;
+                height: 88dvh;
+            }
+            .acknowledgements-scroll { padding: 36px 20px 24px; }
+            .acknowledgements-body { font-size: .96rem; line-height: 1.66; }
+            .acknowledgements-lead { font-size: 1.16rem; }
+            .research-source-list li { padding-left: 36px; }
             dialog.collapsed-mode { width: 92vw !important; height: 70vh !important; }
             dialog.maximized-mode:not(.native-lightbox-topframe) {
                 width: 100% !important;
@@ -1776,6 +1898,12 @@
             <button class="portal-gate-trigger-btn" onclick="launchReaderView('portuguese_ch1')">
                 Enter the Navigator's Folio
             </button>
+            <div class="frontispiece-colophon">
+                <button class="research-acknowledgements-link" type="button" onclick="openPopupWithVoiceMute('researchAcknowledgementsDialog')">
+                    Research &amp; Acknowledgements
+                </button>
+                <span class="frontispiece-colophon-note">Sources, visual credits and editorial method</span>
+            </div>
         </div>
         <div class="workspace-master-wrapper">
             
@@ -1836,6 +1964,86 @@
         </div>
     </div>
     <div id="popupMasterStack"></div>
+    <dialog id="researchAcknowledgementsDialog" class="acknowledgements-dialog" aria-labelledby="researchAcknowledgementsTitle" onclick="if(event.target === this) closePopupAndMute('researchAcknowledgementsDialog')">
+        <div class="window-control-rack">
+            <button class="window-control-btn expand-mode-btn" type="button" aria-label="Maximise acknowledgements" aria-pressed="false" title="Maximise acknowledgements" onclick="toggleWindowSizeState('researchAcknowledgementsDialog', 'expand')">⛶</button>
+            <button class="window-control-btn close-x-btn" type="button" aria-label="Close acknowledgements" onclick="closePopupAndMute('researchAcknowledgementsDialog')">&times;</button>
+        </div>
+        <div class="dialog-layout-wrapper">
+            <div class="popup-scroll-body-container acknowledgements-scroll">
+                <header class="popup-document-header">
+                    <div class="popup-document-kicker">Research Colophon · An Independent Historical Project</div>
+                    <h3 class="popup-title" id="researchAcknowledgementsTitle">Before the Voyage: A Note to the Reader</h3>
+                    <p class="popup-document-hook">“History rarely moves in a single line; its currents meet long before they are given a name.”</p>
+                </header>
+
+                <div class="narration-player" id="narration-player-researchAcknowledgementsDialog" data-source-id="acknowledgementsBody">
+                    <div class="narration-player-heading">
+                        <span class="narration-player-kicker">Spoken chronicle</span>
+                        <span class="narration-player-status" id="narration-status-researchAcknowledgementsDialog" aria-live="polite">Ready</span>
+                    </div>
+                    <div class="narration-player-controls">
+                        <button class="narration-control-btn narration-play-btn" id="narration-play-researchAcknowledgementsDialog" type="button" onclick="playNarration('researchAcknowledgementsDialog', 'acknowledgementsBody')" aria-label="Play acknowledgements narration">▶ <span>Listen</span></button>
+                        <button class="narration-control-btn" id="narration-pause-researchAcknowledgementsDialog" type="button" onclick="toggleNarrationPause('researchAcknowledgementsDialog')" aria-label="Pause acknowledgements narration" disabled>Ⅱ <span>Pause</span></button>
+                        <button class="narration-control-btn narration-icon-btn" id="narration-stop-researchAcknowledgementsDialog" type="button" onclick="stopNarration('researchAcknowledgementsDialog')" aria-label="Stop acknowledgements narration" title="Stop" disabled>■</button>
+                        <div class="narration-rate-control" aria-label="Narration pace controls">
+                            <span class="narration-rate-label">Pace</span>
+                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('researchAcknowledgementsDialog', -0.1)" aria-label="Decrease narration pace">−</button>
+                            <span class="narration-rate-value" id="narration-rate-researchAcknowledgementsDialog">1.0×</span>
+                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('researchAcknowledgementsDialog', 0.1)" aria-label="Increase narration pace">+</button>
+                        </div>
+                    </div>
+                    <div class="narration-timeline-row">
+                        <div class="narration-timeline" id="narration-track-researchAcknowledgementsDialog" role="slider" tabindex="0" aria-label="Acknowledgements narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onclick="seekNarration('researchAcknowledgementsDialog', 'acknowledgementsBody', event)" onkeydown="handleNarrationSeekKey('researchAcknowledgementsDialog', 'acknowledgementsBody', event)">
+                            <div class="narration-timeline-fill" id="narration-fill-researchAcknowledgementsDialog"></div>
+                            <div class="narration-timeline-thumb" id="narration-thumb-researchAcknowledgementsDialog"></div>
+                        </div>
+                        <span class="narration-time" id="narration-time-researchAcknowledgementsDialog">0:00 / --:--</span>
+                    </div>
+                    <p class="narration-player-hint">Select any point on the line to continue from there.</p>
+                </div>
+
+                <article class="acknowledgements-body" id="acknowledgementsBody">
+                    <p class="acknowledgements-lead">History is rarely made by one voyage, one monarch or one decisive battle. The Portuguese expansion into the Indian Ocean emerged from many scattered currents: maritime experiment, religious ambition, commercial rivalry, political calculation, violence, chance and the responses of the societies already connected by the ocean’s trade routes.</p>
+                    <p>This project brings those parallel episodes into a single navigable narrative. It follows the incidents that gathered around Portugal’s arrival in India and asks how separate ambitions, encounters and crises gradually became the machinery of a colonial empire. The purpose is not to romanticise conquest, nor to offer an exhaustive academic history, but to help curious readers see how empire is assembled—decision by decision, voyage by voyage and port by port.</p>
+
+                    <section class="acknowledgements-section">
+                        <h4>About this project</h4>
+                        <p><em>Backstory</em> was created for educational use and historical curiosity. Accounts of the Portuguese presence in India and Bengal are often distributed across different periods, regions and historical works. This project attempts to connect those dispersed incidents and place events occurring in parallel beside one another, giving readers a more holistic understanding of how maritime expansion developed into colonial power.</p>
+                        <p>It is an interpretive learning project rather than a substitute for archival research or the books listed below. Readers are encouraged to consult the original scholarship, compare perspectives and continue beyond this introductory record.</p>
+                    </section>
+
+                    <section class="acknowledgements-section">
+                        <h4>Research sources</h4>
+                        <p>The historical synthesis was informed principally by the following works:</p>
+                        <ol class="research-source-list">
+                            <li>Nigel Cliff, <cite>The Last Crusade: The Epic Voyages of Vasco da Gama</cite>, Atlantic Books, first published 2011.</li>
+                            <li>Roger Crowley, <cite>Conquerors: How Portugal Forged the First Global Empire</cite>, Random House, 2015.</li>
+                            <li>J. J. A. Campos, <cite>History of the Portuguese in Bengal: With Maps and Illustrations</cite>, Butterworth &amp; Co. (India), Calcutta, 1919.</li>
+                        </ol>
+                        <p>No passages from these books are presented as direct quotations. Historical facts were gathered, compared and reorganised into an independently composed narrative.</p>
+                    </section>
+
+                    <section class="acknowledgements-section">
+                        <h4>Image and map credits</h4>
+                        <p>Historical images and maps used across this project were located through publicly accessible web searches, including Google Image Search, for educational and contextual presentation.</p>
+                        <div class="image-credit-notice"><strong>Rights note:</strong> Google is a discovery service, not the original source or rights holder. This project claims no ownership of third-party images. Copyright and other rights remain with their respective creators, publishers or holding institutions. Original sources and licence information should be recorded for each image wherever they can be established.</div>
+                    </section>
+
+                    <section class="acknowledgements-section">
+                        <h4>Editorial note</h4>
+                        <p>The research direction, selection of historical facts, comparative structure and editorial judgement belong to Dwaipayan Sinha. AI-assisted tools were used to help reorganise factual notes, refine language into an accessible storytelling form and support the design and technical presentation of the website.</p>
+                        <p>AI tools were not treated as historical authorities. Responsibility for the final selection, interpretation, accuracy and any remaining errors rests with the project creator. The narrative is intended to invite further reading rather than present a final or uncontested account of the past.</p>
+                    </section>
+
+                    <p class="acknowledgements-signature">Compiled with curiosity and respect for the historical record<br>— Dwaipayan Sinha</p>
+                </article>
+            </div>
+            <div class="modal-nav-footer">
+                <button class="modal-nav-link" type="button" onclick="closePopupAndMute('researchAcknowledgementsDialog')">Return to the Frontispiece</button>
+            </div>
+        </div>
+    </dialog>
     <dialog id="systemLightboxContainer" class="native-lightbox-topframe">
         <button class="lightbox-close-x" aria-label="Close enlarged image" onclick="closeImmersiveLightbox()">&times;</button>
         <img src="" class="lightbox-canvas-img" id="lightboxTargetImage" alt="Expanded Focus Canvas" onclick="closeImmersiveLightbox()">
@@ -2698,7 +2906,8 @@
             const control = targetModal.querySelector('.expand-mode-btn');
             if (!control) return;
             const isDispatch = targetModal.classList.contains('india-modal-container');
-            const documentType = isDispatch ? 'dispatch' : 'entry';
+            const isAcknowledgements = targetModal.classList.contains('acknowledgements-dialog');
+            const documentType = isAcknowledgements ? 'acknowledgements' : isDispatch ? 'dispatch' : 'entry';
             control.innerText = isMaximised ? '⛗' : '⛶';
             control.setAttribute('aria-pressed', isMaximised ? 'true' : 'false');
             control.setAttribute('aria-label', `${isMaximised ? 'Restore' : 'Maximise'} ${documentType}`);
