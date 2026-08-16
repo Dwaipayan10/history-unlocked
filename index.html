@@ -1480,6 +1480,159 @@
         .modal-nav-link:hover { background: rgba(129,55,44,.08); }
         .lightbox-canvas-img { border-radius: 0; border: 1px solid rgba(241,225,184,.5); }
         .lightbox-close-x { border-radius: 1px; font-family: Georgia, serif; }
+
+        /* One narration console is used for the chapter and every popup. */
+        .narration-player {
+            width: 100%;
+            margin: 0 0 20px;
+            padding: 11px 13px 10px;
+            color: var(--ink);
+            background:
+                linear-gradient(rgba(239,225,190,.94), rgba(231,214,174,.94)),
+                repeating-linear-gradient(0deg, rgba(86,64,37,.035) 0 1px, transparent 1px 4px);
+            border: 1px solid rgba(91,65,37,.48);
+            border-left: 3px solid var(--wax);
+            box-shadow: inset 0 0 18px rgba(91,65,37,.055);
+        }
+        .narration-player-heading,
+        .narration-player-controls,
+        .narration-timeline-row,
+        .narration-rate-control {
+            display: flex;
+            align-items: center;
+        }
+        .narration-player-heading {
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+        .narration-player-kicker,
+        .narration-player-status,
+        .narration-rate-label {
+            font-size: .64rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+        .narration-player-kicker { color: var(--chart-blue); }
+        .narration-player-status { color: #6b5f4d; letter-spacing: .09em; }
+        .narration-player-controls { gap: 7px; flex-wrap: wrap; }
+        .narration-control-btn,
+        .narration-rate-btn {
+            min-height: 36px;
+            border: 1px solid rgba(85,60,35,.5);
+            border-radius: 1px;
+            background: rgba(248,237,208,.62);
+            color: var(--wax);
+            font: 700 .76rem/1 "Source Serif 4", Georgia, serif;
+            cursor: pointer;
+            transition: background .16s ease, color .16s ease;
+        }
+        .narration-control-btn { padding: 0 11px; letter-spacing: .025em; }
+        .narration-icon-btn { width: 36px; padding: 0; }
+        .narration-play-btn { background: var(--wax); color: #fff1d2; border-color: #572b24; }
+        .narration-control-btn:hover:not(:disabled),
+        .narration-rate-btn:hover:not(:disabled) { background: #5c3028; color: #fff1d2; }
+        .narration-control-btn:focus-visible,
+        .narration-rate-btn:focus-visible,
+        .narration-timeline:focus-visible { outline: 2px solid var(--chart-blue); outline-offset: 2px; }
+        .narration-control-btn:disabled { opacity: .42; cursor: not-allowed; }
+        .narration-rate-control {
+            gap: 5px;
+            margin-left: auto;
+            padding-left: 9px;
+            border-left: 1px solid rgba(91,65,37,.28);
+        }
+        .narration-rate-label { color: #6e624f; margin-right: 2px; }
+        .narration-rate-btn { width: 34px; padding: 0; font-size: 1rem; }
+        .narration-rate-value {
+            min-width: 39px;
+            color: var(--wax);
+            font-size: .76rem;
+            font-variant-numeric: tabular-nums;
+            text-align: center;
+        }
+        .narration-timeline-row { gap: 11px; margin-top: 9px; }
+        .narration-timeline {
+            position: relative;
+            flex: 1;
+            height: 12px;
+            border: 1px solid rgba(82,61,37,.36);
+            background: rgba(83,70,47,.17);
+            cursor: pointer;
+            touch-action: pan-y;
+        }
+        .narration-timeline::after {
+            content: "";
+            position: absolute;
+            inset: -10px 0;
+        }
+        .narration-timeline-fill {
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 0;
+            background: var(--wax);
+            pointer-events: none;
+        }
+        .narration-timeline-thumb {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 13px;
+            height: 13px;
+            border: 2px solid #f5e8c8;
+            border-radius: 50%;
+            background: var(--wax);
+            box-shadow: 0 0 0 1px #63372d;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .narration-time {
+            min-width: 88px;
+            color: #5f5545;
+            font-size: .7rem;
+            font-variant-numeric: tabular-nums;
+            text-align: right;
+            white-space: nowrap;
+        }
+        .narration-player-hint {
+            margin: 7px 0 0;
+            color: #736754;
+            font-size: .68rem;
+            font-style: italic;
+            line-height: 1.35;
+        }
+        .popup-scroll-body-container > .narration-player {
+            position: sticky;
+            top: -1px;
+            z-index: 20;
+        }
+        .popup-img {
+            max-height: 240px;
+            object-fit: contain;
+            margin-bottom: 14px;
+        }
+        .popup-body-content {
+            max-width: 780px;
+            margin: 13px auto 4px;
+            white-space: pre-line;
+            text-align: left;
+        }
+        .popup-body-content p:empty { display: none; }
+        .popup-body-content img {
+            display: block;
+            width: auto !important;
+            max-width: 100% !important;
+            max-height: 320px !important;
+            object-fit: contain;
+            margin: 16px auto 12px !important;
+            border: 1px solid var(--rule);
+            padding: 5px;
+            background: #ddcfab;
+            filter: sepia(.12) saturate(.83);
+        }
+        dialog.maximized-mode .popup-img { max-height: 340px; }
+        dialog.maximized-mode .popup-body-content { max-width: 920px; font-size: 1.08rem; }
         @media (max-width: 960px) {
             .workspace-master-wrapper {
                 grid-template-columns: minmax(0, 1fr);
@@ -1570,6 +1723,24 @@
             .popup-scroll-body-container { padding: 32px 20px 22px; }
             .popup-document-header { padding-right: 72px; }
             .popup-document-header .popup-title { font-size: 1.65rem; }
+            .narration-player { padding: 10px; }
+            .narration-player-controls { gap: 6px; }
+            .narration-control-btn { min-height: 40px; padding: 0 10px; }
+            .narration-icon-btn { width: 40px; }
+            .narration-rate-control {
+                width: 100%;
+                justify-content: flex-end;
+                margin: 1px 0 0;
+                padding: 7px 0 0;
+                border-left: 0;
+                border-top: 1px solid rgba(91,65,37,.24);
+            }
+            .narration-rate-btn { width: 40px; min-height: 40px; }
+            .narration-timeline-row { gap: 8px; }
+            .narration-time { min-width: 82px; font-size: .66rem; }
+            .narration-player-hint { display: none; }
+            .popup-img { max-height: 205px; }
+            .popup-body-content { font-size: .98rem; line-height: 1.68; }
             dialog.collapsed-mode { width: 92vw !important; height: 70vh !important; }
             dialog.maximized-mode:not(.native-lightbox-topframe) {
                 width: 100% !important;
@@ -1621,12 +1792,30 @@
                 </div>
                 
                 <div class="book-chapter-tab-deck" id="bookSubChapterTabContainer"></div>
-                <div class="narration-deck">
-                    <button class="audio-trigger-btn" id="ttsPlaybackMasterTrigger" onclick="toggleNarrationEngine()">Hear this account</button>
-                    <div class="speed-panel-label">Pace</div>
-                    <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(-0.1)">-</button>
-                    <div class="speed-tracker-display" id="ttsSpeedLabel">1.0x</div>
-                    <button class="audio-speed-btn" onclick="adjustPlaybackSpeed(0.1)">+</button>
+                <div class="narration-player narration-player-main" id="narration-player-main" data-source-id="readerBody">
+                    <div class="narration-player-heading">
+                        <span class="narration-player-kicker">Spoken chronicle</span>
+                        <span class="narration-player-status" id="narration-status-main" aria-live="polite">Ready</span>
+                    </div>
+                    <div class="narration-player-controls">
+                        <button class="narration-control-btn narration-play-btn" id="narration-play-main" type="button" onclick="playNarration('main', 'readerBody')" aria-label="Play chapter narration">▶ <span>Listen</span></button>
+                        <button class="narration-control-btn" id="narration-pause-main" type="button" onclick="toggleNarrationPause('main')" aria-label="Pause chapter narration" disabled>Ⅱ <span>Pause</span></button>
+                        <button class="narration-control-btn narration-icon-btn" id="narration-stop-main" type="button" onclick="stopNarration('main')" aria-label="Stop chapter narration" title="Stop" disabled>■</button>
+                        <div class="narration-rate-control" aria-label="Narration pace controls">
+                            <span class="narration-rate-label">Pace</span>
+                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('main', -0.1)" aria-label="Decrease narration pace">−</button>
+                            <span class="narration-rate-value" id="narration-rate-main">1.0×</span>
+                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('main', 0.1)" aria-label="Increase narration pace">+</button>
+                        </div>
+                    </div>
+                    <div class="narration-timeline-row">
+                        <div class="narration-timeline" id="narration-track-main" role="slider" tabindex="0" aria-label="Chapter narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onclick="seekNarration('main', 'readerBody', event)" onkeydown="handleNarrationSeekKey('main', 'readerBody', event)">
+                            <div class="narration-timeline-fill" id="narration-fill-main"></div>
+                            <div class="narration-timeline-thumb" id="narration-thumb-main"></div>
+                        </div>
+                        <span class="narration-time" id="narration-time-main">0:00 / --:--</span>
+                    </div>
+                    <p class="narration-player-hint">Select any point on the line to continue from there.</p>
                 </div>
                 <div class="reader-folio-reference" id="readerFolioReference">Folio I · Navigator's Log</div>
                 <div class="date" id="readerDate" style="font-size: 0.9rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;"></div>
@@ -1664,15 +1853,17 @@
         let globalCategories = {}; 
         let globalParallelContexts = [];
         let activeBookSubChapterId = null; 
-        let isAudioPlaying = false;
-        let isAudioPaused = false; 
-        let currentSpeechRate = 1.0;
-        let activeParagraphTextArray = [];
-        let currentSpeechParagraphIndex = 0;
-        let isPopupAudioPlaying = false;
-        let isPopupAudioPaused = false; 
-        let activePopupTextArray = [];
-        let currentPopupSegmentIndex = 0;
+        const narrationState = {
+            playerId: null,
+            sourceId: null,
+            text: '',
+            charIndex: 0,
+            rate: 1.0,
+            pitch: 0.93,
+            status: 'idle',
+            utterance: null,
+            generation: 0
+        };
 
         // HELPER TO CONVERT NUMBERS TO ROMAN NUMERALS
         function convertToRomanNumeral(num) {
@@ -1773,16 +1964,21 @@
             const voices = window.speechSynthesis.getVoices();
             if (!voices || voices.length === 0) return null;
             const preferredMaleFilters = [
-                "google uk english male", 
-                "google us english male", 
-                "microsoft christopher online", 
-                "microsoft ryan online", 
-                "microsoft david", 
-                "microsoft ryan", 
-                "apple daniel", 
-                "apple oliver", 
-                "en-us-x-sfg", 
-                "en-us-x-iom", 
+                "microsoft andrew online",
+                "microsoft christopher online",
+                "microsoft ryan online",
+                "google uk english male",
+                "google us english male",
+                "microsoft guy online",
+                "microsoft mark",
+                "microsoft david",
+                "daniel enhanced",
+                "daniel",
+                "alex",
+                "aaron",
+                "oliver",
+                "en-us-x-sfg",
+                "en-us-x-iom",
                 "en-gb-x-rdb"
             ];
             for (let filter of preferredMaleFilters) {
@@ -1801,6 +1997,38 @@
             });
             if (genericMale) return genericMale;
             return voices.find(v => v.lang && (v.lang.toLowerCase() === "en-us" || v.lang.toLowerCase() === "en-gb")) || voices[0];
+        }
+        function buildNarrationPlayerMarkup(playerId, sourceId, label = 'record') {
+            const safePlayerId = safeDomId(playerId);
+            const safeSourceId = safeDomId(sourceId);
+            const accessibleLabel = escapeHtml(label);
+            return `
+                <div class="narration-player" id="narration-player-${safePlayerId}" data-source-id="${safeSourceId}">
+                    <div class="narration-player-heading">
+                        <span class="narration-player-kicker">Spoken chronicle</span>
+                        <span class="narration-player-status" id="narration-status-${safePlayerId}" aria-live="polite">Ready</span>
+                    </div>
+                    <div class="narration-player-controls">
+                        <button class="narration-control-btn narration-play-btn" id="narration-play-${safePlayerId}" type="button" onclick="playNarration('${safePlayerId}', '${safeSourceId}')" aria-label="Play ${accessibleLabel} narration">▶ <span>Listen</span></button>
+                        <button class="narration-control-btn" id="narration-pause-${safePlayerId}" type="button" onclick="toggleNarrationPause('${safePlayerId}')" aria-label="Pause ${accessibleLabel} narration" disabled>Ⅱ <span>Pause</span></button>
+                        <button class="narration-control-btn narration-icon-btn" id="narration-stop-${safePlayerId}" type="button" onclick="stopNarration('${safePlayerId}')" aria-label="Stop ${accessibleLabel} narration" title="Stop" disabled>■</button>
+                        <div class="narration-rate-control" aria-label="Narration pace controls">
+                            <span class="narration-rate-label">Pace</span>
+                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('${safePlayerId}', -0.1)" aria-label="Decrease narration pace">−</button>
+                            <span class="narration-rate-value" id="narration-rate-${safePlayerId}">${narrationState.rate.toFixed(1)}×</span>
+                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('${safePlayerId}', 0.1)" aria-label="Increase narration pace">+</button>
+                        </div>
+                    </div>
+                    <div class="narration-timeline-row">
+                        <div class="narration-timeline" id="narration-track-${safePlayerId}" role="slider" tabindex="0" aria-label="${accessibleLabel} narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onclick="seekNarration('${safePlayerId}', '${safeSourceId}', event)" onkeydown="handleNarrationSeekKey('${safePlayerId}', '${safeSourceId}', event)">
+                            <div class="narration-timeline-fill" id="narration-fill-${safePlayerId}"></div>
+                            <div class="narration-timeline-thumb" id="narration-thumb-${safePlayerId}"></div>
+                        </div>
+                        <span class="narration-time" id="narration-time-${safePlayerId}">0:00 / --:--</span>
+                    </div>
+                    <p class="narration-player-hint">Select any point on the line to continue from there.</p>
+                </div>
+            `;
         }
         async function initSystem() {
             try {
@@ -2060,24 +2288,8 @@
                                     <h3 class="popup-title" id="title-${contextModalId}">${escapeHtml(context.popupTitle)}</h3>
                                     ${contextHookHtml}
                                 </header>
+                                ${buildNarrationPlayerMarkup(contextModalId, `raw-text-${contextModalId}`, 'parallel record')}
                                 ${contextImgHtml}
-                                <div class="popup-audio-module-wrap">
-                                    <div class="popup-audio-upper-controls">
-                                        <button class="audio-trigger-btn" style="color:var(--accent-color);" id="btn-audio-${contextModalId}" onclick="togglePopupAudioDeck('${contextModalId}')">Hear this record</button>
-                                        <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${contextModalId}" onclick="pausePopupAudioDeck('${contextModalId}')">⏸ Pause</button>
-                                        <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${contextModalId}" onclick="stopPopupAudioTrack('${contextModalId}')"> Stop</button>
-                                        <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
-                                        <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${contextModalId}', -0.1)">-</button>
-                                        <div class="speed-tracker-display" style="font-size:0.8rem; width:28px;" id="lbl-speed-${contextModalId}">1.0x</div>
-                                        <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${contextModalId}', 0.1)">+</button>
-                                    </div>
-                                    <div class="popup-timeline-scrub-row">
-                                        <div class="popup-audio-timeline-bar" onclick="seekPopupAudioTimeline('${contextModalId}', event)">
-                                            <div class="popup-audio-progress-fill" id="fill-progress-${contextModalId}"></div>
-                                        </div>
-                                        <div class="popup-audio-clock-readout" id="clock-readout-${contextModalId}">Segment 0 / 0</div>
-                                    </div>
-                                </div>
                                 <div class="popup-body-content" id="raw-text-${contextModalId}">${parseMarkdownToHtml(context.popupBody)}</div>
                             </div>
                         </div>
@@ -2127,24 +2339,8 @@
                                         <h3 class="popup-title" id="title-${uniqueId}">${lev.popTitle}</h3>
                                         ${lev.popHook ? `<p class="popup-document-hook">“${lev.popHook}”</p>` : ''}
                                     </header>
+                                    ${buildNarrationPlayerMarkup(uniqueId, `raw-text-${uniqueId}`, 'logbook entry')}
                                     ${modalImgHtml}
-                                    <div class="popup-audio-module-wrap">
-                                        <div class="popup-audio-upper-controls">
-                                            <button class="audio-trigger-btn" id="btn-audio-${uniqueId}" onclick="togglePopupAudioDeck('${uniqueId}')">Hear this entry</button>
-                                            <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${uniqueId}" onclick="pausePopupAudioDeck('${uniqueId}')">⏸ Pause</button>
-                                            <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${uniqueId}" onclick="stopPopupAudioTrack('${uniqueId}')"> Stop</button>
-                                            <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
-                                            <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${uniqueId}', -0.1)">-</button>
-                                            <div class="speed-tracker-display" style="font-size:0.8rem; width:28px;" id="lbl-speed-${uniqueId}">1.0x</div>
-                                            <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${uniqueId}', 0.1)">+</button>
-                                        </div>
-                                        <div class="popup-timeline-scrub-row">
-                                            <div class="popup-audio-timeline-bar" onclick="seekPopupAudioTimeline('${uniqueId}', event)">
-                                                <div class="popup-audio-progress-fill" id="fill-progress-${uniqueId}"></div>
-                                            </div>
-                                            <div class="popup-audio-clock-readout" id="clock-readout-${uniqueId}">Segment 0 / 0</div>
-                                        </div>
-                                    </div>
                                     <div class="popup-body-content" id="raw-text-${uniqueId}">${parseMarkdownToHtml(lev.popBody)}</div>
                                 </div>
                                 <div class="modal-nav-footer">
@@ -2159,6 +2355,8 @@
             });
             document.getElementById('categoriesMasterContainer').innerHTML = masterCategoriesHtml || '<p style="color:#666;font-style:italic;padding:20px;text-align:center;">No timeline records mapped.</p>';
             document.getElementById('popupMasterStack').innerHTML = modalMasterHtml;
+            updateNarrationPlayerUI('main');
+            updateAllNarrationRateLabels();
             
             attachGlobalLightboxTriggers();
             const textFrame = document.querySelector('.text-content-frame');
@@ -2172,208 +2370,328 @@
         function launchParallelContextModal(modalId) {
             if (modalId) openPopupWithVoiceMute(modalId);
         }
-        function toggleNarrationEngine() {
-            const triggerBtn = document.getElementById('ttsPlaybackMasterTrigger');
-            
-            if (isAudioPlaying) {
-                if (isAudioPaused) {
-                    isAudioPaused = false;
-                    triggerBtn.innerText = "Pause the account";
-                    streamMainTextParagraphSegments();
+        function normaliseNarrationText(value) {
+            return String(value || '').replace(/\s+/g, ' ').trim();
+        }
+        function clampNarrationValue(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+        function snapToNarrationWord(text, index) {
+            let cursor = clampNarrationValue(Math.round(index || 0), 0, Math.max(0, text.length - 1));
+            while (cursor > 0 && /\S/.test(text[cursor - 1]) && /\S/.test(text[cursor] || '')) cursor--;
+            return cursor;
+        }
+        function getNarrationSourceText(sourceId) {
+            const source = document.getElementById(sourceId);
+            return source ? normaliseNarrationText(source.innerText) : '';
+        }
+        function clearNarrationProgressTimer() {
+            if (narrationState.progressTimer) {
+                window.clearInterval(narrationState.progressTimer);
+                narrationState.progressTimer = null;
+            }
+        }
+        function cancelNarrationUtterance() {
+            clearNarrationProgressTimer();
+            narrationState.generation++;
+            narrationState.utterance = null;
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        }
+        function formatNarrationTime(totalSeconds) {
+            if (!Number.isFinite(totalSeconds)) return '--:--';
+            const safeSeconds = Math.max(0, Math.round(totalSeconds));
+            return `${Math.floor(safeSeconds / 60)}:${String(safeSeconds % 60).padStart(2, '0')}`;
+        }
+        function estimateNarrationSeconds(text, rate) {
+            const words = normaliseNarrationText(text).split(' ').filter(Boolean).length;
+            return words ? Math.max(1, Math.round((words / (165 * rate)) * 60)) : NaN;
+        }
+        function updateNarrationPlayerUI(playerId) {
+            if (!playerId) return;
+            const isActivePlayer = narrationState.playerId === playerId;
+            const playerNode = document.getElementById(`narration-player-${playerId}`);
+            const previewSourceId = playerNode ? playerNode.dataset.sourceId : '';
+            const text = isActivePlayer ? narrationState.text : getNarrationSourceText(previewSourceId);
+            const progress = isActivePlayer && text.length
+                ? clampNarrationValue((narrationState.charIndex / text.length) * 100, 0, 100)
+                : 0;
+            const status = isActivePlayer ? narrationState.status : 'idle';
+            const playButton = document.getElementById(`narration-play-${playerId}`);
+            const pauseButton = document.getElementById(`narration-pause-${playerId}`);
+            const stopButton = document.getElementById(`narration-stop-${playerId}`);
+            const statusNode = document.getElementById(`narration-status-${playerId}`);
+            const fill = document.getElementById(`narration-fill-${playerId}`);
+            const thumb = document.getElementById(`narration-thumb-${playerId}`);
+            const track = document.getElementById(`narration-track-${playerId}`);
+            const time = document.getElementById(`narration-time-${playerId}`);
+            const totalSeconds = estimateNarrationSeconds(text, narrationState.rate);
+            const elapsedSeconds = Number.isFinite(totalSeconds) ? totalSeconds * (progress / 100) : NaN;
+
+            if (playButton) {
+                if (status === 'playing') playButton.innerHTML = '● <span>Reading</span>';
+                else if (status === 'paused') playButton.innerHTML = '▶ <span>Continue</span>';
+                else if (status === 'ended') playButton.innerHTML = '↺ <span>Listen again</span>';
+                else playButton.innerHTML = '▶ <span>Listen</span>';
+            }
+            if (pauseButton) {
+                pauseButton.disabled = !isActivePlayer || status === 'idle' || status === 'ended';
+                pauseButton.innerHTML = status === 'paused' ? '▶ <span>Resume</span>' : 'Ⅱ <span>Pause</span>';
+                pauseButton.setAttribute('aria-label', status === 'paused' ? 'Resume narration' : 'Pause narration');
+            }
+            if (stopButton) stopButton.disabled = !isActivePlayer || status === 'idle';
+            if (statusNode) {
+                statusNode.innerText = status === 'playing' ? 'Reading'
+                    : status === 'paused' ? 'Paused'
+                    : status === 'ended' ? 'Complete'
+                    : status === 'error' ? 'Voice unavailable'
+                    : 'Ready';
+            }
+            if (fill) fill.style.width = `${progress}%`;
+            if (thumb) thumb.style.left = `${progress}%`;
+            if (track) {
+                track.setAttribute('aria-valuenow', String(Math.round(progress)));
+                track.setAttribute('aria-valuetext', `${Math.round(progress)} percent`);
+            }
+            if (time) {
+                time.innerText = text
+                    ? `${formatNarrationTime(elapsedSeconds)} / ${formatNarrationTime(totalSeconds)}`
+                    : '0:00 / --:--';
+            }
+        }
+        function updateAllNarrationRateLabels() {
+            document.querySelectorAll('[id^="narration-rate-"]').forEach(node => {
+                node.innerText = `${narrationState.rate.toFixed(1)}×`;
+            });
+        }
+        function prepareNarrationSource(playerId, sourceId) {
+            const nextText = getNarrationSourceText(sourceId);
+            if (!nextText) {
+                const statusNode = document.getElementById(`narration-status-${playerId}`);
+                if (statusNode) statusNode.innerText = 'No text found';
+                return false;
+            }
+            const sameRecord = narrationState.playerId === playerId
+                && narrationState.sourceId === sourceId
+                && narrationState.text === nextText;
+            if (sameRecord) return true;
+
+            const previousPlayerId = narrationState.playerId;
+            cancelNarrationUtterance();
+            if (previousPlayerId && previousPlayerId !== playerId) {
+                narrationState.status = 'idle';
+                narrationState.charIndex = 0;
+                updateNarrationPlayerUI(previousPlayerId);
+            }
+            narrationState.playerId = playerId;
+            narrationState.sourceId = sourceId;
+            narrationState.text = nextText;
+            narrationState.charIndex = 0;
+            narrationState.status = 'idle';
+            updateNarrationPlayerUI(playerId);
+            updateAllNarrationRateLabels();
+            return true;
+        }
+        function getNextNarrationChunk(startIndex) {
+            const text = narrationState.text;
+            const start = snapToNarrationWord(text, startIndex);
+            let end = Math.min(text.length, start + 680);
+            if (end < text.length) {
+                const candidate = text.slice(start, end);
+                const sentenceBreaks = [...candidate.matchAll(/[.!?][\"'’”]?\s+/g)]
+                    .filter(match => match.index > 260);
+                if (sentenceBreaks.length) {
+                    const lastBreak = sentenceBreaks[sentenceBreaks.length - 1];
+                    end = start + lastBreak.index + lastBreak[0].length;
                 } else {
-                    isAudioPaused = true;
-                    triggerBtn.innerText = "Resume the account";
-                    window.speechSynthesis.cancel(); 
+                    const lastSpace = candidate.lastIndexOf(' ');
+                    if (lastSpace > 260) end = start + lastSpace + 1;
                 }
-            } else {
-                stopPopupNarrationEngine();
-                const rawText = document.getElementById('readerBody').innerText;
-                
-                activeParagraphTextArray = rawText.split(/[.!?]+\s+/).filter(s => s.trim().length > 0);
-                currentSpeechParagraphIndex = 0;
-                isAudioPlaying = true;
-                isAudioPaused = false;
-                
-                streamMainTextParagraphSegments();
             }
+            return { start, end, text: text.slice(start, end) };
         }
-        function streamMainTextParagraphSegments() {
-            if (!isAudioPlaying || isAudioPaused) return;
-            
-            if (currentSpeechParagraphIndex >= activeParagraphTextArray.length) {
-                stopNarrationEngine();
-                return;
-            }
-            window.speechSynthesis.cancel();
-            
-            const segmentText = activeParagraphTextArray[currentSpeechParagraphIndex];
-            const utterance = new SpeechSynthesisUtterance(segmentText);
-            
-            utterance.lang = 'en-US';
-            utterance.voice = captureNaturalSpeechVoiceInstance();
-            utterance.rate = currentSpeechRate;
-            utterance.pitch = 0.95; 
-            utterance.onend = () => {
-                if (isAudioPaused) return;
-                currentSpeechParagraphIndex++;
-                streamMainTextParagraphSegments();
-            };
-            utterance.onerror = () => {
-                if (isAudioPaused) return;
-                stopNarrationEngine();
-            };
-            document.getElementById('ttsPlaybackMasterTrigger').innerText = "Pause the account";
-            window.speechSynthesis.speak(utterance);
-        }
-        function adjustPlaybackSpeed(delta) {
-            currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
-            document.getElementById('ttsSpeedLabel').innerText = `${currentSpeechRate.toFixed(1)}x`;
-            
-            if (isAudioPlaying && !isAudioPaused) {
-                streamMainTextParagraphSegments();
-            }
-        }
-        function stopNarrationEngine() {
-            window.speechSynthesis.cancel();
-            isAudioPlaying = false;
-            isAudioPaused = false;
-            currentSpeechParagraphIndex = 0;
-            const trigger = document.getElementById('ttsPlaybackMasterTrigger');
-            if(trigger) trigger.innerText = "Hear this account";
-        }
-        function togglePopupAudioDeck(modalId) {
-            const btnPlay = document.getElementById(`btn-audio-${modalId}`);
-            const btnPause = document.getElementById(`btn-pause-${modalId}`);
-            
-            if (isPopupAudioPlaying) {
-                if (isPopupAudioPaused) {
-                    isPopupAudioPaused = false;
-                    if (btnPlay) btnPlay.innerText = "Reading…";
-                    if (btnPause) btnPause.style.display = "inline-block";
-                    streamPopupVoiceSegments(modalId);
-                }
-            } else {
-                stopNarrationEngine();
-                
-                const rawText = document.getElementById(`raw-text-${modalId}`).innerText;
-                activePopupTextArray = rawText.split(/[.!?]+\s+/).filter(s => s.trim().length > 0);
-                currentPopupSegmentIndex = 0;
-                isPopupAudioPlaying = true;
-                isPopupAudioPaused = false;
-                streamPopupVoiceSegments(modalId);
-            }
-        }
-        function seekPopupAudioTimeline(modalId, event) {
-            if (!activePopupTextArray || activePopupTextArray.length === 0) {
-                const rawTextNode = document.getElementById(`raw-text-${modalId}`);
-                if (rawTextNode) {
-                    activePopupTextArray = rawTextNode.innerText.split(/[.!?]+\s+/).filter(s => s.trim().length > 0);
-                } else {
+        function beginNarrationProgressFallback(chunk, token) {
+            clearNarrationProgressTimer();
+            const chunkWordCount = normaliseNarrationText(chunk.text).split(' ').filter(Boolean).length;
+            const estimatedMilliseconds = Math.max(900, (chunkWordCount / (165 * narrationState.rate)) * 60000);
+            const startedAt = performance.now();
+            let boundaryWasSeen = false;
+            narrationState.markBoundarySeen = () => { boundaryWasSeen = true; };
+            narrationState.progressTimer = window.setInterval(() => {
+                if (token !== narrationState.generation || narrationState.status !== 'playing') {
+                    clearNarrationProgressTimer();
                     return;
                 }
-            }
-            const bar = event.currentTarget;
-            const rect = bar.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-            currentPopupSegmentIndex = Math.floor(ratio * activePopupTextArray.length);
-            if (currentPopupSegmentIndex >= activePopupTextArray.length) {
-                currentPopupSegmentIndex = activePopupTextArray.length - 1;
-            }
-            isPopupAudioPlaying = true;
-            isPopupAudioPaused = false;
-            streamPopupVoiceSegments(modalId);
+                if (!boundaryWasSeen) {
+                    const fraction = clampNarrationValue((performance.now() - startedAt) / estimatedMilliseconds, 0, .96);
+                    narrationState.charIndex = Math.max(
+                        narrationState.charIndex,
+                        chunk.start + Math.floor(chunk.text.length * fraction)
+                    );
+                    updateNarrationPlayerUI(narrationState.playerId);
+                }
+            }, 250);
         }
-        function streamPopupVoiceSegments(modalId) {
-            if (!isPopupAudioPlaying || isPopupAudioPaused) return;
-            if (currentPopupSegmentIndex >= activePopupTextArray.length) {
-                stopPopupAudioTrack(modalId);
+        function speakNarrationFromCurrentPosition() {
+            if (narrationState.status !== 'playing' || !narrationState.text) return;
+            if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+                narrationState.status = 'error';
+                updateNarrationPlayerUI(narrationState.playerId);
                 return;
             }
-            window.speechSynthesis.cancel();
-            const textSegment = activePopupTextArray[currentPopupSegmentIndex];
-            const utterance = new SpeechSynthesisUtterance(textSegment);
-            
+            if (narrationState.charIndex >= narrationState.text.length - 1) {
+                narrationState.charIndex = narrationState.text.length;
+                narrationState.status = 'ended';
+                updateNarrationPlayerUI(narrationState.playerId);
+                return;
+            }
+
+            const chunk = getNextNarrationChunk(narrationState.charIndex);
+            narrationState.charIndex = chunk.start;
+            const token = ++narrationState.generation;
+            const utterance = new SpeechSynthesisUtterance(chunk.text);
+            narrationState.utterance = utterance;
             utterance.lang = 'en-US';
             utterance.voice = captureNaturalSpeechVoiceInstance();
-            utterance.rate = currentSpeechRate;
-            utterance.pitch = 0.95;
-            const progress = ((currentPopupSegmentIndex + 1) / activePopupTextArray.length) * 100;
-            const fillBar = document.getElementById(`fill-progress-${modalId}`);
-            if (fillBar) fillBar.style.width = `${progress}%`;
-            
-            updateDynamicAudioClockVisuals(modalId, currentPopupSegmentIndex, activePopupTextArray.length);
+            utterance.rate = narrationState.rate;
+            utterance.pitch = narrationState.pitch;
+            utterance.volume = 1;
+
+            utterance.onstart = () => {
+                if (token !== narrationState.generation) return;
+                beginNarrationProgressFallback(chunk, token);
+                updateNarrationPlayerUI(narrationState.playerId);
+            };
+            utterance.onboundary = event => {
+                if (token !== narrationState.generation || narrationState.status !== 'playing') return;
+                if (typeof narrationState.markBoundarySeen === 'function') narrationState.markBoundarySeen();
+                if (Number.isFinite(event.charIndex)) {
+                    narrationState.charIndex = clampNarrationValue(
+                        chunk.start + event.charIndex,
+                        chunk.start,
+                        chunk.end
+                    );
+                    updateNarrationPlayerUI(narrationState.playerId);
+                }
+            };
             utterance.onend = () => {
-                if (isPopupAudioPaused) return;
-                currentPopupSegmentIndex++;
-                streamPopupVoiceSegments(modalId);
+                if (token !== narrationState.generation || narrationState.status !== 'playing') return;
+                clearNarrationProgressTimer();
+                narrationState.charIndex = chunk.end;
+                updateNarrationPlayerUI(narrationState.playerId);
+                if (chunk.end >= narrationState.text.length) {
+                    narrationState.status = 'ended';
+                    updateNarrationPlayerUI(narrationState.playerId);
+                } else {
+                    speakNarrationFromCurrentPosition();
+                }
             };
-            utterance.onerror = () => {
-                if (isPopupAudioPaused) return;
-                stopPopupAudioTrack(modalId);
+            utterance.onerror = event => {
+                if (token !== narrationState.generation) return;
+                if (event.error === 'canceled' || event.error === 'interrupted') return;
+                clearNarrationProgressTimer();
+                narrationState.status = 'error';
+                updateNarrationPlayerUI(narrationState.playerId);
             };
-            const btnPlay = document.getElementById(`btn-audio-${modalId}`);
-            const btnPause = document.getElementById(`btn-pause-${modalId}`);
-            const btnStop = document.getElementById(`btn-stop-${modalId}`);
-            
-            if (btnPlay) btnPlay.innerText = "Reading…";
-            if (btnPause) btnPause.style.display = "inline-block";
-            if (btnStop) btnStop.style.display = "inline-block";
-            
             window.speechSynthesis.speak(utterance);
         }
-        function pausePopupAudioDeck(modalId) {
-            if (isPopupAudioPlaying && !isPopupAudioPaused) {
-                isPopupAudioPaused = true;
-                const btnPlay = document.getElementById(`btn-audio-${modalId}`);
-                const btnPause = document.getElementById(`btn-pause-${modalId}`);
-                if (btnPlay) btnPlay.innerText = "Resume";
-                if (btnPause) btnPause.style.display = "none";
-                window.speechSynthesis.cancel();
+        function playNarration(playerId, sourceId) {
+            if (!prepareNarrationSource(playerId, sourceId)) return;
+            if (narrationState.status === 'playing') return;
+            if (narrationState.status === 'ended' || narrationState.charIndex >= narrationState.text.length - 1) {
+                narrationState.charIndex = 0;
+            }
+            narrationState.status = 'playing';
+            updateNarrationPlayerUI(playerId);
+            speakNarrationFromCurrentPosition();
+        }
+        function toggleNarrationPause(playerId) {
+            if (narrationState.playerId !== playerId) return;
+            if (narrationState.status === 'playing') {
+                cancelNarrationUtterance();
+                narrationState.charIndex = snapToNarrationWord(narrationState.text, narrationState.charIndex);
+                narrationState.status = 'paused';
+                updateNarrationPlayerUI(playerId);
+            } else if (narrationState.status === 'paused') {
+                narrationState.status = 'playing';
+                updateNarrationPlayerUI(playerId);
+                speakNarrationFromCurrentPosition();
             }
         }
-        function modPopupAudioSpeed(modalId, delta) {
-            currentSpeechRate = Math.max(0.5, Math.min(2.0, currentSpeechRate + delta));
-            const lbl = document.getElementById(`lbl-speed-${modalId}`);
-            if(lbl) lbl.innerText = `${currentSpeechRate.toFixed(1)}x`;
-            
-            const mainLabel = document.getElementById('ttsSpeedLabel');
-            if(mainLabel) mainLabel.innerText = `${currentSpeechRate.toFixed(1)}x`;
-            if (isPopupAudioPlaying && !isPopupAudioPaused) {
-                streamPopupVoiceSegments(modalId);
+        function stopNarration(playerId = narrationState.playerId) {
+            if (!playerId) return;
+            if (narrationState.playerId === playerId) {
+                cancelNarrationUtterance();
+                narrationState.charIndex = 0;
+                narrationState.status = 'idle';
             }
+            updateNarrationPlayerUI(playerId);
+        }
+        function changeNarrationRate(playerId, delta) {
+            narrationState.rate = Number(clampNarrationValue(narrationState.rate + delta, 0.7, 1.5).toFixed(1));
+            updateAllNarrationRateLabels();
+            if (narrationState.playerId !== playerId) {
+                updateNarrationPlayerUI(playerId);
+                return;
+            }
+
+            const wasPlaying = narrationState.status === 'playing';
+            const wasPaused = narrationState.status === 'paused';
+            if (wasPlaying || wasPaused) {
+                cancelNarrationUtterance();
+                narrationState.charIndex = snapToNarrationWord(narrationState.text, narrationState.charIndex);
+                narrationState.status = wasPlaying ? 'playing' : 'paused';
+            }
+            updateNarrationPlayerUI(playerId);
+            if (wasPlaying) window.setTimeout(speakNarrationFromCurrentPosition, 60);
+        }
+        function seekNarrationToRatio(playerId, sourceId, ratio) {
+            if (!prepareNarrationSource(playerId, sourceId)) return;
+            cancelNarrationUtterance();
+            const target = Math.min(
+                narrationState.text.length - 1,
+                Math.max(0, narrationState.text.length * clampNarrationValue(ratio, 0, 1))
+            );
+            narrationState.charIndex = snapToNarrationWord(narrationState.text, target);
+            narrationState.status = 'playing';
+            updateNarrationPlayerUI(playerId);
+            window.setTimeout(speakNarrationFromCurrentPosition, 40);
+        }
+        function seekNarration(playerId, sourceId, event) {
+            const bounds = event.currentTarget.getBoundingClientRect();
+            if (!bounds.width) return;
+            seekNarrationToRatio(playerId, sourceId, (event.clientX - bounds.left) / bounds.width);
+        }
+        function handleNarrationSeekKey(playerId, sourceId, event) {
+            const validKeys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+            if (!validKeys.includes(event.key)) return;
+            event.preventDefault();
+            if (!prepareNarrationSource(playerId, sourceId)) return;
+            const currentRatio = narrationState.text.length ? narrationState.charIndex / narrationState.text.length : 0;
+            const nextRatio = event.key === 'Home' ? 0
+                : event.key === 'End' ? .999
+                : currentRatio + (event.key === 'ArrowRight' ? .05 : -.05);
+            seekNarrationToRatio(playerId, sourceId, nextRatio);
+        }
+
+        // Compatibility wrappers for the existing chapter navigation functions.
+        function toggleNarrationEngine() {
+            playNarration('main', 'readerBody');
+        }
+        function adjustPlaybackSpeed(delta) {
+            changeNarrationRate('main', delta);
+        }
+        function stopNarrationEngine() {
+            if (narrationState.playerId === 'main') stopNarration('main');
+            else updateNarrationPlayerUI('main');
         }
         function stopPopupAudioTrack(modalId) {
-            window.speechSynthesis.cancel();
-            isPopupAudioPlaying = false;
-            isPopupAudioPaused = false;
-            currentPopupSegmentIndex = 0;
-            
-            const p = document.getElementById(`btn-audio-${modalId}`);
-            const pauseBtn = document.getElementById(`btn-pause-${modalId}`);
-            const stopBtn = document.getElementById(`btn-stop-${modalId}`);
-            
-            if(p) p.innerText = "Hear this entry";
-            if(pauseBtn) pauseBtn.style.display = "none";
-            if(stopBtn) stopBtn.style.display = "none";
-            resetPopupClockReadout(modalId);
-        }
-        function updateDynamicAudioClockVisuals(modalId, current, total) {
-            const clockNode = document.getElementById(`clock-readout-${modalId}`);
-            if (!clockNode) return;
-            clockNode.innerText = `Segment ${current + 1} / ${total}`;
-        }
-        function resetPopupClockReadout(modalId) {
-            const barFillNode = document.getElementById(`fill-progress-${modalId}`);
-            const clockNode = document.getElementById(`clock-readout-${modalId}`);
-            if(barFillNode) barFillNode.style.width = "0%";
-            if(clockNode) clockNode.innerText = "Segment 0 / 0";
+            if (narrationState.playerId === modalId) stopNarration(modalId);
+            else updateNarrationPlayerUI(modalId);
         }
         function stopPopupNarrationEngine() {
-            window.speechSynthesis.cancel();
-            isPopupAudioPlaying = false;
-            isPopupAudioPaused = false;
-            currentPopupSegmentIndex = 0;
+            if (narrationState.playerId && narrationState.playerId !== 'main') {
+                stopNarration(narrationState.playerId);
+            }
         }
         function updateMaximiseControl(targetModal, isMaximised) {
             if (!targetModal) return;
@@ -2400,17 +2718,16 @@
             }
         }
         function openPopupWithVoiceMute(dialogId) {
-            if(isAudioPlaying && !isAudioPaused) {
-                isAudioPaused = true;
-                document.getElementById('ttsPlaybackMasterTrigger').innerText = "Resume the account";
-                window.speechSynthesis.cancel();
+            if (narrationState.playerId === 'main' && narrationState.status === 'playing') {
+                toggleNarrationPause('main');
             }
             const modal = document.getElementById(dialogId);
             if(modal) {
                 modal.classList.remove('maximized-mode', 'collapsed-mode'); 
                 updateMaximiseControl(modal, false);
                 modal.showModal();
-                resetPopupClockReadout(dialogId);
+                updateNarrationPlayerUI(dialogId);
+                updateAllNarrationRateLabels();
             }
             attachGlobalLightboxTriggers(); 
         }
@@ -2431,7 +2748,8 @@
                     nextModal.classList.remove('maximized-mode', 'collapsed-mode');
                     updateMaximiseControl(nextModal, false);
                     nextModal.showModal();
-                    resetPopupClockReadout(targetId);
+                    updateNarrationPlayerUI(targetId);
+                    updateAllNarrationRateLabels();
                 }
                 attachGlobalLightboxTriggers();
             }, 100);
