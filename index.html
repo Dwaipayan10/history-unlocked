@@ -1109,6 +1109,36 @@
             color: #f6efd8 !important;
             box-shadow: none !important;
         }
+        .parallel-context-action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            max-height: 330px;
+            overflow-y: auto;
+            padding-right: 3px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(48,73,74,.5) transparent;
+        }
+        .parallel-context-record {
+            position: relative;
+            display: grid;
+            gap: 5px;
+            padding-top: 10px;
+            border-top: 1px dotted rgba(48,73,74,.38);
+        }
+        .parallel-context-record:first-child {
+            padding-top: 0;
+            border-top: 0;
+        }
+        .parallel-context-record-label {
+            color: #465c59;
+            font-size: .64rem;
+            font-weight: 700;
+            letter-spacing: .13em;
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+        .parallel-context-record .india-margin-card-btn { width: 100%; }
         .reader-branding-meta-bar { margin-bottom: 28px !important; }
         .back-btn { padding: 9px 13px !important; background: transparent !important; color: var(--wax) !important; box-shadow: none !important; }
         .back-btn:hover { color: #f9edcf !important; box-shadow: none !important; }
@@ -1582,7 +1612,7 @@
                 <div class="india-margin-perspective-card" id="stickyLeftIndiaPerspectiveCard">
                     <h4 class="india-margin-card-header" id="leftIndiaHeaderLabel">Concurrent Chronicle</h4>
                     <p class="india-margin-card-blurb" id="leftIndiaBlurbSummary">Discover what was happening simultaneously on the other side.</p>
-                    <button class="india-margin-card-btn" id="leftIndiaTriggerAction" aria-label="Open parallel record" onclick="launchLeftDockIndiaModal()">Open this record</button>
+                    <div class="parallel-context-action-list" id="parallelContextActionList"></div>
                 </div>
             </aside>
             <div class="reader-layout" id="readerScreen">
@@ -1628,9 +1658,11 @@
         const CHAPTERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
         const LEVERS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET2_GID}`;
         const CATEGORIES_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET3_GID}`;
+        const PARALLEL_CONTEXTS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=ParallelContexts`;
         let globalChapters = {};
         let globalLevers = [];
         let globalCategories = {}; 
+        let globalParallelContexts = [];
         let activeBookSubChapterId = null; 
         let isAudioPlaying = false;
         let isAudioPaused = false; 
@@ -1707,6 +1739,36 @@
             html = html.replace(/<u>(.*?)<\/u>/gi, '<span style="text-decoration: underline;">$1</span>');
             return html;
         }
+        function parseGoogleVizRows(responseText) {
+            if (!responseText) return [];
+            const payloadMatch = responseText.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);?\s*$/);
+            if (!payloadMatch) return [];
+            try {
+                return JSON.parse(payloadMatch[1]).table?.rows || [];
+            } catch (error) {
+                console.warn('A spreadsheet response could not be parsed.', error);
+                return [];
+            }
+        }
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+        function safeDomId(value) {
+            return String(value || 'parallel-record')
+                .trim()
+                .replace(/[^a-zA-Z0-9_-]+/g, '-')
+                .replace(/^-+|-+$/g, '') || 'parallel-record';
+        }
+        function getParallelContextsForChapter(chapterId) {
+            return globalParallelContexts
+                .filter(context => context.chapterId === chapterId && context.enabled)
+                .sort((a, b) => a.sortOrder - b.sortOrder || a.id.localeCompare(b.id));
+        }
         function captureNaturalSpeechVoiceInstance() {
             const voices = window.speechSynthesis.getVoices();
             if (!voices || voices.length === 0) return null;
@@ -1742,14 +1804,18 @@
         }
         async function initSystem() {
             try {
-                const [res1, res2, res3] = await Promise.all([
+                const [res1, res2, res3, res4] = await Promise.all([
                     fetch(CHAPTERS_URL).then(r => r.text()),
                     fetch(LEVERS_URL).then(r => r.text()),
-                    fetch(CATEGORIES_URL).then(r => r.text())
+                    fetch(CATEGORIES_URL).then(r => r.text()),
+                    fetch(PARALLEL_CONTEXTS_URL)
+                        .then(r => r.ok ? r.text() : '')
+                        .catch(() => '')
                 ]);
-                const d1 = JSON.parse(res1.substr(47).slice(0, -2)).table.rows;
-                const d2 = JSON.parse(res2.substr(47).slice(0, -2)).table.rows;
-                const d3 = JSON.parse(res3.substr(47).slice(0, -2)).table.rows;
+                const d1 = parseGoogleVizRows(res1);
+                const d2 = parseGoogleVizRows(res2);
+                const d3 = parseGoogleVizRows(res3);
+                const d4 = parseGoogleVizRows(res4);
                 d3.forEach((row) => {
                     if (row && row.c && row.c[0] && row.c[1]) {
                         const catId = row.c[0].v ? row.c[0].v.toString().trim() : '';
@@ -1791,6 +1857,54 @@
                         popBody: (row.c[4] && row.c[4].v) ? row.c[4].v : '',
                         popHook: (row.c[5] && row.c[5].v) ? row.c[5].v : '',
                         categoryId: (row.c[6] && row.c[6].v) ? row.c[6].v.toString().trim() : '1' 
+                    });
+                });
+                const seenParallelContextIds = new Set();
+                d4.forEach((row) => {
+                    if (!row || !row.c || !row.c[0]) return;
+                    const contextId = String(row.c[0].v || '').trim();
+                    if (!contextId || contextId.toLowerCase() === 'context_id' || seenParallelContextIds.has(contextId)) return;
+
+                    const chapterId = row.c[1] && row.c[1].v ? String(row.c[1].v).trim() : '';
+                    if (!chapterId) return;
+
+                    const enabledValue = row.c[9] && row.c[9].v !== null ? row.c[9].v : true;
+                    const enabled = !['false', '0', 'no', 'disabled'].includes(String(enabledValue).toLowerCase().trim());
+                    seenParallelContextIds.add(contextId);
+                    globalParallelContexts.push({
+                        id: contextId,
+                        chapterId,
+                        contextLabel: row.c[2] && row.c[2].v ? String(row.c[2].v).trim() : 'Parallel Record',
+                        buttonText: row.c[3] && row.c[3].v ? String(row.c[3].v).trim() : 'Open this record',
+                        popupTitle: row.c[4] && row.c[4].v ? String(row.c[4].v).trim() : 'Parallel Record',
+                        popupHook: row.c[5] && row.c[5].v ? String(row.c[5].v).trim() : '',
+                        popupImg: row.c[6] && row.c[6].v ? String(row.c[6].v).trim() : '',
+                        popupBody: row.c[7] && row.c[7].v ? String(row.c[7].v) : '',
+                        sortOrder: Number(row.c[8] && row.c[8].v) || 999,
+                        enabled
+                    });
+                });
+
+                Object.values(globalChapters).forEach((chapter) => {
+                    if (!chapter.id || !chapter.id.includes('portuguese_ch') || !chapter.indiaBtnText) return;
+                    const migratedLegacyId = `${chapter.id}_context_01`;
+                    const hasMigratedLegacy = globalParallelContexts.some(context =>
+                        context.chapterId === chapter.id &&
+                        (context.id === migratedLegacyId || context.id === `legacy-${chapter.id}`)
+                    );
+                    if (hasMigratedLegacy) return;
+                    globalParallelContexts.push({
+                        id: `legacy-${chapter.id}`,
+                        chapterId: chapter.id,
+                        contextLabel: 'Concurrent Chronicle',
+                        buttonText: chapter.indiaBtnText || 'Open this record',
+                        popupTitle: chapter.indiaPopTitle || 'Parallel Record',
+                        popupHook: '',
+                        popupImg: chapter.indiaPopImg || '',
+                        popupBody: chapter.indiaPopBody || '',
+                        sortOrder: 1,
+                        enabled: true,
+                        legacy: true
                     });
                 });
                 if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
@@ -1892,60 +2006,84 @@
                 mapFrame.style.display = 'none';
             }
             const sidePerspCard = document.getElementById('stickyLeftIndiaPerspectiveCard');
-            if (ch.indiaBtnText) {
-                document.getElementById('leftIndiaHeaderLabel').innerText = "Concurrent Chronicle";
-                document.getElementById('leftIndiaBlurbSummary').innerText = "A related record unfolding beyond the principal voyage.";
-                document.getElementById('leftIndiaTriggerAction').innerText = "Open this record";
-                document.getElementById('leftIndiaTriggerAction').setAttribute('aria-label', 'Open parallel record');
+            const chapterParallelContexts = getParallelContextsForChapter(ch.id);
+            const parallelActionList = document.getElementById('parallelContextActionList');
+            if (chapterParallelContexts.length) {
+                const isSingleContext = chapterParallelContexts.length === 1;
+                document.getElementById('leftIndiaHeaderLabel').innerText = isSingleContext
+                    ? chapterParallelContexts[0].contextLabel
+                    : 'Concurrent Chronicles';
+                document.getElementById('leftIndiaBlurbSummary').innerText = isSingleContext
+                    ? (chapterParallelContexts[0].popupHook || 'A related record unfolding beyond the principal voyage.')
+                    : `${chapterParallelContexts.length} related records unfolding beside this chapter.`;
+                parallelActionList.innerHTML = chapterParallelContexts.map((context) => {
+                    const modalId = `parallel-modal-${safeDomId(context.id)}`;
+                    const recordLabel = isSingleContext ? '' : `<span class="parallel-context-record-label">${escapeHtml(context.contextLabel)}</span>`;
+                    return `
+                        <div class="parallel-context-record">
+                            ${recordLabel}
+                            <button class="india-margin-card-btn" type="button"
+                                aria-label="Open parallel record: ${escapeHtml(context.popupTitle)}"
+                                onclick="launchParallelContextModal('${modalId}')">${escapeHtml(context.buttonText)}</button>
+                        </div>
+                    `;
+                }).join('');
                 sidePerspCard.style.display = "block";
             } else {
+                parallelActionList.innerHTML = '';
                 sidePerspCard.style.display = "none";
             }
             let currentChapterSections = Object.values(globalCategories).filter(cat => cat.parentChapterId === activeBookSubChapterId);
             
             let masterCategoriesHtml = '';
             let modalMasterHtml = '';
-            if (ch.indiaBtnText) {
-                const indiaModalId = `india-modal-${ch.id}`;
-                let indiaImgHtml = ch.indiaPopImg ? `<img src="${ch.indiaPopImg}" class="popup-img" alt="Parallel historical record illustration">` : '';
-                
+            chapterParallelContexts.forEach((context) => {
+                const contextModalId = `parallel-modal-${safeDomId(context.id)}`;
+                const contextImgHtml = context.popupImg
+                    ? `<img src="${escapeHtml(context.popupImg)}" class="popup-img" alt="Parallel historical record illustration">`
+                    : '';
+                const contextHookHtml = context.popupHook
+                    ? `<p class="popup-document-hook">“${escapeHtml(context.popupHook)}”</p>`
+                    : '';
+
                 modalMasterHtml += `
-                    <dialog id="${indiaModalId}" class="india-modal-container" aria-labelledby="title-${indiaModalId}">
+                    <dialog id="${contextModalId}" class="india-modal-container" aria-labelledby="title-${contextModalId}">
                         <div class="window-control-rack">
-                            <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${indiaModalId}', 'shrink')">[-]</button>
-                            <button class="window-control-btn expand-mode-btn" type="button" aria-label="Maximise dispatch" aria-pressed="false" title="Maximise dispatch" onclick="toggleWindowSizeState('${indiaModalId}', 'expand')">⛶</button>
-                            <button class="window-control-btn close-x-btn" aria-label="Close dispatch" onclick="closePopupAndMute('${indiaModalId}')">&times;</button>
+                            <button class="window-control-btn collapse-mode-btn" onclick="toggleWindowSizeState('${contextModalId}', 'shrink')">[-]</button>
+                            <button class="window-control-btn expand-mode-btn" type="button" aria-label="Maximise dispatch" aria-pressed="false" title="Maximise dispatch" onclick="toggleWindowSizeState('${contextModalId}', 'expand')">⛶</button>
+                            <button class="window-control-btn close-x-btn" aria-label="Close dispatch" onclick="closePopupAndMute('${contextModalId}')">&times;</button>
                         </div>
                         <div class="dialog-layout-wrapper">
                             <div class="popup-scroll-body-container">
                                 <header class="popup-document-header">
-                                    <div class="popup-document-kicker">Parallel Record · Folio ${chapterRoman}</div>
-                                    <h3 class="popup-title" id="title-${indiaModalId}">${ch.indiaPopTitle}</h3>
+                                    <div class="popup-document-kicker">${escapeHtml(context.contextLabel)} · Folio ${chapterRoman}</div>
+                                    <h3 class="popup-title" id="title-${contextModalId}">${escapeHtml(context.popupTitle)}</h3>
+                                    ${contextHookHtml}
                                 </header>
-                                ${indiaImgHtml}
+                                ${contextImgHtml}
                                 <div class="popup-audio-module-wrap">
                                     <div class="popup-audio-upper-controls">
-                                        <button class="audio-trigger-btn" style="color:var(--accent-color);" id="btn-audio-${indiaModalId}" onclick="togglePopupAudioDeck('${indiaModalId}')">Hear this dispatch</button>
-                                        <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${indiaModalId}" onclick="pausePopupAudioDeck('${indiaModalId}')">⏸ Pause</button>
-                                        <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${indiaModalId}" onclick="stopPopupAudioTrack('${indiaModalId}')"> Stop</button>
+                                        <button class="audio-trigger-btn" style="color:var(--accent-color);" id="btn-audio-${contextModalId}" onclick="togglePopupAudioDeck('${contextModalId}')">Hear this record</button>
+                                        <button class="audio-trigger-btn" style="display:none;" id="btn-pause-${contextModalId}" onclick="pausePopupAudioDeck('${contextModalId}')">⏸ Pause</button>
+                                        <button class="audio-trigger-btn" style="display:none;" id="btn-stop-${contextModalId}" onclick="stopPopupAudioTrack('${contextModalId}')"> Stop</button>
                                         <div class="speed-panel-label" style="font-size:0.75rem;">Pace:</div>
-                                        <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${indiaModalId}', -0.1)">-</button>
-                                        <div class="speed-tracker-display" style="font-size:0.8rem; width:28px;" id="lbl-speed-${indiaModalId}">1.0x</div>
-                                        <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${indiaModalId}', 0.1)">+</button>
+                                        <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${contextModalId}', -0.1)">-</button>
+                                        <div class="speed-tracker-display" style="font-size:0.8rem; width:28px;" id="lbl-speed-${contextModalId}">1.0x</div>
+                                        <button class="audio-speed-btn" onclick="modPopupAudioSpeed('${contextModalId}', 0.1)">+</button>
                                     </div>
                                     <div class="popup-timeline-scrub-row">
-                                        <div class="popup-audio-timeline-bar" onclick="seekPopupAudioTimeline('${indiaModalId}', event)">
-                                            <div class="popup-audio-progress-fill" id="fill-progress-${indiaModalId}"></div>
+                                        <div class="popup-audio-timeline-bar" onclick="seekPopupAudioTimeline('${contextModalId}', event)">
+                                            <div class="popup-audio-progress-fill" id="fill-progress-${contextModalId}"></div>
                                         </div>
-                                        <div class="popup-audio-clock-readout" id="clock-readout-${indiaModalId}">Segment 0 / 0</div>
+                                        <div class="popup-audio-clock-readout" id="clock-readout-${contextModalId}">Segment 0 / 0</div>
                                     </div>
                                 </div>
-                                <div class="popup-body-content" id="raw-text-${indiaModalId}">${parseMarkdownToHtml(ch.indiaPopBody)}</div>
+                                <div class="popup-body-content" id="raw-text-${contextModalId}">${parseMarkdownToHtml(context.popupBody)}</div>
                             </div>
                         </div>
                     </dialog>
                 `;
-            }
+            });
             currentChapterSections.forEach((cat) => {
                 const matchedLevers = globalLevers.filter(l => l.categoryId === cat.id);
                 
@@ -2031,10 +2169,8 @@
             }
             requestAnimationFrame(updateReaderScrollCue);
         }
-        function launchLeftDockIndiaModal() {
-            if (activeBookSubChapterId) {
-                openPopupWithVoiceMute(`india-modal-${activeBookSubChapterId}`);
-            }
+        function launchParallelContextModal(modalId) {
+            if (modalId) openPopupWithVoiceMute(modalId);
         }
         function toggleNarrationEngine() {
             const triggerBtn = document.getElementById('ttsPlaybackMasterTrigger');
