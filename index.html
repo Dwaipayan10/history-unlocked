@@ -1271,14 +1271,19 @@
         .audio-speed-btn:hover { background: var(--wax); border-color: var(--wax); }
         .reader-header { font-size: clamp(2rem, 4.1vw, 3rem); line-height: 1.05; margin-bottom: 24px; }
         .split-reader-grid {
-            gap: 30px;
-            height: 480px;
+            display: block;
+            height: auto;
             padding: 14px;
             border: 1px solid var(--rule);
             background: rgba(229,215,178,.34);
+            margin-bottom: 35px;
         }
         .map-viewer-frame {
             position: relative;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            max-height: 620px;
             border-radius: 0;
             border: 1px solid rgba(74,60,39,.4);
             background: #d9cba6;
@@ -1291,7 +1296,10 @@
             margin: 0;
             overflow: hidden;
         }
-        .map-image { filter: sepia(.2) saturate(.76) contrast(1.04); }
+        .map-image {
+            object-fit: contain;
+            filter: sepia(.2) saturate(.76) contrast(1.04);
+        }
         .map-caption {
             position: absolute;
             left: 0;
@@ -1308,45 +1316,35 @@
         }
         .text-content-frame {
             position: relative;
-            padding: 6px 13px 46px 0;
-            scrollbar-color: rgba(129,55,44,.72) rgba(113,91,55,.11);
-            scrollbar-width: thin;
+            width: min(760px, 100%);
+            height: auto;
+            max-height: none;
+            overflow: visible;
+            margin: 30px auto 8px;
+            padding: 28px 20px 8px;
+            border-top: 1px solid var(--rule);
         }
-        .text-content-frame::-webkit-scrollbar { width: 9px; }
-        .text-content-frame::-webkit-scrollbar-track {
-            background: rgba(113,91,55,.1);
-            border-left: 1px solid rgba(83,70,47,.12);
-        }
-        .text-content-frame::-webkit-scrollbar-thumb {
-            background: var(--wax);
-            border: 2px solid #e6d9b7;
-            border-radius: 0;
-        }
-        .reader-scroll-cue {
-            position: sticky;
-            z-index: 4;
-            left: 0;
-            right: 0;
-            bottom: -1px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            min-height: 48px;
-            margin-top: -30px;
-            padding: 24px 10px 5px;
-            background: linear-gradient(180deg, rgba(247,239,217,0), rgba(247,239,217,.97) 52%);
+        .text-content-frame::before {
+            content: "THE CHAPTER RECORD";
+            position: absolute;
+            top: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0 14px;
+            background: #f3e8c9;
             color: var(--wax);
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: .75rem;
+            font-size: .72rem;
             font-weight: 700;
-            letter-spacing: .11em;
-            text-transform: uppercase;
-            pointer-events: none;
-            transition: opacity .2s ease;
+            letter-spacing: .15em;
+            white-space: nowrap;
         }
-        .reader-scroll-cue.is-finished,
-        .reader-scroll-cue.is-unneeded { opacity: 0; }
-        .reader-body { color: #38342c; font-size: 1.03rem; line-height: 1.72; }
+        .reader-body {
+            color: #38342c;
+            font-size: 1.08rem;
+            line-height: 1.78;
+            margin: 0;
+        }
         .reader-folio-reference {
             display: flex;
             align-items: center;
@@ -1767,18 +1765,17 @@
                 max-width: 100%;
             }
             .split-reader-grid {
-                flex-direction: column;
-                align-items: stretch;
                 width: 100%;
                 min-width: 0;
                 max-width: 100%;
                 height: auto;
                 min-height: 0;
-                gap: 18px;
             }
             .map-viewer-frame {
                 width: 100%;
-                height: clamp(230px, 48vw, 390px);
+                height: auto;
+                aspect-ratio: 16 / 10;
+                max-height: 430px;
                 flex: none;
             }
             .text-content-frame {
@@ -1787,9 +1784,9 @@
                 height: auto;
                 max-height: none;
                 overflow: visible;
-                padding: 8px 4px 4px;
+                margin: 26px auto 0;
+                padding: 24px 5px 4px;
             }
-            .reader-scroll-cue { display: none; }
             .reader-body {
                 max-width: 100%;
                 text-align: left;
@@ -1829,7 +1826,11 @@
             .book-tab-roman { width: 27px; height: 30px; }
             .book-tab-name { font-size: .64rem; }
             .split-reader-grid { padding: 9px; height: auto; }
-            .map-viewer-frame { height: 250px; }
+            .map-viewer-frame {
+                height: auto;
+                aspect-ratio: 4 / 3;
+                max-height: 330px;
+            }
             .reader-body { font-size: .98rem; line-height: 1.68; }
             .category-header-summary { flex-direction: row; align-items: center; }
             .ledger-rows-list { padding-left: 15px; }
@@ -1952,8 +1953,7 @@
                 <div class="split-reader-grid">
                     <div class="map-viewer-frame" id="mapFrameContainer"></div>
                     <div class="text-content-frame">
-                        <p class="reader-body" id="readerBody"></p>
-                        <div class="reader-scroll-cue" id="readerScrollCue" aria-hidden="true">Continue down the record ↓</div>
+                        <article class="reader-body" id="readerBody"></article>
                     </div>
                 </div>
                 <div class="section-divider">
@@ -2116,17 +2116,6 @@
                 .split(/[:,–—]/)[0]
                 .trim();
             return cleanedTitle.length > 20 ? `${cleanedTitle.slice(0, 18).trim()}…` : cleanedTitle;
-        }
-
-        function updateReaderScrollCue() {
-            const textFrame = document.querySelector('.text-content-frame');
-            const cue = document.getElementById('readerScrollCue');
-            if (!textFrame || !cue) return;
-
-            const hasOverflow = textFrame.scrollHeight > textFrame.clientHeight + 8;
-            const isAtEnd = textFrame.scrollTop + textFrame.clientHeight >= textFrame.scrollHeight - 10;
-            cue.classList.toggle('is-unneeded', !hasOverflow);
-            cue.classList.toggle('is-finished', hasOverflow && isAtEnd);
         }
 
         function parseMarkdownToHtml(textString) {
@@ -2567,13 +2556,6 @@
             updateAllNarrationRateLabels();
             
             attachGlobalLightboxTriggers();
-            const textFrame = document.querySelector('.text-content-frame');
-            if (textFrame) {
-                textFrame.scrollTop = 0;
-                textFrame.removeEventListener('scroll', updateReaderScrollCue);
-                textFrame.addEventListener('scroll', updateReaderScrollCue, { passive: true });
-            }
-            requestAnimationFrame(updateReaderScrollCue);
         }
         function launchParallelContextModal(modalId) {
             if (modalId) openPopupWithVoiceMute(modalId);
