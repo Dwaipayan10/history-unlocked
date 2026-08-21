@@ -1635,6 +1635,133 @@
             top: -1px;
             z-index: 20;
         }
+
+        /* Compact narration strip shared by chapters, logbook entries and dispatches. */
+        .narration-player {
+            min-height: 52px;
+            margin-bottom: 18px;
+            padding: 7px 9px;
+        }
+        .narration-player-compact-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            min-width: 0;
+        }
+        .narration-transport-btn,
+        .narration-rate-cycle,
+        .narration-more-menu > summary,
+        .narration-menu-panel button {
+            border: 1px solid rgba(85,60,35,.5);
+            border-radius: 1px;
+            background: rgba(248,237,208,.72);
+            color: var(--wax);
+            font: 700 .76rem/1 "Source Serif 4", Georgia, serif;
+            cursor: pointer;
+        }
+        .narration-transport-btn {
+            min-height: 38px;
+            padding: 0 12px;
+            white-space: nowrap;
+            background: var(--wax);
+            color: #fff1d2;
+            border-color: #572b24;
+        }
+        .narration-player.is-engaged .narration-transport-btn {
+            width: 40px;
+            min-width: 40px;
+            padding: 0;
+            font-size: 1rem;
+        }
+        .narration-idle-duration { font-weight: 500; opacity: .9; }
+        .narration-rate-cycle {
+            min-width: 48px;
+            min-height: 38px;
+            padding: 0 7px;
+            font-variant-numeric: tabular-nums;
+        }
+        .narration-transport-btn:hover,
+        .narration-rate-cycle:hover,
+        .narration-more-menu > summary:hover,
+        .narration-menu-panel button:hover {
+            background: #5c3028;
+            color: #fff1d2;
+        }
+        .narration-transport-btn:focus-visible,
+        .narration-rate-cycle:focus-visible,
+        .narration-more-menu > summary:focus-visible,
+        .narration-menu-panel button:focus-visible {
+            outline: 2px solid var(--chart-blue);
+            outline-offset: 2px;
+        }
+        .narration-player .narration-timeline {
+            flex: 1 1 150px;
+            min-width: 70px;
+            height: 9px;
+            touch-action: none;
+        }
+        .narration-player .narration-time {
+            min-width: 79px;
+            font-size: .68rem;
+            text-align: center;
+        }
+        .narration-more-menu {
+            position: relative;
+            flex: 0 0 auto;
+        }
+        .narration-more-menu > summary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            list-style: none;
+            font-size: 1.15rem;
+        }
+        .narration-more-menu > summary::-webkit-details-marker { display: none; }
+        .narration-menu-panel {
+            position: absolute;
+            z-index: 80;
+            top: calc(100% + 7px);
+            right: 0;
+            width: 165px;
+            padding: 6px;
+            background: #efe0ba;
+            border: 1px solid rgba(85,60,35,.55);
+            box-shadow: 0 8px 24px rgba(38,29,18,.22);
+        }
+        .narration-menu-panel button {
+            display: block;
+            width: 100%;
+            min-height: 38px;
+            padding: 0 10px;
+            border: 0;
+            background: transparent;
+            text-align: left;
+        }
+        .narration-player.is-idle .narration-timeline,
+        .narration-player.is-idle .narration-time,
+        .narration-player.is-idle .narration-rate-cycle,
+        .narration-player.is-idle .narration-more-menu {
+            display: none;
+        }
+        .narration-player.is-idle .narration-transport-btn { margin-right: auto; }
+        .narration-visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0 0 0 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+
+        /* Mobile chapter wayfinding; hidden on larger screens. */
+        .mobile-chapter-navigator,
+        .chapter-page-turn-nav { display: none; }
         .popup-img {
             max-height: 240px;
             object-fit: contain;
@@ -1876,6 +2003,134 @@
             }
             dialog.maximized-mode .popup-scroll-body-container { padding: 54px 20px 26px; }
         }
+        @media (max-width: 960px) {
+            .mobile-chapter-navigator {
+                position: fixed;
+                z-index: 120;
+                top: max(8px, env(safe-area-inset-top));
+                left: 50%;
+                display: grid;
+                grid-template-columns: 46px minmax(0, 1fr) 46px;
+                align-items: stretch;
+                width: min(620px, calc(100% - 24px));
+                min-height: 46px;
+                overflow: hidden;
+                background: rgba(239,224,185,.98);
+                border: 1px solid rgba(72,54,34,.58);
+                box-shadow: 0 5px 18px rgba(25,23,18,.25);
+                opacity: 0;
+                pointer-events: none;
+                transform: translate(-50%, -135%);
+                transition: opacity .18s ease, transform .18s ease;
+            }
+            .mobile-chapter-navigator.is-visible {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translate(-50%, 0);
+            }
+            .mobile-chapter-step,
+            .mobile-chapter-select {
+                min-height: 46px;
+                border: 0;
+                background: transparent;
+                color: var(--wax);
+                font-family: "Cormorant Garamond", Georgia, serif;
+                font-weight: 700;
+            }
+            .mobile-chapter-step {
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            .mobile-chapter-step:first-child { border-right: 1px solid rgba(72,54,34,.28); }
+            .mobile-chapter-step:last-child { border-left: 1px solid rgba(72,54,34,.28); }
+            .mobile-chapter-step:disabled { opacity: .28; cursor: default; }
+            .mobile-chapter-select-wrap { position: relative; min-width: 0; }
+            .mobile-chapter-select {
+                width: 100%;
+                padding: 0 28px 0 10px;
+                appearance: none;
+                text-align: center;
+                text-align-last: center;
+                font-size: .8rem;
+                letter-spacing: .07em;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+            .mobile-chapter-select-wrap::after {
+                content: "⌄";
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                color: var(--wax);
+                transform: translateY(-58%);
+                pointer-events: none;
+            }
+            .workspace-master-wrapper.reader-active .chapter-page-turn-nav {
+                order: 3;
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+                padding: 14px;
+                background: rgba(235,220,181,.94);
+                border: 1px solid rgba(72,54,34,.48);
+                box-shadow: 0 4px 14px rgba(31,27,20,.14);
+            }
+            .chapter-page-turn-btn {
+                min-height: 44px;
+                padding: 7px 9px;
+                border: 1px solid rgba(85,60,35,.4);
+                background: rgba(248,237,208,.55);
+                color: var(--wax);
+                font-family: "Cormorant Garamond", Georgia, serif;
+                font-size: .78rem;
+                font-weight: 700;
+                line-height: 1.15;
+                cursor: pointer;
+            }
+            .chapter-page-turn-btn:last-child { text-align: right; }
+            .chapter-page-turn-btn:first-child { text-align: left; }
+            .chapter-page-turn-btn:disabled { opacity: .3; cursor: default; }
+            .chapter-page-turn-position {
+                color: #675945;
+                font-size: .66rem;
+                font-weight: 700;
+                letter-spacing: .1em;
+                text-align: center;
+                text-transform: uppercase;
+                white-space: nowrap;
+            }
+            .narration-player {
+                min-height: 50px;
+                margin-bottom: 12px;
+                padding: 6px;
+            }
+            .narration-player-compact-row { gap: 6px; }
+            .narration-player .narration-timeline { min-width: 54px; }
+            .narration-player .narration-time {
+                min-width: 70px;
+                font-size: .62rem;
+            }
+            .narration-rate-cycle { min-width: 43px; padding: 0 4px; }
+            .narration-more-menu > summary { width: 36px; }
+            .modal-nav-footer {
+                min-height: 48px;
+                padding: 5px 9px;
+            }
+            .modal-nav-link {
+                min-height: 38px;
+                padding: 5px 7px;
+                font-size: .76rem;
+            }
+        }
+        @media (max-width: 390px) {
+            .narration-player-compact-row { gap: 4px; }
+            .narration-player .narration-time { min-width: 64px; font-size: .58rem; }
+            .narration-rate-cycle { min-width: 40px; }
+            .chapter-page-turn-nav { padding: 10px 8px; }
+        }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
@@ -1921,30 +2176,32 @@
                 </div>
                 
                 <div class="book-chapter-tab-deck" id="bookSubChapterTabContainer"></div>
-                <div class="narration-player narration-player-main" id="narration-player-main" data-source-id="readerBody">
-                    <div class="narration-player-heading">
-                        <span class="narration-player-kicker">Spoken chronicle</span>
-                        <span class="narration-player-status" id="narration-status-main" aria-live="polite">Ready</span>
-                    </div>
-                    <div class="narration-player-controls">
-                        <button class="narration-control-btn narration-play-btn" id="narration-play-main" type="button" onclick="playNarration('main', 'readerBody')" aria-label="Play chapter narration">▶ <span>Listen</span></button>
-                        <button class="narration-control-btn" id="narration-pause-main" type="button" onclick="toggleNarrationPause('main')" aria-label="Pause chapter narration" disabled>Ⅱ <span>Pause</span></button>
-                        <button class="narration-control-btn narration-icon-btn" id="narration-stop-main" type="button" onclick="stopNarration('main')" aria-label="Stop chapter narration" title="Stop" disabled>■</button>
-                        <div class="narration-rate-control" aria-label="Narration pace controls">
-                            <span class="narration-rate-label">Pace</span>
-                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('main', -0.1)" aria-label="Decrease narration pace">−</button>
-                            <span class="narration-rate-value" id="narration-rate-main">1.0×</span>
-                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('main', 0.1)" aria-label="Increase narration pace">+</button>
-                        </div>
-                    </div>
-                    <div class="narration-timeline-row">
-                        <div class="narration-timeline" id="narration-track-main" role="slider" tabindex="0" aria-label="Chapter narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onclick="seekNarration('main', 'readerBody', event)" onkeydown="handleNarrationSeekKey('main', 'readerBody', event)">
+                <nav class="mobile-chapter-navigator" id="mobileChapterNavigator" aria-label="Chapter navigation">
+                    <button class="mobile-chapter-step" id="mobilePreviousChapter" type="button" onclick="switchRelativeChapter(-1)" aria-label="Previous chapter">‹</button>
+                    <label class="mobile-chapter-select-wrap">
+                        <span class="narration-visually-hidden">Choose a chapter</span>
+                        <select class="mobile-chapter-select" id="mobileChapterSelect" onchange="selectMobileChapter(this.value)"></select>
+                    </label>
+                    <button class="mobile-chapter-step" id="mobileNextChapter" type="button" onclick="switchRelativeChapter(1)" aria-label="Next chapter">›</button>
+                </nav>
+                <div class="narration-player narration-player-main is-idle" id="narration-player-main" data-source-id="readerBody">
+                    <div class="narration-player-compact-row">
+                        <button class="narration-transport-btn" id="narration-play-main" type="button" onclick="toggleNarrationPlayback('main', 'readerBody')" aria-label="Play chapter narration">▶ <span>Listen</span><span class="narration-idle-duration"> · --:--</span></button>
+                        <div class="narration-timeline" id="narration-track-main" role="slider" tabindex="0" aria-label="Chapter narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onpointerdown="beginNarrationScrub('main', 'readerBody', event)" onkeydown="handleNarrationSeekKey('main', 'readerBody', event)">
                             <div class="narration-timeline-fill" id="narration-fill-main"></div>
                             <div class="narration-timeline-thumb" id="narration-thumb-main"></div>
                         </div>
                         <span class="narration-time" id="narration-time-main">0:00 / --:--</span>
+                        <button class="narration-rate-cycle" id="narration-rate-main" type="button" onclick="cycleNarrationRate('main')" aria-label="Change narration speed">1.0×</button>
+                        <details class="narration-more-menu">
+                            <summary aria-label="More narration controls" title="More narration controls">⋯</summary>
+                            <div class="narration-menu-panel">
+                                <button type="button" onclick="dismissNarrationMenu(event); restartNarration('main', 'readerBody')">↺ Start again</button>
+                                <button type="button" onclick="dismissNarrationMenu(event); stopNarration('main')">■ Stop narration</button>
+                            </div>
+                        </details>
                     </div>
-                    <p class="narration-player-hint">Select any point on the line to continue from there.</p>
+                    <span class="narration-player-status narration-visually-hidden" id="narration-status-main" aria-live="polite">Ready</span>
                 </div>
                 <div class="reader-folio-reference" id="readerFolioReference">Folio I · Navigator's Log</div>
                 <div class="date" id="readerDate" style="font-size: 0.9rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;"></div>
@@ -1961,6 +2218,11 @@
                 </div>
                 <div id="categoriesMasterContainer"></div>
             </div>
+            <nav class="chapter-page-turn-nav" aria-label="End of chapter navigation">
+                <button class="chapter-page-turn-btn" id="chapterFooterPrevious" type="button" onclick="switchRelativeChapter(-1, true)">← Previous voyage</button>
+                <span class="chapter-page-turn-position" id="chapterFooterPosition">Folio I of V</span>
+                <button class="chapter-page-turn-btn" id="chapterFooterNext" type="button" onclick="switchRelativeChapter(1, true)">Next voyage →</button>
+            </nav>
         </div>
     </div>
     <div id="popupMasterStack"></div>
@@ -1977,30 +2239,24 @@
                     <p class="popup-document-hook">“History rarely moves in a single line; its currents meet long before they are given a name.”</p>
                 </header>
 
-                <div class="narration-player" id="narration-player-researchAcknowledgementsDialog" data-source-id="acknowledgementsBody">
-                    <div class="narration-player-heading">
-                        <span class="narration-player-kicker">Spoken chronicle</span>
-                        <span class="narration-player-status" id="narration-status-researchAcknowledgementsDialog" aria-live="polite">Ready</span>
-                    </div>
-                    <div class="narration-player-controls">
-                        <button class="narration-control-btn narration-play-btn" id="narration-play-researchAcknowledgementsDialog" type="button" onclick="playNarration('researchAcknowledgementsDialog', 'acknowledgementsBody')" aria-label="Play acknowledgements narration">▶ <span>Listen</span></button>
-                        <button class="narration-control-btn" id="narration-pause-researchAcknowledgementsDialog" type="button" onclick="toggleNarrationPause('researchAcknowledgementsDialog')" aria-label="Pause acknowledgements narration" disabled>Ⅱ <span>Pause</span></button>
-                        <button class="narration-control-btn narration-icon-btn" id="narration-stop-researchAcknowledgementsDialog" type="button" onclick="stopNarration('researchAcknowledgementsDialog')" aria-label="Stop acknowledgements narration" title="Stop" disabled>■</button>
-                        <div class="narration-rate-control" aria-label="Narration pace controls">
-                            <span class="narration-rate-label">Pace</span>
-                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('researchAcknowledgementsDialog', -0.1)" aria-label="Decrease narration pace">−</button>
-                            <span class="narration-rate-value" id="narration-rate-researchAcknowledgementsDialog">1.0×</span>
-                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('researchAcknowledgementsDialog', 0.1)" aria-label="Increase narration pace">+</button>
-                        </div>
-                    </div>
-                    <div class="narration-timeline-row">
-                        <div class="narration-timeline" id="narration-track-researchAcknowledgementsDialog" role="slider" tabindex="0" aria-label="Acknowledgements narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onclick="seekNarration('researchAcknowledgementsDialog', 'acknowledgementsBody', event)" onkeydown="handleNarrationSeekKey('researchAcknowledgementsDialog', 'acknowledgementsBody', event)">
+                <div class="narration-player is-idle" id="narration-player-researchAcknowledgementsDialog" data-source-id="acknowledgementsBody">
+                    <div class="narration-player-compact-row">
+                        <button class="narration-transport-btn" id="narration-play-researchAcknowledgementsDialog" type="button" onclick="toggleNarrationPlayback('researchAcknowledgementsDialog', 'acknowledgementsBody')" aria-label="Play acknowledgements narration">▶ <span>Listen</span><span class="narration-idle-duration"> · --:--</span></button>
+                        <div class="narration-timeline" id="narration-track-researchAcknowledgementsDialog" role="slider" tabindex="0" aria-label="Acknowledgements narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onpointerdown="beginNarrationScrub('researchAcknowledgementsDialog', 'acknowledgementsBody', event)" onkeydown="handleNarrationSeekKey('researchAcknowledgementsDialog', 'acknowledgementsBody', event)">
                             <div class="narration-timeline-fill" id="narration-fill-researchAcknowledgementsDialog"></div>
                             <div class="narration-timeline-thumb" id="narration-thumb-researchAcknowledgementsDialog"></div>
                         </div>
                         <span class="narration-time" id="narration-time-researchAcknowledgementsDialog">0:00 / --:--</span>
+                        <button class="narration-rate-cycle" id="narration-rate-researchAcknowledgementsDialog" type="button" onclick="cycleNarrationRate('researchAcknowledgementsDialog')" aria-label="Change narration speed">1.0×</button>
+                        <details class="narration-more-menu">
+                            <summary aria-label="More narration controls" title="More narration controls">⋯</summary>
+                            <div class="narration-menu-panel">
+                                <button type="button" onclick="dismissNarrationMenu(event); restartNarration('researchAcknowledgementsDialog', 'acknowledgementsBody')">↺ Start again</button>
+                                <button type="button" onclick="dismissNarrationMenu(event); stopNarration('researchAcknowledgementsDialog')">■ Stop narration</button>
+                            </div>
+                        </details>
                     </div>
-                    <p class="narration-player-hint">Select any point on the line to continue from there.</p>
+                    <span class="narration-player-status narration-visually-hidden" id="narration-status-researchAcknowledgementsDialog" aria-live="polite">Ready</span>
                 </div>
 
                 <article class="acknowledgements-body" id="acknowledgementsBody">
@@ -2200,30 +2456,24 @@
             const safeSourceId = safeDomId(sourceId);
             const accessibleLabel = escapeHtml(label);
             return `
-                <div class="narration-player" id="narration-player-${safePlayerId}" data-source-id="${safeSourceId}">
-                    <div class="narration-player-heading">
-                        <span class="narration-player-kicker">Spoken chronicle</span>
-                        <span class="narration-player-status" id="narration-status-${safePlayerId}" aria-live="polite">Ready</span>
-                    </div>
-                    <div class="narration-player-controls">
-                        <button class="narration-control-btn narration-play-btn" id="narration-play-${safePlayerId}" type="button" onclick="playNarration('${safePlayerId}', '${safeSourceId}')" aria-label="Play ${accessibleLabel} narration">▶ <span>Listen</span></button>
-                        <button class="narration-control-btn" id="narration-pause-${safePlayerId}" type="button" onclick="toggleNarrationPause('${safePlayerId}')" aria-label="Pause ${accessibleLabel} narration" disabled>Ⅱ <span>Pause</span></button>
-                        <button class="narration-control-btn narration-icon-btn" id="narration-stop-${safePlayerId}" type="button" onclick="stopNarration('${safePlayerId}')" aria-label="Stop ${accessibleLabel} narration" title="Stop" disabled>■</button>
-                        <div class="narration-rate-control" aria-label="Narration pace controls">
-                            <span class="narration-rate-label">Pace</span>
-                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('${safePlayerId}', -0.1)" aria-label="Decrease narration pace">−</button>
-                            <span class="narration-rate-value" id="narration-rate-${safePlayerId}">${narrationState.rate.toFixed(1)}×</span>
-                            <button class="narration-rate-btn" type="button" onclick="changeNarrationRate('${safePlayerId}', 0.1)" aria-label="Increase narration pace">+</button>
-                        </div>
-                    </div>
-                    <div class="narration-timeline-row">
-                        <div class="narration-timeline" id="narration-track-${safePlayerId}" role="slider" tabindex="0" aria-label="${accessibleLabel} narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onclick="seekNarration('${safePlayerId}', '${safeSourceId}', event)" onkeydown="handleNarrationSeekKey('${safePlayerId}', '${safeSourceId}', event)">
+                <div class="narration-player is-idle" id="narration-player-${safePlayerId}" data-source-id="${safeSourceId}">
+                    <div class="narration-player-compact-row">
+                        <button class="narration-transport-btn" id="narration-play-${safePlayerId}" type="button" onclick="toggleNarrationPlayback('${safePlayerId}', '${safeSourceId}')" aria-label="Play ${accessibleLabel} narration">▶ <span>Listen</span><span class="narration-idle-duration"> · --:--</span></button>
+                        <div class="narration-timeline" id="narration-track-${safePlayerId}" role="slider" tabindex="0" aria-label="${accessibleLabel} narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onpointerdown="beginNarrationScrub('${safePlayerId}', '${safeSourceId}', event)" onkeydown="handleNarrationSeekKey('${safePlayerId}', '${safeSourceId}', event)">
                             <div class="narration-timeline-fill" id="narration-fill-${safePlayerId}"></div>
                             <div class="narration-timeline-thumb" id="narration-thumb-${safePlayerId}"></div>
                         </div>
                         <span class="narration-time" id="narration-time-${safePlayerId}">0:00 / --:--</span>
+                        <button class="narration-rate-cycle" id="narration-rate-${safePlayerId}" type="button" onclick="cycleNarrationRate('${safePlayerId}')" aria-label="Change narration speed">${narrationState.rate.toFixed(1)}×</button>
+                        <details class="narration-more-menu">
+                            <summary aria-label="More narration controls" title="More narration controls">⋯</summary>
+                            <div class="narration-menu-panel">
+                                <button type="button" onclick="dismissNarrationMenu(event); restartNarration('${safePlayerId}', '${safeSourceId}')">↺ Start again</button>
+                                <button type="button" onclick="dismissNarrationMenu(event); stopNarration('${safePlayerId}')">■ Stop narration</button>
+                            </div>
+                        </details>
                     </div>
-                    <p class="narration-player-hint">Select any point on the line to continue from there.</p>
+                    <span class="narration-player-status narration-visually-hidden" id="narration-status-${safePlayerId}" aria-live="polite">Ready</span>
                 </div>
             `;
         }
@@ -2362,6 +2612,79 @@
             }
             attachGlobalLightboxTriggers();
         }
+        function getReaderChapterList() {
+            return Object.values(globalChapters).filter(chapter => chapter.id && chapter.id.includes('portuguese_ch'));
+        }
+        function buildMobileChapterNavigator() {
+            const chapterSelect = document.getElementById('mobileChapterSelect');
+            if (!chapterSelect) return;
+            chapterSelect.innerHTML = getReaderChapterList().map((chapter, index) => {
+                const folio = convertToRomanNumeral(index + 1);
+                return `<option value="${escapeHtml(chapter.id)}">Folio ${folio} · ${escapeHtml(getShortChapterLabel(chapter))}</option>`;
+            }).join('');
+        }
+        function updateChapterNavigation() {
+            const chapters = getReaderChapterList();
+            const currentIndex = chapters.findIndex(chapter => chapter.id === activeBookSubChapterId);
+            if (currentIndex < 0) return;
+            const previousChapter = chapters[currentIndex - 1];
+            const nextChapter = chapters[currentIndex + 1];
+            const folioLabel = `Folio ${convertToRomanNumeral(currentIndex + 1)} of ${chapters.length}`;
+            const chapterSelect = document.getElementById('mobileChapterSelect');
+            const mobilePrevious = document.getElementById('mobilePreviousChapter');
+            const mobileNext = document.getElementById('mobileNextChapter');
+            const footerPrevious = document.getElementById('chapterFooterPrevious');
+            const footerNext = document.getElementById('chapterFooterNext');
+            const footerPosition = document.getElementById('chapterFooterPosition');
+
+            if (chapterSelect) chapterSelect.value = activeBookSubChapterId;
+            if (mobilePrevious) {
+                mobilePrevious.disabled = !previousChapter;
+                mobilePrevious.setAttribute('aria-label', previousChapter ? `Previous chapter: ${previousChapter.title}` : 'No previous chapter');
+            }
+            if (mobileNext) {
+                mobileNext.disabled = !nextChapter;
+                mobileNext.setAttribute('aria-label', nextChapter ? `Next chapter: ${nextChapter.title}` : 'No next chapter');
+            }
+            if (footerPrevious) {
+                footerPrevious.disabled = !previousChapter;
+                footerPrevious.innerText = previousChapter ? `← ${getShortChapterLabel(previousChapter)}` : '← Beginning';
+            }
+            if (footerNext) {
+                footerNext.disabled = !nextChapter;
+                footerNext.innerText = nextChapter ? `${getShortChapterLabel(nextChapter)} →` : 'End of record →';
+            }
+            if (footerPosition) footerPosition.innerText = folioLabel;
+        }
+        function scrollToChapterBeginning() {
+            const tabs = document.getElementById('bookSubChapterTabContainer');
+            if (!tabs) return;
+            const targetTop = tabs.getBoundingClientRect().top + window.scrollY - 12;
+            window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+        }
+        function switchRelativeChapter(offset, returnToBeginning = true) {
+            const chapters = getReaderChapterList();
+            const currentIndex = chapters.findIndex(chapter => chapter.id === activeBookSubChapterId);
+            const targetChapter = chapters[currentIndex + offset];
+            if (!targetChapter) return;
+            switchBookChapterContext(targetChapter.id);
+            if (returnToBeginning) window.setTimeout(scrollToChapterBeginning, 30);
+        }
+        function selectMobileChapter(chapterId) {
+            if (!getReaderChapterList().some(chapter => chapter.id === chapterId)) return;
+            switchBookChapterContext(chapterId);
+            window.setTimeout(scrollToChapterBeginning, 30);
+        }
+        function updateMobileChapterNavigatorVisibility() {
+            const navigator = document.getElementById('mobileChapterNavigator');
+            const tabs = document.getElementById('bookSubChapterTabContainer');
+            if (!navigator || !tabs || window.innerWidth > 960) {
+                if (navigator) navigator.classList.remove('is-visible');
+                return;
+            }
+            const readerIsOpen = document.getElementById('readerScreen').style.display !== 'none';
+            navigator.classList.toggle('is-visible', readerIsOpen && tabs.getBoundingClientRect().bottom < 0);
+        }
         function launchReaderView(targetChapterId) {
             activeBookSubChapterId = targetChapterId;
             
@@ -2386,10 +2709,12 @@
                 }
             });
             document.getElementById('bookSubChapterTabContainer').innerHTML = tabsHtml;
+            buildMobileChapterNavigator();
             renderCurrentChapterContent();
             
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('readerScreen').style.display = 'block';
+            document.querySelector('.workspace-master-wrapper').classList.add('reader-active');
             window.scrollTo(0,0);
         }
         function switchBookChapterContext(chapterId) {
@@ -2407,6 +2732,7 @@
             }
 
             renderCurrentChapterContent();
+            updateChapterNavigation();
         }
         function renderCurrentChapterContent() {
             const ch = globalChapters[activeBookSubChapterId];
@@ -2554,6 +2880,7 @@
             document.getElementById('popupMasterStack').innerHTML = modalMasterHtml;
             updateNarrationPlayerUI('main');
             updateAllNarrationRateLabels();
+            updateChapterNavigation();
             
             attachGlobalLightboxTriggers();
         }
@@ -2607,8 +2934,6 @@
                 : 0;
             const status = isActivePlayer ? narrationState.status : 'idle';
             const playButton = document.getElementById(`narration-play-${playerId}`);
-            const pauseButton = document.getElementById(`narration-pause-${playerId}`);
-            const stopButton = document.getElementById(`narration-stop-${playerId}`);
             const statusNode = document.getElementById(`narration-status-${playerId}`);
             const fill = document.getElementById(`narration-fill-${playerId}`);
             const thumb = document.getElementById(`narration-thumb-${playerId}`);
@@ -2617,18 +2942,30 @@
             const totalSeconds = estimateNarrationSeconds(text, narrationState.rate);
             const elapsedSeconds = Number.isFinite(totalSeconds) ? totalSeconds * (progress / 100) : NaN;
 
+            if (playerNode) {
+                const isIdle = status === 'idle';
+                playerNode.classList.toggle('is-idle', isIdle);
+                playerNode.classList.toggle('is-engaged', !isIdle);
+            }
+
             if (playButton) {
-                if (status === 'playing') playButton.innerHTML = '● <span>Reading</span>';
-                else if (status === 'paused') playButton.innerHTML = '▶ <span>Continue</span>';
-                else if (status === 'ended') playButton.innerHTML = '↺ <span>Listen again</span>';
-                else playButton.innerHTML = '▶ <span>Listen</span>';
+                if (status === 'playing') {
+                    playButton.innerHTML = 'Ⅱ <span class="narration-visually-hidden">Pause</span>';
+                    playButton.setAttribute('aria-label', 'Pause narration');
+                } else if (status === 'paused') {
+                    playButton.innerHTML = '▶ <span class="narration-visually-hidden">Resume</span>';
+                    playButton.setAttribute('aria-label', 'Resume narration');
+                } else if (status === 'ended') {
+                    playButton.innerHTML = '↺ <span class="narration-visually-hidden">Listen again</span>';
+                    playButton.setAttribute('aria-label', 'Listen again');
+                } else if (status === 'error') {
+                    playButton.innerHTML = '! <span class="narration-visually-hidden">Try narration again</span>';
+                    playButton.setAttribute('aria-label', 'Try narration again');
+                } else {
+                    playButton.innerHTML = `▶ <span>Listen</span><span class="narration-idle-duration"> · ${formatNarrationTime(totalSeconds)}</span>`;
+                    playButton.setAttribute('aria-label', 'Play narration');
+                }
             }
-            if (pauseButton) {
-                pauseButton.disabled = !isActivePlayer || status === 'idle' || status === 'ended';
-                pauseButton.innerHTML = status === 'paused' ? '▶ <span>Resume</span>' : 'Ⅱ <span>Pause</span>';
-                pauseButton.setAttribute('aria-label', status === 'paused' ? 'Resume narration' : 'Pause narration');
-            }
-            if (stopButton) stopButton.disabled = !isActivePlayer || status === 'idle';
             if (statusNode) {
                 statusNode.innerText = status === 'playing' ? 'Reading'
                     : status === 'paused' ? 'Paused'
@@ -2794,6 +3131,26 @@
             updateNarrationPlayerUI(playerId);
             speakNarrationFromCurrentPosition();
         }
+        function toggleNarrationPlayback(playerId, sourceId) {
+            const isCurrentPlayer = narrationState.playerId === playerId;
+            if (isCurrentPlayer && (narrationState.status === 'playing' || narrationState.status === 'paused')) {
+                toggleNarrationPause(playerId);
+                return;
+            }
+            playNarration(playerId, sourceId);
+        }
+        function cycleNarrationRate(playerId) {
+            const availableRates = [0.8, 1.0, 1.2, 1.5];
+            const nextRate = availableRates.find(rate => rate > narrationState.rate + .01) || availableRates[0];
+            changeNarrationRate(playerId, nextRate - narrationState.rate);
+        }
+        function restartNarration(playerId, sourceId) {
+            seekNarrationToRatio(playerId, sourceId, 0);
+        }
+        function dismissNarrationMenu(event) {
+            const menu = event && event.currentTarget ? event.currentTarget.closest('details') : null;
+            if (menu) menu.removeAttribute('open');
+        }
         function toggleNarrationPause(playerId) {
             if (narrationState.playerId !== playerId) return;
             if (narrationState.status === 'playing') {
@@ -2850,6 +3207,45 @@
             const bounds = event.currentTarget.getBoundingClientRect();
             if (!bounds.width) return;
             seekNarrationToRatio(playerId, sourceId, (event.clientX - bounds.left) / bounds.width);
+        }
+        function beginNarrationScrub(playerId, sourceId, event) {
+            if (typeof event.button === 'number' && event.button !== 0) return;
+            if (!prepareNarrationSource(playerId, sourceId)) return;
+
+            const track = event.currentTarget;
+            const shouldResume = narrationState.status !== 'paused';
+            const setScrubPosition = clientX => {
+                const bounds = track.getBoundingClientRect();
+                if (!bounds.width) return;
+                const ratio = clampNarrationValue((clientX - bounds.left) / bounds.width, 0, 1);
+                const target = Math.min(
+                    narrationState.text.length - 1,
+                    Math.max(0, narrationState.text.length * ratio)
+                );
+                narrationState.charIndex = snapToNarrationWord(narrationState.text, target);
+                updateNarrationPlayerUI(playerId);
+            };
+
+            cancelNarrationUtterance();
+            narrationState.status = 'paused';
+            setScrubPosition(event.clientX);
+            updateNarrationPlayerUI(playerId);
+            event.preventDefault();
+            if (track.setPointerCapture) track.setPointerCapture(event.pointerId);
+
+            const onMove = moveEvent => setScrubPosition(moveEvent.clientX);
+            const finishScrub = endEvent => {
+                setScrubPosition(endEvent.clientX);
+                track.removeEventListener('pointermove', onMove);
+                track.removeEventListener('pointerup', finishScrub);
+                track.removeEventListener('pointercancel', finishScrub);
+                narrationState.status = shouldResume ? 'playing' : 'paused';
+                updateNarrationPlayerUI(playerId);
+                if (shouldResume) window.setTimeout(speakNarrationFromCurrentPosition, 40);
+            };
+            track.addEventListener('pointermove', onMove);
+            track.addEventListener('pointerup', finishScrub);
+            track.addEventListener('pointercancel', finishScrub);
         }
         function handleNarrationSeekKey(playerId, sourceId, event) {
             const validKeys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
@@ -2977,8 +3373,11 @@
             document.getElementById('dashboardScreen').style.display = 'block';
             document.getElementById('readerScreen').style.display = 'none';
             document.getElementById('stickyLeftIndiaPerspectiveCard').style.display = 'none';
+            document.querySelector('.workspace-master-wrapper').classList.remove('reader-active');
             window.scrollTo(0,0);
         }
+        window.addEventListener('scroll', updateMobileChapterNavigatorVisibility, { passive: true });
+        window.addEventListener('resize', updateMobileChapterNavigatorVisibility);
         window.onload = initSystem;
     </script>
 </body>
