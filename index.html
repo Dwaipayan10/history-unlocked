@@ -3,7 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backstory - The Hidden Levers</title>
+    <title>History Unlocked: Portugal’s Maritime Empire in India | Backstory</title>
+    <meta name="description" content="An interactive historical narrative exploring the voyages, political pressures and parallel events behind Portugal’s maritime expansion into India and Bengal.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#172a28">
+    <link rel="canonical" href="https://dwaipayan10.github.io/history-unlocked/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="History Unlocked">
+    <meta property="og:title" content="History Unlocked: Portugal’s Maritime Empire in India">
+    <meta property="og:description" content="Trace the voyages, rivalries and parallel events behind Portugal’s maritime expansion into India and Bengal.">
+    <meta property="og:url" content="https://dwaipayan10.github.io/history-unlocked/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="History Unlocked: Portugal’s Maritime Empire in India">
+    <meta name="twitter:description" content="An interactive historical narrative of voyages, political pressures and parallel events.">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "History Unlocked",
+      "alternateName": "Backstory",
+      "url": "https://dwaipayan10.github.io/history-unlocked/",
+      "description": "An interactive historical narrative exploring Portugal’s maritime expansion into India and Bengal.",
+      "author": { "@type": "Person", "name": "Dwaipayan Sinha" }
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -1050,7 +1073,8 @@
             gap: 5px;
             margin-top: 23px;
         }
-        .research-acknowledgements-link {
+        .research-acknowledgements-link,
+        .reader-feedback-link {
             position: relative;
             padding: 5px 2px 7px;
             border: 0;
@@ -1065,8 +1089,12 @@
             cursor: pointer;
         }
         .research-acknowledgements-link::before { content: "◇"; margin-right: 8px; }
-        .research-acknowledgements-link:hover { color: #5d2922; border-bottom-color: #5d2922; }
-        .research-acknowledgements-link:focus-visible { outline: 2px solid var(--chart-blue); outline-offset: 4px; }
+        .reader-feedback-link { margin-top: 10px; }
+        .reader-feedback-link::before { content: "✦"; margin-right: 8px; }
+        .research-acknowledgements-link:hover,
+        .reader-feedback-link:hover { color: #5d2922; border-bottom-color: #5d2922; }
+        .research-acknowledgements-link:focus-visible,
+        .reader-feedback-link:focus-visible { outline: 2px solid var(--chart-blue); outline-offset: 4px; }
         .frontispiece-colophon-note {
             color: #786b54;
             font-size: .68rem;
@@ -1871,6 +1899,37 @@
             font-style: italic;
             text-align: right;
         }
+        dialog.feedback-dialog {
+            width: 790px;
+            height: 780px;
+            max-height: 90vh;
+            max-height: 90dvh;
+        }
+        .feedback-scroll { padding: 34px 38px 26px; }
+        .feedback-explanation {
+            max-width: 680px;
+            margin: 0 auto 20px;
+            padding: 15px 18px;
+            border-left: 3px solid var(--chart-blue);
+            background: rgba(75,101,102,.07);
+            color: #413a30;
+            font-size: .94rem;
+            line-height: 1.62;
+        }
+        .feedback-privacy-note {
+            display: block;
+            margin-top: 7px;
+            color: #6c5c47;
+            font-size: .82rem;
+            font-style: italic;
+        }
+        .feedback-form-frame {
+            display: block;
+            width: 100%;
+            min-height: 610px;
+            border: 1px solid var(--rule);
+            background: #f4ead0;
+        }
         @media (max-width: 960px) {
             .workspace-master-wrapper {
                 grid-template-columns: minmax(0, 1fr);
@@ -1991,6 +2050,14 @@
             .acknowledgements-body { font-size: .96rem; line-height: 1.66; }
             .acknowledgements-lead { font-size: 1.16rem; }
             .research-source-list li { padding-left: 36px; }
+            dialog.feedback-dialog {
+                width: calc(100vw - 16px);
+                height: calc(100dvh - 16px);
+                max-height: calc(100dvh - 16px);
+            }
+            .feedback-scroll { padding: 28px 12px 18px; }
+            .feedback-explanation { margin-bottom: 14px; padding: 13px 14px; }
+            .feedback-form-frame { min-height: 680px; }
             dialog.collapsed-mode { width: 92vw !important; height: 70vh !important; }
             dialog.maximized-mode:not(.native-lightbox-topframe) {
                 width: 100% !important;
@@ -2159,6 +2226,10 @@
                     Research &amp; Acknowledgements
                 </button>
                 <span class="frontispiece-colophon-note">Sources, visual credits and editorial method</span>
+                <button class="reader-feedback-link" type="button" onclick="openPopupWithVoiceMute('readerFeedbackDialog')">
+                    Reader Feedback · Send a Dispatch
+                </button>
+                <span class="frontispiece-colophon-note">A dispatch is a private message to the project creator</span>
             </div>
         </div>
         <div class="workspace-master-wrapper">
@@ -2297,6 +2368,29 @@
             </div>
             <div class="modal-nav-footer">
                 <button class="modal-nav-link" type="button" onclick="closePopupAndMute('researchAcknowledgementsDialog')">Return to the Frontispiece</button>
+            </div>
+        </div>
+    </dialog>
+    <dialog id="readerFeedbackDialog" class="acknowledgements-dialog feedback-dialog" aria-labelledby="readerFeedbackTitle" onclick="if(event.target === this) closePopupAndMute('readerFeedbackDialog')">
+        <div class="window-control-rack">
+            <button class="window-control-btn expand-mode-btn" type="button" aria-label="Maximise feedback form" aria-pressed="false" title="Maximise feedback form" onclick="toggleWindowSizeState('readerFeedbackDialog', 'expand')">⛶</button>
+            <button class="window-control-btn close-x-btn" type="button" aria-label="Close feedback form" onclick="closePopupAndMute('readerFeedbackDialog')">&times;</button>
+        </div>
+        <div class="dialog-layout-wrapper">
+            <div class="popup-scroll-body-container feedback-scroll">
+                <header class="popup-document-header">
+                    <div class="popup-document-kicker">Reader Feedback · Private Correspondence</div>
+                    <h3 class="popup-title" id="readerFeedbackTitle">Send a Dispatch</h3>
+                    <p class="popup-document-hook">A private note from one reader of history to another.</p>
+                </header>
+                <div class="feedback-explanation">
+                    A “dispatch” simply means a private message to the project creator. Use it to report a factual error, recommend a source, suggest an improvement or share your impressions of the narrative.
+                    <span class="feedback-privacy-note">Your message will not be displayed publicly. Name and email are optional and only needed if you would like a reply.</span>
+                </div>
+                <iframe class="feedback-form-frame" src="https://docs.google.com/forms/d/e/1FAIpQLSeRppMpoPil4GDUnYmxbXnf_qDdxnrxifiUoFi2F-osrjk2Lw/viewform?embedded=true" title="Private reader feedback form" loading="lazy" referrerpolicy="strict-origin-when-cross-origin">Loading private feedback form…</iframe>
+            </div>
+            <div class="modal-nav-footer">
+                <button class="modal-nav-link" type="button" onclick="closePopupAndMute('readerFeedbackDialog')">Return to the Frontispiece</button>
             </div>
         </div>
     </dialog>
