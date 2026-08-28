@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dwaipayan10.github.io/history-unlocked/sitemap.xml
+Sitemap: https://compassandchronicle.com/sitemap.xml
