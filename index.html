@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History Unlocked: Portugal’s Maritime Empire in India | Backstory</title>
-    <meta name="description" content="An interactive historical narrative exploring the voyages, political pressures and parallel events behind Portugal’s maritime expansion into India and Bengal.">
+    <title id="documentTitle">History Unlocked: Portugal’s Maritime Empire in India | Backstory</title>
+    <meta id="documentDescription" name="description" content="An interactive historical narrative exploring the voyages, political pressures and parallel events behind Portugal’s maritime expansion into India and Bengal.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="theme-color" content="#172a28">
-    <link rel="canonical" href="https://compassandchronicle.com/">
+    <link id="documentCanonical" rel="canonical" href="https://compassandchronicle.com/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="History Unlocked">
-    <meta property="og:title" content="History Unlocked: Portugal’s Maritime Empire in India">
-    <meta property="og:description" content="Trace the voyages, rivalries and parallel events behind Portugal’s maritime expansion into India and Bengal.">
-    <meta property="og:url" content="https://compassandchronicle.com/">
+    <meta id="documentOgTitle" property="og:title" content="History Unlocked: Portugal’s Maritime Empire in India">
+    <meta id="documentOgDescription" property="og:description" content="Trace the voyages, rivalries and parallel events behind Portugal’s maritime expansion into India and Bengal.">
+    <meta id="documentOgUrl" property="og:url" content="https://compassandchronicle.com/">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="History Unlocked: Portugal’s Maritime Empire in India">
-    <meta name="twitter:description" content="An interactive historical narrative of voyages, political pressures and parallel events.">
-    <script type="application/ld+json">
+    <meta id="documentTwitterTitle" name="twitter:title" content="History Unlocked: Portugal’s Maritime Empire in India">
+    <meta id="documentTwitterDescription" name="twitter:description" content="An interactive historical narrative of voyages, political pressures and parallel events.">
+    <script id="documentStructuredData" type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -68,6 +68,7 @@
             letter-spacing: -0.5px;
             color: var(--text-color);
             cursor: pointer;
+            text-decoration: none;
         }
         .global-author-signature {
             font-size: 0.85rem;
@@ -141,6 +142,7 @@
             line-height: 1.7;
         }
         .portal-gate-trigger-btn {
+            display: inline-block;
             background-color: var(--accent-color);
             color: white;
             border: none;
@@ -151,6 +153,7 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(90, 120, 107, 0.3);
             transition: all 0.2s ease;
+            text-decoration: none;
         }
         .portal-gate-trigger-btn:hover {
             transform: translateY(-2px);
@@ -1230,6 +1233,7 @@
             text-align: left;
             overflow: hidden;
             isolation: isolate;
+            text-decoration: none;
         }
         .book-tab-link::before {
             content: "";
@@ -2205,7 +2209,7 @@
 </head>
 <body>
     <div class="global-branding-track">
-        <h1 class="global-site-logo-label" id="globalDynamicLogoLabel" role="button" tabindex="0" onclick="showDashboardView()" onkeydown="if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); showDashboardView(); }">Backstory</h1>
+        <a class="global-site-logo-label" id="globalDynamicLogoLabel" href="/" onclick="showDashboardView(); return false;">Backstory</a>
         <div class="global-author-signature" id="globalDynamicAuthorSignature">Dwaipayan Sinha</div>
     </div>
     <div class="container">
@@ -2218,9 +2222,9 @@
             <div id="siteEntranceCoverImgWrap"></div>
             <p class="portal-saga-intro-body" id="siteEntrancePortalBody"></p>
             
-            <button class="portal-gate-trigger-btn" onclick="launchReaderView('portuguese_ch1')">
+            <a class="portal-gate-trigger-btn" href="/chapters/genesis/" onclick="launchReaderView('portuguese_ch1'); return false;">
                 Enter the Navigator's Folio
-            </button>
+            </a>
             <div class="frontispiece-colophon">
                 <button class="research-acknowledgements-link" type="button" onclick="openPopupWithVoiceMute('researchAcknowledgementsDialog')">
                     Research &amp; Acknowledgements
@@ -2243,7 +2247,7 @@
             </aside>
             <div class="reader-layout" id="readerScreen">
                 <div class="reader-branding-meta-bar" style="margin-bottom: 20px;">
-                    <button class="back-btn" style="background:none; border:1px solid var(--accent-color); color:var(--accent-color); padding:8px 16px; border-radius:20px; cursor:pointer; font-weight:bold;" onclick="showDashboardView()">← Return to the Frontispiece</button>
+                    <a class="back-btn" href="/" style="background:none; border:1px solid var(--accent-color); color:var(--accent-color); padding:8px 16px; border-radius:20px; cursor:pointer; font-weight:bold; text-decoration:none;" onclick="showDashboardView(); return false;">← Return to the Frontispiece</a>
                 </div>
                 
                 <div class="book-chapter-tab-deck" id="bookSubChapterTabContainer"></div>
@@ -2447,6 +2451,86 @@
             portuguese_ch4: 'Estado da Índia',
             portuguese_ch5: 'Bengal'
         };
+
+        const SITE_ORIGIN = 'https://compassandchronicle.com';
+        const HOMEPAGE_METADATA = {
+            title: 'History Unlocked: Portugal’s Maritime Empire in India | Backstory',
+            description: 'An interactive historical narrative exploring the voyages, political pressures and parallel events behind Portugal’s maritime expansion into India and Bengal.'
+        };
+        const CHAPTER_ROUTE_CONFIG = {
+            portuguese_ch1: { slug: 'genesis', label: 'Genesis' },
+            portuguese_ch2: { slug: 'the-void', label: 'The Void' },
+            portuguese_ch3: { slug: 'empire', label: 'Empire' },
+            portuguese_ch4: { slug: 'estado-da-india', label: 'Estado da Índia' },
+            portuguese_ch5: { slug: 'bengal', label: 'Bengal' }
+        };
+
+        function getChapterPath(chapterId) {
+            const route = CHAPTER_ROUTE_CONFIG[chapterId];
+            return route ? `/chapters/${route.slug}/` : '/';
+        }
+
+        function getChapterIdFromPath(pathname = window.location.pathname) {
+            const normalizedPath = `/${String(pathname || '').split('/').filter(Boolean).join('/')}/`;
+            const match = Object.entries(CHAPTER_ROUTE_CONFIG).find(([, route]) =>
+                normalizedPath === `/chapters/${route.slug}/`
+            );
+            return match ? match[0] : null;
+        }
+
+        function setMetadataContent(selector, value) {
+            const node = document.querySelector(selector);
+            if (node) node.setAttribute('content', value);
+        }
+
+        function updateDocumentMetadata(chapterId = null) {
+            const chapter = chapterId ? globalChapters[chapterId] : null;
+            const route = chapterId ? CHAPTER_ROUTE_CONFIG[chapterId] : null;
+            const canonicalUrl = route ? `${SITE_ORIGIN}${getChapterPath(chapterId)}` : `${SITE_ORIGIN}/`;
+            const pageTitle = chapter
+                ? `${chapter.title || route.label} | Backstory`
+                : HOMEPAGE_METADATA.title;
+            const pageDescription = chapter
+                ? `Explore ${chapter.title || route.label}, part of Backstory’s interactive account of Portugal’s maritime expansion into India and Bengal.`
+                : HOMEPAGE_METADATA.description;
+
+            document.title = pageTitle;
+            const canonical = document.getElementById('documentCanonical');
+            if (canonical) canonical.setAttribute('href', canonicalUrl);
+            setMetadataContent('meta[name="description"]', pageDescription);
+            setMetadataContent('meta[property="og:title"]', pageTitle);
+            setMetadataContent('meta[property="og:description"]', pageDescription);
+            setMetadataContent('meta[property="og:url"]', canonicalUrl);
+            setMetadataContent('meta[name="twitter:title"]', pageTitle);
+            setMetadataContent('meta[name="twitter:description"]', pageDescription);
+
+            const structuredData = document.getElementById('documentStructuredData');
+            if (structuredData) {
+                structuredData.textContent = JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': chapter ? 'WebPage' : 'WebSite',
+                    name: chapter ? (chapter.title || route.label) : 'History Unlocked',
+                    alternateName: 'Backstory',
+                    url: canonicalUrl,
+                    description: pageDescription,
+                    author: { '@type': 'Person', name: 'Dwaipayan Sinha' },
+                    ...(chapter ? {
+                        isPartOf: {
+                            '@type': 'WebSite',
+                            name: 'History Unlocked',
+                            url: `${SITE_ORIGIN}/`
+                        }
+                    } : {})
+                });
+            }
+        }
+
+        function updateBrowserLocation(chapterId = null, replace = false) {
+            const nextPath = chapterId ? getChapterPath(chapterId) : '/';
+            if (window.location.pathname === nextPath) return;
+            const method = replace ? 'replaceState' : 'pushState';
+            window.history[method]({ chapterId }, '', nextPath);
+        }
 
         function getChapterOrdinal(chapterId) {
             const explicitNumber = Number((chapterId || '').match(/(\d+)$/)?.[1]);
@@ -2680,6 +2764,12 @@
                     speechSynthesis.onvoiceschanged = renderCinematicEntrancePortal;
                 }
                 renderCinematicEntrancePortal();
+                const requestedChapterId = getChapterIdFromPath();
+                if (requestedChapterId && globalChapters[requestedChapterId]) {
+                    launchReaderView(requestedChapterId, false);
+                } else {
+                    showDashboardView(false);
+                }
             } catch (err) {
                 document.getElementById('dashboardScreen').innerHTML = `<div style="color:red;padding:20px;">Initialization fault. Verify spreadsheet setup hooks.</div>`;
                 console.error(err);
@@ -2779,7 +2869,8 @@
             const readerIsOpen = document.getElementById('readerScreen').style.display !== 'none';
             navigator.classList.toggle('is-visible', readerIsOpen && tabs.getBoundingClientRect().bottom < 0);
         }
-        function launchReaderView(targetChapterId) {
+        function launchReaderView(targetChapterId, updateLocation = true) {
+            if (!globalChapters[targetChapterId]) return;
             activeBookSubChapterId = targetChapterId;
             
             let tabsHtml = '';
@@ -2790,14 +2881,15 @@
                     const romanLabel = convertToRomanNumeral(countIndex);
                     const shortLabel = getShortChapterLabel(ch);
                     tabsHtml += `
-                        <button class="book-tab-link ${activeClass}"
+                        <a class="book-tab-link ${activeClass}"
                             id="tab-btn-${ch.id}"
-                            onclick="switchBookChapterContext('${ch.id}')"
+                            href="${getChapterPath(ch.id)}"
+                            onclick="switchBookChapterContext('${ch.id}'); return false;"
                             aria-label="${ch.title}"
                             title="${ch.title}">
                             <span class="book-tab-roman" aria-hidden="true">${romanLabel}</span>
                             <span class="book-tab-name" aria-hidden="true">${shortLabel}</span>
-                        </button>
+                        </a>
                     `;
                     countIndex++;
                 }
@@ -2809,9 +2901,12 @@
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('readerScreen').style.display = 'block';
             document.querySelector('.workspace-master-wrapper').classList.add('reader-active');
+            if (updateLocation) updateBrowserLocation(targetChapterId);
+            updateDocumentMetadata(targetChapterId);
             window.scrollTo(0,0);
         }
-        function switchBookChapterContext(chapterId) {
+        function switchBookChapterContext(chapterId, updateLocation = true) {
+            if (!globalChapters[chapterId]) return;
             stopNarrationEngine();
             stopPopupNarrationEngine();
             activeBookSubChapterId = chapterId;
@@ -2827,6 +2922,8 @@
 
             renderCurrentChapterContent();
             updateChapterNavigation();
+            if (updateLocation) updateBrowserLocation(chapterId);
+            updateDocumentMetadata(chapterId);
         }
         function renderCurrentChapterContent() {
             const ch = globalChapters[activeBookSubChapterId];
@@ -3461,17 +3558,25 @@
             const frame = document.getElementById('systemLightboxContainer');
             if(frame) frame.close();
         }
-        function showDashboardView() {
+        function showDashboardView(updateLocation = true) {
             stopNarrationEngine();
             stopPopupNarrationEngine();
+            activeBookSubChapterId = null;
             document.getElementById('dashboardScreen').style.display = 'block';
             document.getElementById('readerScreen').style.display = 'none';
             document.getElementById('stickyLeftIndiaPerspectiveCard').style.display = 'none';
             document.querySelector('.workspace-master-wrapper').classList.remove('reader-active');
+            if (updateLocation) updateBrowserLocation(null);
+            updateDocumentMetadata();
             window.scrollTo(0,0);
         }
         window.addEventListener('scroll', updateMobileChapterNavigatorVisibility, { passive: true });
         window.addEventListener('resize', updateMobileChapterNavigatorVisibility);
+        window.addEventListener('popstate', () => {
+            const chapterId = getChapterIdFromPath();
+            if (chapterId && globalChapters[chapterId]) launchReaderView(chapterId, false);
+            else showDashboardView(false);
+        });
         window.onload = initSystem;
     </script>
 </body>
